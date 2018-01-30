@@ -3,16 +3,33 @@
 /**
  * Module dependencies.
  */
-
+var SSL_LOC = '/home/ubuntu/ssl/listassist.duckdns.org/';
 var app = require('../app');
+var fs = require('fs');
 var debug = require('debug')('listassist:server');
 var http = require('http');
+var https = require('https');
+var LIST_ASSIST_SSL = process.env.LIST_ASSIST_SSL == 'TRUE' || process.env.LIST_ASSIST_SSL == 'true';
+var privateKey;
+var certificate;
+var authority;
+if (LIST_ASSIST_SSL) privateKey = fs.readFileSync(SSL_LOC + 'privkey1.pem');
+if (LIST_ASSIST_SSL) certificate = fs.readFileSync(SSL_LOC + 'fullchain1.pem');
+if (LIST_ASSIST_SSL) authority = fs.readFileSync(SSL_LOC + 'chain1.pem');
+
+var credientials = {
+	key: privateKey,
+	cert: certificate,
+	ca: authority
+}
+
 
 /**
  * Get port from environment and store in Express.
  */
 
 var port = normalizePort(process.env.PORT || '3000');
+var sslPort = normalizePort(process.env.PORT || ' 3443');
 app.set('port', port);
 
 /**
@@ -20,7 +37,10 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
-
+var httpsServer;
+if (LIST_ASSIST_SSL) {
+	httpsServer = https.createServer(credientials, app)
+}
 /**
  * Listen on provided port, on all network interfaces.
  */
@@ -28,6 +48,12 @@ var server = http.createServer(app);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
+//HTTPS Listen
+if (LIST_ASSIST_SSL) {
+	httpsServer.listen(sslPort);
+	httpsServer.on('error', onError);
+	httpsServer.on('listening', onListening);
+}
 
 /**
  * Normalize a port into a number, string, or false.
