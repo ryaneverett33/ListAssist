@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var authenticator = require('../management/authenticator');
 var helpers = require('./helpers');
+var userManager = require('../management/userManagement'); 
 /*
 id: user id
 name: profile name
@@ -44,9 +45,9 @@ router.post('/login', function(req, res, next) {
         };
         authenticator.authenticate(AuthObj, function(UserObj) {
             if (UserObj !== null) {
-                res.setHeader("content-type", "application/json");
+                /*res.setHeader("content-type", "application/json");
                 res.send(200, "Authenticated: " + JSON.stringify(UserObj));
-                return;
+                return;*/
             }
             else {
                 res.setHeader("content-type", "application/json");
