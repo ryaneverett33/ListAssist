@@ -23,8 +23,14 @@ exports.init = function() {
 AuthObj:
 tokenId: Oath token
 provider: [google]
+name
+email
 Callback:
-bool - autenticated or not
+bool - autenticated or not ||||CURRENTLY|||
+Soon:
+UserPayload {
+    name, email, profile pic, id, expiration timestamp (unix), provider
+}
 */
 exports.authenticate = function(AuthObj, callback) {
     if (AuthObj == null) {
@@ -32,7 +38,7 @@ exports.authenticate = function(AuthObj, callback) {
     }
     switch (AuthObj.provider) {
         case 'google':
-            googleClient.verifyIdToken(tokenId, GOOGLE_CLIENT_ID, function(e, login) {
+            googleClient.verifyIdToken({ idToken: AuthObj.tokenId, audience: GOOGLE_CLIENT_ID} , function(e, login) {
                 if (login) {
                     console.log(login.getPayload());
                     callback(true)

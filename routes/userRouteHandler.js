@@ -20,7 +20,7 @@ router.post('/login', function(req, res, next) {
             return;
         }
         var json = body;
-        /*try {
+        try {
             json = JSON.parse(body);
             if (json == null) {
                 console.log("json null");
@@ -34,7 +34,7 @@ router.post('/login', function(req, res, next) {
             res.setHeader("content-type", "application/json");
             res.send(400, JSON.stringify({ error: "Bad JSON" }));
             return;
-        }*/
+        }
         //authenticate before proceeding
         authenticator.authenticate({ tokenId: json.tokenId, provider: json.provider }, function(success) {
             if (success) {

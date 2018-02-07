@@ -21,7 +21,11 @@ function onSignIn(googleUser) {
   xhr.send(JSON.stringify({
     tokenId: googleUser.getAuthResponse().id_token,
     provider: 'google'
-  }))
+  }));
+  console.log(JSON.stringify({
+    tokenId: googleUser.getAuthResponse().id_token,
+    provider: 'google'
+  }));
 }
 function signOut() {
     var auth2 = gapi.auth2.getAuthInstance();
