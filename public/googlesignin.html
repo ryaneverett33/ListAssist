@@ -19,12 +19,16 @@ function onSignIn(googleUser) {
     console.log(this.responseText)
   }
   xhr.send(JSON.stringify({
-    tokenId: googleUser.getAuthResponse().id_token,
-    provider: 'google'
+    tokenId : googleUser.getAuthResponse().id_token,
+    provider : 'google',
+    name : profile.getName(),
+    email : profile.getEmail()
   }));
   console.log(JSON.stringify({
-    tokenId: googleUser.getAuthResponse().id_token,
-    provider: 'google'
+    tokenId : googleUser.getAuthResponse().id_token,
+    provider : 'google',
+    name : profile.getName(),
+    email : profile.getEmail()
   }));
 }
 function signOut() {

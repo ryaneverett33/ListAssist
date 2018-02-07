@@ -36,20 +36,24 @@ router.post('/login', function(req, res, next) {
             return;
         }
         //authenticate before proceeding
-        authenticator.authenticate({ tokenId: json.tokenId, provider: json.provider }, function(success) {
-            if (success) {
+        var AuthObj = {
+            tokenId : json.tokenId,
+            provider : json.provider,
+            name : json.name,
+            email : json.email
+        };
+        authenticator.authenticate(AuthObj, function(UserObj) {
+            if (UserObj !== null) {
                 res.setHeader("content-type", "application/json");
-                res.send(200, JSON.stringify({ error: "gg" }));
+                res.send(200, "Authenticated: " + JSON.stringify(UserObj));
                 return;
             }
             else {
-                console.log("OAuth token not authenticated");
                 res.setHeader("content-type", "application/json");
-                res.send(400, JSON.stringify({ error: "Bad OAuth Token" }));
+                res.send(400, "Failed to Authenticate");
                 return;
             }
-        })
-        //res.send("CALLED LOGIN");
+        });
     });
 });
 router.post('/logout', function(req, res, next) {

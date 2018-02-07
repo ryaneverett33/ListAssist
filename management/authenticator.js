@@ -20,31 +20,51 @@ exports.init = function() {
     initialized = true;
 }
 /*
-AuthObj:
-tokenId: Oath token
-provider: [google]
-name
-email
+AuthObj {
+    tokenId: Oath token, provider: [google], name, email
+}
 Callback:
-bool - autenticated or not ||||CURRENTLY|||
-Soon:
+A null object is returned if failed to authenticate
 UserPayload {
     name, email, profile pic, id, expiration timestamp (unix), provider
 }
 */
 exports.authenticate = function(AuthObj, callback) {
     if (AuthObj == null) {
-        callback(false);
+        callback(null);
     }
     switch (AuthObj.provider) {
         case 'google':
             googleClient.verifyIdToken({ idToken: AuthObj.tokenId, audience: GOOGLE_CLIENT_ID} , function(e, login) {
                 if (login) {
-                    console.log(login.getPayload());
-                    callback(true)
+                    var payload = login.getPayload();
+                    //check if values match
+                    if (AuthObj.name !== payload.name) {
+                        console.log("authenticator::'names don't match'");
+                        callback(null);
+                        return;
+                    }
+                    else if (AuthObj.email !== payload.email) {
+                        console.log("authenticator::'emails don't match'");
+                        callback(null);
+                        return;
+                    }
+                    else {
+                        callback({
+                            name : payload.name,
+                            email : payload.email,
+                            profile_pic : payload.picture,
+                            id : payload.sub,
+                            timestamp : payload.exp,
+                            provider : 'google'
+                        });
+                        return;
+                    }
                 }
                 else {
-                    callback(false);
+                    console.log("authenticator::'failed to verify token'");
+                    callback(null);
+                    return;
                 }
             });
             return;
