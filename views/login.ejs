@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>ListAssist</title>
-		<link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
+		<title>List Assist - Sign in</title>
+
+		<meta name="google-signin-client_id" content="1032367753855-k81843peclct63utjvcb4e95vu74icsp.apps.googleusercontent.com">
 		<link rel='stylesheet' href='/stylesheets/style.css' />
-		<link rel='stylesheet' href='/stylesheets/login.css' />
 	</head>
 	<body>
-		<script src='javascript/jquery-3.3.1.min.js'></script>
-		<script src='javascript/bootstrap.bundle.min.js'></script>
-		<script src='javascript/login.js'></script>
+		<script src="https://apis.google.com/js/platform.js" async defer></script>
+		<script>
+			function onSignIn(googleUser) {
+				var profile = googleUser.getBasicProfile();
+				console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+				console.log('Name: ' + profile.getName());
+				console.log('Image URL: ' + profile.getImageUrl());
+				console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+			}
+		</script>
 
-		<h1>Hello</h1>
-		<div class='container'>
-			<div class='row'>
-				<div class='col'>left</div>
-				<div class='col'>right</div>
-			</div>
-		</div>
+		<h1>List Assist sign in</h1>
+		<div class="g-signin2" data-onsuccess="onSignIn"></div>
 
 	</body>
 </html>
