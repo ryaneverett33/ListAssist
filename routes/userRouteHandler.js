@@ -82,8 +82,40 @@ router.post('/logout', function(req, res, next) {
 });
 router.post('/get', function(req, res, next) {
     console.log("Called user/get");
-    res.setHeader("content-type", "application/json");
-    res.send(501, JSON.stringify({ error : "/user/get not implemented yet"}));
+    helpers.resolveBody(req, function(body) {
+        var json = helpers.toJson(body);
+        if (json == null) {
+            res.setHeader("content-type", "application/json");
+            res.send(400, JSON.stringify({ error: "Bad JSON" }));
+            return;
+        }
+        var token = json.token;
+        if (token === null) {
+            res.setHeader("content-type", "application/json");
+            res.send(400, JSON.stringify({ error: "Invalid Arguments, no token supplied" }));
+            return;
+        }
+        userManager.getUser(token, function(User) {
+            if (User === null) {
+                res.setHeader("content-type", "application/json");
+                res.send(400, JSON.stringify({ error: "Invalid Token, unable to retrieve user" }));
+                return;
+            }
+            /*
+                Possibly
+                var User = userManager.getInfo(userid)
+            */
+           res.setHeader("content-type", "application/json");
+           res.status(200).send(JSON.stringify({
+               name : User.getName(),
+               image : User.getImage(),
+               email : User.getEmail(),
+               id : User.getListId()
+           }));
+           return;
+    });
+    /*res.setHeader("content-type", "application/json");
+    res.send(501, JSON.stringify({ error : "/user/get not implemented yet"}));*/
     return;
 })
 module.exports = router;

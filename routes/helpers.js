@@ -34,3 +34,17 @@ exports.isTimeStampExpired = function(timestamp) {
     var expir_date = new Date(unix_timestamp*1000);
     return new Date() > expir_date;
 }
+//Returns json if successful, null if else
+exports.toJson = function(body) {
+    var json;
+    try {
+        json = JSON.parse(body);
+        return json;
+    }
+    catch (e) {
+        console.log('helpers.toJson() caught an exception: %s', e);
+        return null;
+    }
+    //shouldn't get here
+    return null;
+}

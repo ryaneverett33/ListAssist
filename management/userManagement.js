@@ -7,7 +7,7 @@ var UserControl = require('../database/UserControl');
 var tokens; //list of tokens
 var TOKEN_LENGTH = 20;
 /* UserObj : {
-    name : full_name, email, profile_pic : url, id (google id),
+    name : full_name, email, profile_pic : url, providerid (google id),
     timestamp (expiration time), provider, token
 }*/
 exports.init = function() {
@@ -28,13 +28,21 @@ exports.init = function() {
 //if fails to add, return null
 //callback(token|null)
 exports.addUser = function(UserObj, callback) {
-    UserControl.putUser(UserObj, function(success) {
-        if (success) {
-            tokens.token = UserObj;
+    UserControl.putUser(UserObj, function(id) {
+        if (id !== 0) {
+            //tokens.token = UserObj;
+            tokens.token = {
+                userid : id,
+                provider : 'google',
+                name : UserObj.name,
+                token : UserObj.token
+            };
             callback(UserObj.token);
+            return;
         }
         else {
             callback(null);
+            return;
         }
     });
 }
@@ -45,7 +53,13 @@ exports.userExists = function(UserObj, callback) {
 }
 //gets a user from the database from a given token
 //returns a User if successful, null if else 
-exports.getUser = function(token) {
+exports.getUser = function(token, callback) {
+    UserControl.getUser(tokens.token.id, function() {
+        callback();
+    });
+}
+//to get any user's basic info
+exports.getUserInfo = function(id, callback) {
 
 }
 //remove token from 
