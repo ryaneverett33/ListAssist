@@ -7,10 +7,10 @@ userRouteHandler
 //callback (boolean)
 //if user exists in db
 exports.isUserInDb = function(userObj, callback) {
-
+    callback(true);
 }
 //callback (boolean)
 //if successfully put in db
 exports.putUser = function(userObj, callback) {
-
+    callback(true);
 }

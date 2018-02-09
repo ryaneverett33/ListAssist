@@ -36,7 +36,7 @@ exports.authenticate = function(AuthObj, callback) {
     switch (AuthObj.provider) {
         case 'google':
             googleClient.verifyIdToken({ idToken: AuthObj.tokenId, audience: GOOGLE_CLIENT_ID} , function(e, login) {
-                if (login) {
+                if (login !== null) {
                     var payload = login.getPayload();
                     //check if values match
                     if (AuthObj.name !== payload.name) {
@@ -56,7 +56,8 @@ exports.authenticate = function(AuthObj, callback) {
                             profile_pic : payload.picture,
                             id : payload.sub,
                             timestamp : payload.exp,
-                            provider : 'google'
+                            provider : 'google',
+                            token : AuthObj.tokenId
                         });
                         return;
                     }

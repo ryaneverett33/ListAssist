@@ -48,17 +48,42 @@ router.post('/login', function(req, res, next) {
                 /*res.setHeader("content-type", "application/json");
                 res.send(200, "Authenticated: " + JSON.stringify(UserObj));
                 return;*/
+                /* UserObj : {
+                            name : full_name, email, profile_pic : url, id (google id),
+                            timestamp (expiration time), provider, token
+                        }*/
+                userManager.addUser(UserObj, function(token) {
+                    if (token !== null) {
+                        res.setHeader("content-type", "application/json");
+                        res.send(200, JSON.stringify({ token : token}));
+                        return;
+                    }
+                    else {
+                        //send failure
+                        res.setHeader("content-type", "application/json");
+                        res.send(400, JSON.stringify({error : "failed to addUser()"}));
+                        return;
+                    }
+                });
             }
             else {
                 res.setHeader("content-type", "application/json");
-                res.send(400, "Failed to Authenticate");
+                res.send(500, JSON.stringify({error : "Failed to Authenticate"}));
                 return;
             }
         });
     });
 });
 router.post('/logout', function(req, res, next) {
-    console.log("Called logout");
-    res.send("CALLED LOGOUT");
+    console.log("Called /logout");
+    res.setHeader("content-type", "application/json");
+    res.send(501, JSON.stringify({ error : "/user/logout not implemented yet"}));
+    return;
 });
+router.post('/get', function(req, res, next) {
+    console.log("Called user/get");
+    res.setHeader("content-type", "application/json");
+    res.send(501, JSON.stringify({ error : "/user/get not implemented yet"}));
+    return;
+})
 module.exports = router;
