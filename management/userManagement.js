@@ -54,8 +54,13 @@ exports.userExists = function(UserObj, callback) {
 //gets a user from the database from a given token
 //returns a User if successful, null if else 
 exports.getUser = function(token, callback) {
-    UserControl.getUser(tokens.token.id, function() {
-        callback();
+    if (tokens.token == null) {
+        callback(null);
+        return;
+    }
+    UserControl.getUser(tokens.token.id, function(User) {
+        callback(User);
+        return;
     });
 }
 //to get any user's basic info
@@ -64,5 +69,11 @@ exports.getUserInfo = function(id, callback) {
 }
 //remove token from 
 exports.logoutUser = function(token) {
-
+    if (tokens.token == null) {
+        return false;
+    }
+    else {
+        delete tokens.token;
+        return true;
+    }
 }

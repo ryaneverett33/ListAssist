@@ -1,7 +1,7 @@
 //describes a user in the database
-function user(name, listId, email, providerId, image, id) {
+function user(name, email, providerId, image, id) {
     this.name = name;
-    this.listId = listId;
+    //this.listId = listId;
     this.email = email;
     this.image = image;
     this.id = id;
@@ -11,7 +11,7 @@ function user(name, listId, email, providerId, image, id) {
         return this.name;
     }
     this.getListId = function() {
-        return this.listId;
+        return this.id;
     }
     this.getEmail = function() {
         return this.email;
@@ -19,4 +19,8 @@ function user(name, listId, email, providerId, image, id) {
     this.getId = function() {
         return this.id;
     }
+    this.getImage = function() {
+        return this.image;
+    }
 }
+exports.user = user;

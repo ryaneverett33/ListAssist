@@ -36,6 +36,12 @@ exports.isTimeStampExpired = function(timestamp) {
 }
 //Returns json if successful, null if else
 exports.toJson = function(body) {
+    console.log("toJson() of %s", body);
+    if (typeof body !== 'string') {
+        console.log("POSTY");
+        //handle postman AGAIN
+        return body;
+    }
     var json;
     try {
         json = JSON.parse(body);
