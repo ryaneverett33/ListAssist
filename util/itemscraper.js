@@ -7,7 +7,8 @@ var scrapeAmazonItem = function (url) {
       .get(url)
       .set({
         itemTitle: '#productTitle',
-        price: '#priceblock_ourprice'
+        price: '#priceblock_ourprice',
+        itemImg: '#landingImage@data-old-hires'
       })
       .data(item => {
         out = item;
@@ -20,5 +21,8 @@ var scrapeAmazonItem = function (url) {
       .error(reject);
   })
 }
+
+// debug code
+//scrapeAmazonItem('https://www.amazon.com/gp/product/B073ZK95P6').then(console.log);
 
 module.exports = scrapeAmazonItem;
