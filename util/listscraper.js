@@ -1,6 +1,5 @@
 var osmosis = require('osmosis');
 
-
 var scrapeAmazonList = function (url) {
   return new Promise((resolve, reject) => {
     let items = [];
@@ -34,10 +33,11 @@ var scrapeAmazonList = function (url) {
           price: parseFloat(items[i].price.substring(1))
         })
       }
-      
+
       resolve(ret);
     })
+    .error(reject);
   })
 }
 
-scrapeAmazonList('https://www.amazon.com/hz/wishlist/ls/Y3JW1PSZPW9N?&sort=default').then(data => console.log(data));
+module.exports = scrapeAmazonList;
