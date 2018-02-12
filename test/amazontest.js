@@ -26,6 +26,13 @@ it('throws an error when the item is invalid', function () {
     });
 })
 
+it('throws an error when the url is empty (item scraping)', function () {
+    scrapeAmazonItem('').catch(err => {
+        expect(err).to.exist;
+        done();
+    });
+})
+
 it('scrapes an amazon list', function () {
     this.timeout(10000);
     return scrapeAmazonList('https://www.amazon.com/hz/wishlist/ls/Y3JW1PSZPW9N?&sort=default').then(item => {
@@ -54,6 +61,13 @@ it('scrapes an amazon list', function () {
 
 it('throws an error when the list is invalid', function () {
     scrapeAmazonList('https://www.google.com').then(() => {}).catch(err => {
+        expect(err).to.exist;
+        done();
+    });
+})
+
+it('throws an error when the url is empty (list scraping)', function () {
+    scrapeAmazonList('').catch(err => {
         expect(err).to.exist;
         done();
     });
