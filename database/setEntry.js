@@ -1,7 +1,7 @@
 var pool = require('./connections.js');
 
 
-pool.initiate();
+//pool.initiate();
 /*setUser(3, "Jill", function(success) {
 	if (success) {
 		console.log("Huzzah and stuff");
@@ -16,7 +16,7 @@ setList(6, "user_id", 666, function(success) {
 	} else {
 		console.log("Well sugar");
 	}
-});*/
+});
 
 setItem(8, "name", "Gift2", function(success){
 	if (success) {
@@ -26,14 +26,21 @@ setItem(8, "name", "Gift2", function(success){
 	
 	}
 });
-
+*/
 
 /*
 changes a username value for a particular user
 id: int, primary key for database (unique identifier), so unchangable
 new_username: string, the column that we are changing
 */
-function setUser(id, new_username, callback) {
+exports.setUser = function setUser(id, new_username, callback) {
+	var len = new_username.length
+	if (len > 64 || len < 1) {
+		console.error("Username size must be between 1 and 64 characters");
+		callback(false);
+		return;
+	}
+
 	pool.connect(function(error, connection) {
 		//check for errors
 	    if (error) {
@@ -69,9 +76,15 @@ id: the list's id, unchangeable
 new_value: must be the same type as the column type
 Example: setList(21, name, "xmas items other than coal", function(success) {})
 */
-function setList(id, column, new_value, callback) {
+exports.setList = function setList(id, column, new_value, callback) {
 	//check for bad column inputs and new_value type (rest will be handled by sql error handlers)
 	if (column === "name") {
+		var len = new_value.length
+		if (len > 64 || len < 1) {
+			console.error("Username size must be between 1 and 64 characters");
+			callback(false);
+			return;
+		}
 	    query_string = 'UPDATE Lists SET name=? WHERE id=?;';
 	    //type check
 	    if (!(typeof new_value === 'string') && !(new_value instanceof String)) {
@@ -126,7 +139,7 @@ id: the items's id, unchangeable
 new_value: must be the same type as the column type
 Example: setItem(21, purchased, 1, function(success) {})
 */
-function setItem(id, column, new_value, callback) {
+exports.setItem = function setItem(id, column, new_value, callback) {
 	//check for bad column inputs and new_value type (rest will be handled by sql error handlers)
 	//must be done this way because sql doesn't like quotes around the column values
 	var query_string;
@@ -159,6 +172,12 @@ function setItem(id, column, new_value, callback) {
 	    	console.log("picture_url must be a string.");
 	    	return;
 	    }
+	    var len = new_value.length
+		if (len > 64 || len < 1) {
+			console.error("Username size must be between 1 and 64 characters");
+			callback(false);
+			return;
+		}
 	} else {
 	    if (!(typeof new_value === 'number')) {
 			console.log("user_id must be a number");
