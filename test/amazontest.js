@@ -56,13 +56,13 @@ describe('amazon item scraper', () => {
 		}).catch(err => {});
 	})
 
-	it('throws an error when the list is invalid', function () {
-		scrapeAmazonList('https://www.google.com').then(() => {}).catch(err => {
+	it('throws an error when the list is invalid', function (done) {
+		scrapeAmazonList('https://www.google.com').then(() => { }).catch(err => {
 			expect(err).to.exist;
 			done();
 		});
 
-		it('throws an error when the url is empty (item scraping)', function () {
+		it('throws an error when the url is empty (item scraping)', function (done) {
 			scrapeAmazonItem('').catch(err => {
 				expect(err).to.exist;
 				done();
@@ -98,14 +98,14 @@ describe('amazon list scraper', () => {
 		}).catch(err => {});
 	})
 
-	it('throws an error when the list is invalid', function () {
+	it('throws an error when the list is invalid', function (done) {
 		scrapeAmazonList('https://www.google.com').then(() => {}).catch(err => {
 			expect(err).to.exist;
 			done();
 		});
 	})
 
-	it('throws an error when the url is empty (list scraping)', function () {
+	it('throws an error when the url is empty (list scraping)', function (done) {
 		scrapeAmazonList('').catch(err => {
 			expect(err).to.exist;
 			done();

@@ -21,6 +21,7 @@ router.post('/login', function(req, res, next) {
             return;
         }
         var json = helpers.toJson(body);
+        console.log(json.tokenId);
         if (json == null) {
             res.status(400).send(JSON.stringify({ error: "Bad JSON" }));
             return;
@@ -85,7 +86,7 @@ router.post('/logout', function(req, res, next) {
             return;
         }
         var token = json.token;
-        if (token === null) {
+        if (token == null) {
             res.status(400).send(JSON.stringify({ error: "Invalid Arguments, no token supplied" }));
             return;
         }

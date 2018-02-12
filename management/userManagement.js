@@ -54,6 +54,7 @@ exports.userExists = function(UserObj, callback) {
 //gets a user from the database from a given token
 //returns a User if successful, null if else 
 exports.getUser = function(token, callback) {
+    console.log(tokens.token);
     if (tokens.token == null) {
         callback(null);
         return;
