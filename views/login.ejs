@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>List Assist - Sign in</title>
+
+		<meta name="google-signin-client_id" content="1032367753855-k81843peclct63utjvcb4e95vu74icsp.apps.googleusercontent.com">
+		<link rel='stylesheet' href='/stylesheets/style.css' />
+	</head>
+	<body>
+		<script src="https://apis.google.com/js/platform.js" async defer></script>
+		<script>
+			function onSignIn(googleUser) {
+				var profile = googleUser.getBasicProfile();
+				console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+				console.log('Name: ' + profile.getName());
+				console.log('Image URL: ' + profile.getImageUrl());
+				console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+			}
+		</script>
+
+		<h1>List Assist sign in</h1>
+		<div class="g-signin2" data-onsuccess="onSignIn"></div>
+
+	</body>
+</html>
