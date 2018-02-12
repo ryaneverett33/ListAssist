@@ -7,18 +7,26 @@ var scrapeAmazonItem = function (url) {
       .get(url)
       .set({
         itemTitle: '#productTitle',
-        price: '#priceblock_ourprice'
+        price: '#priceblock_ourprice',
+        itemImg: '#landingImage@data-old-hires'
       })
       .data(item => {
         out = item;
       })
       .done(() => {
-        out.price = Number.parseFloat(out.price.substring(1));
+        if (!out || !out.itemTitle || !out.price || !out.itemImg) {
+          reject('Item Not found');
+        }
+        if (out.price) 
+          out.price = Number.parseFloat(out.price.substring(1));
         out.link = url;
         resolve(out);
       })
       .error(reject);
   })
 }
+
+// debug code
+// scrapeAmazonItem('https://www.amazon.com/gp/product/B073ZK95P6').then(console.log);
 
 module.exports = scrapeAmazonItem;

@@ -40,4 +40,7 @@ var scrapeAmazonList = function (url) {
   })
 }
 
+// Debug code
+// scrapeAmazonList('https://www.amazon.com/hz/wishlist/ls/Y3JW1PSZPW9N?&sort=default').then(console.log);
+
 module.exports = scrapeAmazonList;
