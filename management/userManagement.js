@@ -28,6 +28,10 @@ exports.init = function() {
 //if fails to add, return null
 //callback(token|null)
 exports.addUser = function(UserObj, callback) {
+    if(callback == null) {
+        console.error("callback function is null");
+        return;
+    }
     UserControl.putUser(UserObj, function(id) {
         if (id !== 0) {
             //tokens.token = UserObj;
