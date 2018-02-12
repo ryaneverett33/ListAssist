@@ -1,11 +1,15 @@
 var chai = require('chai');
+var expect = require('chai').expect;
 var chaiHttp = require('chai-http');
 
 var app = require('../app');
 
 chai.use(chaiHttp);
 
-it('shows the homepage', function () { // <= Pass in done callback
+/*
+    HTTP Tests
+*/
+it('shows the homepage', function (done) { // <= Pass in done callback
     chai.request(app)
         .get('/')
         .end(function (err, res) {
