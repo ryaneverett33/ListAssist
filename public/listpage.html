@@ -54,7 +54,12 @@ function displayChoice (evt, option) {
   for (i = 0; i < tablinks.length; i++) {
       tablinks[i].className = tablinks[i].className.replace(" active", "");
   }
-  document.getElementById(option).style.display = "block";
+  if (document.getElementById(option) === null) {
+
+  }
+  else {
+    document.getElementById(option).style.display = "block";
+  }
   evt.currentTarget.className += " active";
 }
 
