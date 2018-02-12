@@ -1,0 +1,115 @@
+<html lang = "en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+  <button id = "addList" data-toggle="modal" data-target="#AddListModal">Add List</button>
+
+  <div class="sidebar" id="sideLists">
+    <button class = "tablinks" id = "tab5" onclick = "displayChoice(event,'TestTab')">Home</button>
+    <button class = "tablinks" id = "tab2" onclick = "displayChoice(event,'AddAdmin')">Add Admin User</button>
+    </div>
+
+    <div id = "TestTab" class="tabcontent">
+    <label>Testing one Tab </label>
+    </div>
+
+<div class="modal fade" id="AddListModal" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title">List Name</h2>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="remove-jobs-too">
+        Name: <input id="listName" class="my-input"></br></br>
+      </div>
+      <div class="modal-footer">
+        <button id="addList" class = "update" onclick="addList()" data-dismiss="modal">Create List!</button>
+      </div>
+    </div>
+  </div>
+ </div>
+
+<script>
+function displayChoice (evt, option) {
+  var tabcontent = document.getElementsByClassName("tabcontent");
+    document.getElementById("TestTab").style.display = "none";
+  //get all elements whose clas name is tabcontent and hide them
+  // console.log(tabcontent[i].id);
+  var i;
+  for(i = 0;i < tabcontent.length;i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(option).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+
+function addList() {
+  if (document.getElementById("listName").value === "") {
+    console.log("error in list name");
+  }
+  else if (document.getElementById("listName").value === null) {
+    console.log("error in list name");
+  }
+  else {
+    var myButton = document.createElement("input");
+    myButton.type = "button";
+    var value = document.getElementById("listName").value;
+    myButton.value = value;
+    myButton.id = value;
+    myButton.className = "tablinks";
+    myButton.onclick = function(){ displayChoice(event,value); } ;
+    var placeHolder = document.getElementById("sideLists");
+    placeHolder.appendChild(myButton);
+  }
+}
+</script>
+
+<style>
+.sidebar {
+  width: 20%;
+  height: 100%;
+  float: left;
+  padding-bottom: 100%;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+div.sidebar button {
+    display: block;
+    background-color: inherit;
+    color: black;
+    padding: 22px 16px;
+    width: 100%;
+    border: none;
+    outline: none;
+    text-align: left;
+    cursor: pointer;
+    /*transition: 0.3s;*/
+}
+
+/* Change background color of buttons on hover */
+ div.sidebar button:hover {
+    background-color: #ddd;
+}
+
+div.sidebar button.active {
+    background-color: #ccc;
+}
+</style>
+
+</body>
+</html>
