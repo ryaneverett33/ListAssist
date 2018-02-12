@@ -5,7 +5,7 @@ var app = require('../app');
 
 chai.use(chaiHttp);
 
-it('shows the homepage', function () { // <= Pass in done callback
+it('shows the homepage', function (done) { // <= Pass in done callback
     chai.request(app)
         .get('/')
         .end(function (err, res) {
