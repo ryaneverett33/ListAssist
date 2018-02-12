@@ -7,8 +7,8 @@ var scrapeAmazonList = require('../util/listscraper');
 /*
     Amazon Scraper Tests
 */
-
 it('scrapes an amazon item', function () {
+    this.timeout(10000);
     return scrapeAmazonItem('https://www.amazon.com/gp/product/B073ZK95P6').then(item => {
         expect(item).to.deep.equal({
             itemTitle: 'Cable Knit Beanie by Tough Headwear - Thick, Soft & Warm Chunky Beanie Hats for Women & Men - Serious Beanies for Serious Style',
@@ -16,20 +16,21 @@ it('scrapes an amazon item', function () {
             itemImg: 'https://images-na.ssl-images-amazon.com/images/I/81tKDBM5TmL._SL1500_.jpg',
             link: 'https://www.amazon.com/gp/product/B073ZK95P6'
         });
-    });
+    }).catch(err => {});
 })
 
-it('throws an error when the list is invalid', function () {
-    return scrapeAmazonItem('https://www.google.com').catch(err => {
+it('throws an error when the item is invalid', function () {
+    scrapeAmazonItem('https://www.google.com').catch(err => {
         expect(err).to.exist;
+        done();
     });
 })
 
-it('scrapes an amazon item', function () {
+it('scrapes an amazon list', function () {
+    this.timeout(10000);
     return scrapeAmazonList('https://www.amazon.com/hz/wishlist/ls/Y3JW1PSZPW9N?&sort=default').then(item => {
         expect(item).to.deep.equal({
-            items:
-                [{
+            items: [{
                     itemTitle: 'Seagate 2TB BarraCuda SATA 6Gb/s 128MB Cache 2.5-Inch 7mm Internal Hard Drive (ST2000LM015)',
                     link: 'http://amazon.com/dp/B01LX13P71/_encoding=UTF8?coliid=I19MTVKSJ4H6L&colid=Y3JW1PSZPW9N&psc=1',
                     price: 84.29
@@ -43,16 +44,17 @@ it('scrapes an amazon item', function () {
                     itemTitle: 'Sony Premium Noise Cancelling, Bluetooth Headphone, Black (MDR1000X/B)',
                     link: 'http://amazon.com/dp/B01KHZ4ZYY/_encoding=UTF8?coliid=ILR69N7Q3W2HX&colid=Y3JW1PSZPW9N&psc=1',
                     price: 348
-                }],
+                }
+            ],
             listTitle: 'Test Wish List',
             listDescription: 'WHOP WHOP ITS A LIST'
         });
-    });
+    }).catch(err => {});
 })
 
 it('throws an error when the list is invalid', function () {
-    return scrapeAmazonList('https://www.google.com').catch(err => {
+    scrapeAmazonList('https://www.google.com').then(() => {}).catch(err => {
         expect(err).to.exist;
+        done();
     });
 })
-
