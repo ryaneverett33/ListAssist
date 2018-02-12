@@ -53,11 +53,23 @@ exports.addUser = function(UserObj, callback) {
 //checks if the user exists in the database
 //
 exports.userExists = function(UserObj, callback) {
+    if(UserObj == null) {
+        console.error("user object is null");
+        return;
+    }
+    if(callback = null) {
+        console.error("callback is null");
+        return;
+    }
 
 }
 //gets a user from the database from a given token
 //returns a User if successful, null if else 
 exports.getUser = function(token, callback) {
+    if(callback == null) {
+        console.error("callback is null");
+        return;
+    }
     if (tokens.token == null) {
         callback(null);
         return;
@@ -69,6 +81,14 @@ exports.getUser = function(token, callback) {
 }
 //to get any user's basic info
 exports.getUserInfo = function(id, callback) {
+    if(id == null) {
+        console.error("id is null");
+        return;
+    }
+    if(callback == null) {
+        console.error("callback is null");
+        return;
+    }
 
 }
 //remove token from 
