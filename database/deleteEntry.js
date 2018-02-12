@@ -1,6 +1,6 @@
 var pool = require('./connections.js');
 
-pool.initiate();
+//pool.initiate();
 
 
 deleteUser(1, function(success) {

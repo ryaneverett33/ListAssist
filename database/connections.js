@@ -1,12 +1,5 @@
 var mysql = require('mysql');
-db = require("sequelize-tools").db
-
-
 var pool;  //connection pool for faster querying
-
-db.init(function() {
-  // successfully connected, authenticated, synced
-});
 
 //creates pool, must be called before any other database related function 
 exports.initiate_test = function() {
