@@ -14,7 +14,11 @@ var scrapeAmazonItem = function (url) {
         out = item;
       })
       .done(() => {
-        out.price = Number.parseFloat(out.price.substring(1));
+        if (!out || !out.itemTitle || !out.price || !out.itemImg) {
+          reject('Item Not found');
+        }
+        if (out.price) 
+          out.price = Number.parseFloat(out.price.substring(1));
         out.link = url;
         resolve(out);
       })
