@@ -15,10 +15,45 @@
 				console.log('Name: ' + profile.getName());
 				console.log('Image URL: ' + profile.getImageUrl());
 				console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+
+				var xhr = new XMLHttpRequest();
+				xhr.open("POST", "/user/login");
+				xhr.onload = function() {
+					console.log(this.responseText)
+				}
+				xhr.send(JSON.stringify({
+					tokenId : googleUser.getAuthResponse().id_token,
+					provider : 'google',
+					name : profile.getName(),
+					email : profile.getEmail()
+				}));
+
+				/*var data = {};
+				data["tokenId"] = googleUser.getAuthResponse().id_token;
+				data["provider"] = "google";
+				data["name"] = profile.getName();
+				data["email"] = profile.getEmail();
+				data = JSON.stringify(data);
+
+				console.log(data);
+
+				var xhr = new XMLHttpRequest();
+				xhr.open("POST", "/user/login");
+				//xhr.open("POST", "https://listassist.duckdns.org/user/login");
+				xhr.onload = function() {
+					console.log(this.responseText);
+					if(xhr.status == 200) {
+						console.log("We logged in bois");
+					}
+					else {
+						console.log("Get wit it");
+					}
+				};
+				xhr.send(data);*/
 			}
 		</script>
 
-		<h1>List Assist sign in</h1>
+		<h1>List Assist Sign In</h1>
 		<div class="g-signin2" data-onsuccess="onSignIn"></div>
 
 	</body>
