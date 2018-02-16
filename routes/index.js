@@ -7,7 +7,7 @@ router.get('/', function(req, res, next) {
   
   //serve the login page
   //res.render('login');
-  res.render('listExample');
+  res.render('itemsExample');
 });
 
 module.exports = router;
