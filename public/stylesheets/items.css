@@ -1,0 +1,25 @@
+body {
+	margin: auto;
+	margin-top: 10px;
+	width: 1200px;
+}
+
+.col {
+    padding: 10px;
+}
+
+h1 {
+    padding-left: 10px;
+}
+
+#addItemButton {
+    margin-right: 10px;
+}
+
+#radioControl {
+    margin-bottom: 20px;
+}
+
+#shareListButton {
+    margin-right: 10px;
+}

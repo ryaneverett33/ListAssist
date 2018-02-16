@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>List Assist</title>
+		<link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
+		<link rel='stylesheet' href='/stylesheets/items.css' />
+	</head>
+<body>
+	<script src="jquery-3.3.1.min.js"></script>
+	<script src="bootstrap.bundle.min.js"></script>
+	<script src="items.js"></script>
+
+	<!-- New item modal -->
+	<div class="modal fade" id="addItemModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">New item</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form>
+						<div id="radioControl">
+							<div class="custom-control custom-radio">
+								<input type="radio" id="customRadio" name="customRadio" class="custom-control-input" checked="">
+								<label class="custom-control-label active" for="customRadio">Custom</label>
+							</div>
+							<div class="custom-control custom-radio">
+								<input type="radio" id="byLinkRadio" name="customRadio" class="custom-control-input">
+								<label class="custom-control-label" for="byLinkRadio">By Amazon link</label>
+							</div>
+						</div>
+						<div id="customFields">
+							<div class="form-group">
+								<label for="addItemNameField">Name</label>
+								<input type="text" class="form-control" id="addItemNameField">
+							</div>
+							<div class="form-group">
+								<label for="addItemDescriptionField">Description</label>
+								<input type="text" class="form-control" id="addItemDescriptionField">
+							</div>
+							<div class="form-group">
+								<label for="addItemImageField">Image</label>
+								<input type="text" class="form-control" id="addItemImageField" placeholder="http://">
+							</div>
+						</div>
+						<div id="byLinkFields" style="display: none">
+							<div class="form-group">
+								<label for="addItemLinkField">Link</label>
+								<input type="text" class="form-control" id="addItemLinkField" placeholder="http://">
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary" id="addItemModalButton">Add</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Edit item modal -->
+	<div class="modal fade" id="editItemModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Edit item</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form>
+						<div class="form-group">
+							<label for="editItemNameField">Name</label>
+							<input type="text" class="form-control" id="editItemNameField">
+						</div>
+						<div class="form-group">
+							<label for="editItemDescriptionField">Description</label>
+							<input type="text" class="form-control" id="editItemDescriptionField">
+						</div>
+						<div class="form-group">
+							<label for="editItemImageField">Image</label>
+							<input type="text" class="form-control" id="editItemImageField" placeholder="http://">
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger mr-auto">Remove</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary">Save changes</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Share list modal -->
+	<div class="modal fade" id="shareListModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Share list</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="shareItemField">Link</label>
+						<input type="text" class="form-control" id="shareItemField">
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Main content -->
+	<button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#addItemModal" id="addItemButton">Add item</button>
+	<button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#shareListModal" id="shareListButton">Share</button>
+	<h1>List Title</h1>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col">
+				<div class="card">
+					<img class="card-img-top" src="defaultItem.png">
+					<div class="card-body">
+						<h5 class="card-title">Item Title</h5>
+						<p class="card-text">Description</p>
+						<button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#editItemModal">Edit</button>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="card">
+					<img class="card-img-top" src="defaultItem.png">
+					<div class="card-body">
+						<h5 class="card-title">Item title</h5>
+						<p class="card-text">Description</p>
+						<a href="#" class="btn btn-outline-primary btn-sm">Edit</a>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="card">
+					<img class="card-img-top" src="defaultItem.png">
+					<div class="card-body">
+						<h5 class="card-title">Item title</h5>
+						<p class="card-text">Description</p>
+						<a href="#" class="btn btn-outline-primary btn-sm">Edit</a>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="card">
+					<img class="card-img-top" src="defaultItem.png">
+					<div class="card-body">
+						<h5 class="card-title">Item title</h5>
+						<p class="card-text">Description</p>
+						<a href="#" class="btn btn-outline-primary btn-sm">Edit</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<div class="card">
+					<img class="card-img-top" src="defaultItem.png">
+					<div class="card-body">
+						<h5 class="card-title">Item title</h5>
+						<p class="card-text">Description</p>
+						<a href="#" class="btn btn-outline-primary btn-sm">Edit</a>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="card">
+					<img class="card-img-top" src="defaultItem.png">
+					<div class="card-body">
+						<h5 class="card-title">Item title</h5>
+						<p class="card-text">Description</p>
+						<a href="#" class="btn btn-outline-primary btn-sm">Edit</a>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="card">
+					<img class="card-img-top" src="defaultItem.png">
+					<div class="card-body">
+						<h5 class="card-title">Item title</h5>
+						<p class="card-text">Description</p>
+						<a href="#" class="btn btn-outline-primary btn-sm">Edit</a>
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="card">
+					<img class="card-img-top" src="defaultItem.png">
+					<div class="card-body">
+						<h5 class="card-title">Item title</h5>
+						<p class="card-text">Description</p>
+						<a href="#" class="btn btn-outline-primary btn-sm">Edit</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
