@@ -97,8 +97,32 @@
 		</div>
 	</div>
 
+	<!-- Share list modal -->
+	<div class="modal fade" id="shareListModal" tabindex="-1" role="dialog">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Share list</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label for="shareItemField">Link</label>
+						<input type="text" class="form-control" id="shareItemField">
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<!-- Main content -->
 	<button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#addItemModal" id="addItemButton">Add item</button>
+	<button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#shareListModal" id="shareListButton">Share</button>
 	<h1>List Title</h1>
 	<div class="container-fluid">
 		<div class="row">

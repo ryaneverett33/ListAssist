@@ -7,6 +7,8 @@ router.get('/', function(req, res, next) {
   
   //serve the login page
   //res.render('login');
+
+  //serve the items page
   res.render('itemsExample');
 });
 
