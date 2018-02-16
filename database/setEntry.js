@@ -89,6 +89,8 @@ exports.setList = function setList(id, column, new_value, callback) {
 	    //type check
 	    if (!(typeof new_value === 'string') && !(new_value instanceof String)) {
 	    	console.log("name must be a string.");
+	    	callback(false);
+
 	    	return;
 	    }
 	}
@@ -98,10 +100,13 @@ exports.setList = function setList(id, column, new_value, callback) {
 		if (!(typeof new_value === 'number')) {
 			console.log(typeof new_value)
 			console.log("user_id must be a number");
+			callback(false);
+
 			return;
 		}
 	} else {
 		console.log("You must put either 'name' or 'user_id' for column value.");
+		callback(false);
 		return;
 	}
 
@@ -163,6 +168,7 @@ exports.setItem = function setItem(id, column, new_value, callback) {
 
 	} else {
 		console.log("You must enter in a valid column.");
+		callback(false);
 		return;
 	}
 
@@ -170,6 +176,7 @@ exports.setItem = function setItem(id, column, new_value, callback) {
 	if (column === "name" || column === "picture_url" || column === "buyer") {
 	    if (!(typeof new_value === 'string') && !(new_value instanceof String)) {
 	    	console.log("picture_url must be a string.");
+	    	callback(false);
 	    	return;
 	    }
 	    var len = new_value.length
@@ -181,6 +188,7 @@ exports.setItem = function setItem(id, column, new_value, callback) {
 	} else {
 	    if (!(typeof new_value === 'number')) {
 			console.log("user_id must be a number");
+			callback(false);
 			return;
 		}
 	}
