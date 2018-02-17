@@ -5,7 +5,7 @@ var cleaner = require('../database/./cleanDatabase.js');
 
 global.expect = chai.expect;
 
-describe('setUserDatabasae', function() {
+describe('setUserDatabase', function() {
 	this.timeout(15000);
 	
 	before(function(done) {
@@ -23,31 +23,36 @@ describe('setUserDatabasae', function() {
 	});
 
 	it('set user 11 name to number', function(done) {
-		setUser(11, 123, function(success) {
+		setter.setUser(11, 123, function(success) {
 			expect(success).to.be.true;
+			done();
 		});
 	});
 
 	it('set user 11 name to new name', function(done) {
-		setUser(11, "new name", function(success) {
+		setter.setUser(11, "new name", function(success) {
 			expect(success).to.be.true;
+			done();
 		});
 	});
 
 	it('set user 11 name to new invalid name', function(done) {
-		setUser(11, "", function(success) {
+		setter.setUser(11, "", function(success) {
 			expect(success).to.be.false;
+			done();
+
 		});
 	});
 
 	it('set user 11 name to new invalid name (too large)', function(done) {
 		var sixty_five = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-		setUser(11, sixty_five, function(success) {
+		setter.setUser(11, sixty_five, function(success) {
 			expect(success).to.be.false;
+			done();
+
 		});
 	});
 });
-
 
 describe('setListDatabase', function() {
 	this.timeout(15000);
@@ -57,8 +62,8 @@ describe('setListDatabase', function() {
 				cleaner.cleanItems(function() {
 					creator.createUser(11, "family", function(success) {
 						creator.createUser(111, "matters", function(success) {
-							creator.createList(111, "list 2", 33, function(success) {
-								creator.createList(11, "list 1", 10, function(success) {
+							creator.createList(111, "list 2", "desc", 33, function(success) {
+								creator.createList(11, "list 1", "Desc", 10, function(success) {
 									done();						
 								});
 							});
@@ -72,39 +77,44 @@ describe('setListDatabase', function() {
 	//name, user id
 	//id, column, new_value, callback
 	it('set list 33 to new name', function(done) {
-		setList(33, "name", "list 99", function(success) {
+		setter.setList(33, "name", "list 99", function(success) {
 			expect(success).to.be.true;
+			done();
 		});
 	});
 
 	it('set list 33 to new user_id', function(done) {
-		setList(33, "name", 11, function(success) {
+		setter.setList(33, "user_id", 11, function(success) {
 			expect(success).to.be.true;
+			done();
 		});
 	});
 
 	it('set list 33 to invalid name', function(done) {
-		setList(33, "name", "", function(success) {
-			expect(success).to.be.true;
+		setter.setList(33, "name", "", function(success) {
+			expect(success).to.be.false;
+			done();
 		});
 	});
 
 	it('set list 33 to invalid name', function(done) {
-		setList(33, "name", 77, function(success) {
-			expect(success).to.be.true;
+		setter.setList(33, "name", 77, function(success) {
+			expect(success).to.be.false;
+			done();
 		});
 	});
 
 	it('set list 33 to invalid user_id', function(done) {
-		setList(33, "user_id", "lkj", function(success) {
-			expect(success).to.be.true;
+		setter.setList(33, "user_id", "lkj", function(success) {
+			expect(success).to.be.false;
+			done();
 		});
 	});
 
 });
 
 
-describe('setListDatabase', function() {
+describe('setItemDatabase', function() {
 	this.timeout(15000);
 	before(function(done) {
 		cleaner.cleanUsers(function() {
@@ -112,10 +122,11 @@ describe('setListDatabase', function() {
 				cleaner.cleanItems(function() {
 					creator.createUser(11, "family", function(success) {
 						creator.createUser(111, "matters", function(success) {
-							creator.createList(111, "list 2", 33, function(success) {
-								creator.createList(11, "list 1", 10, function(success) {
+							creator.createList(111, "list 2", "desc", 33, function(success) {
+								creator.createList(11, "list 1", "desc", 10, function(success) {
 									creator.createItem("an item", "www.picture.com", "Ronald McDonald", 1, 11, 100, function(success) {
-										done();						
+										done();	
+									});					
 								});
 							});
 						});
@@ -129,38 +140,44 @@ describe('setListDatabase', function() {
 	//buyer (string), purchased (int, 0 if false), list_id (int)
 
 	it('set item to valid ', function(done) {
-		setItem(100, "name", "ok", function(success) {
+		setter.setItem(100, "name", "ok", function(success) {
 			expect(success).to.be.true;
+			done();
 		});
 	});
 
 	it('set item name to be invalid ', function(done) {
-		setItem(100, "name", "", function(success) {
+		setter.setItem(100, "name", "", function(success) {
 			expect(success).to.be.false;
+			done();
 		});
 	});
 
 	it('set item  picture_url to be invalid', function(done) {
-		setItem(100, "picture_url", "", function(success) {
+		setter.setItem(100, "picture_url", "", function(success) {
 			expect(success).to.be.false;
+			done();
 		});
 	});
 
 	it('set item  buyer to be invalid', function(done) {
-		setItem(100, "buyer", 99, function(success) {
+		setter.setItem(100, "buyer", 99, function(success) {
 			expect(success).to.be.false;
+			done();
 		});
 	});
 
 	it('set item  list_id to be invalid', function(done) {
-		setItem(100, "list_id", "string", function(success) {
+		setter.setItem(100, "list_id", "string", function(success) {
 			expect(success).to.be.false;
+			done();
 		});
 	});
 
 	it('set item buyer to be invalid', function(done) {
-		setItem(100, "buyer", 99, function(success) {
+		setter.setItem(100, "buyer", 99, function(success) {
 			expect(success).to.be.false;
+			done();
 		});
 	});
 });

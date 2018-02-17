@@ -1,41 +1,5 @@
 var pool = require('./connections.js');
 
-//pool.initiate();
-
-/*
-createUser(1, "Will", function(success) {
-	if (success) {
-		console.log("success!");
-	} else {
-		console.log("failure.");
-	}
-});
-
-createUser(666, "Phil", function(success) {
-	if (success) {
-		console.log("success!");
-	} else {
-		console.log("failure.");
-	}
-});
-
-createList(1, "Will's list", function(success) {
-	if (success) {
-		console.log("success!");
-	} else {
-		console.log("failure.");
-	}
-});
-
-
-createItem("item2", "www.picture2.com", "Fantasia", 1, 4, function(success) {
-	if (success) {
-		console.log("success!");
-	} else {
-		console.log("failure.");
-	}
-});
-*/
 
 /*
 Upon success, this function adds a user row in the database
@@ -79,23 +43,42 @@ exports.createUser = function createUser(id, name, callback) {
 /*
 Upon success, this function adds a list row in the database
 id: int, name: string
+list_id: option to create list with custom id (used for testing purposes)
+		 set to null to ignore this option
+name: name of list
+description: can be null, descpition of list
 callback function returns a boolean value
 */
-exports.createList = function createList(id, name, list_id, callback) {
+exports.createList = function createList(id, name, description, list_id, callback) {
 	pool.connect(function(error, connection) {
 		//check for errors
+		if (!(typeof name === 'string') && !(name instanceof String)) {
+			console.error("name must be a string");
+			callback(false);
+			return;
+		}
+		if (!(typeof description === 'string') && !(description instanceof String)) {
+			console.error("description must be a string");
+			callback(false);
+			return;
+		}
+		if (name.length < 1 || description.length < 1) {
+			console.error("string lengths must be > 0");
+			callback(false);
+			return;
+		}
+
+
 	    if (error) {
 	      console.error("Error adding list to database: %s", error);
 	      callback(false);
 	      return;
 	    }
 	    else {
-
 	    	if (list_id == null) {
-
-		    	//query the database to add a new list
-		    	var query_string = 'INSERT INTO Lists VALUES (NULL,?,?);';
-		    	connection.query(query_string, [name, id], function(error2, results, fields) {
+		    	//query the database to add a new list with an auto_incremented id
+		    	var query_string = 'INSERT INTO Lists VALUES (NULL,?,?,?);';
+		    	connection.query(query_string, [name, id, description], function(error2, results, fields) {
 			        if (error2) {
 						console.error("An error occured adding list to database: %s", error2);
 						callback(false);
@@ -108,10 +91,9 @@ exports.createList = function createList(id, name, list_id, callback) {
 			        }
 		    	});
 	    	} else {
-	    		//query the database to add a new list
-
-		    	var query_string = 'INSERT INTO Lists VALUES (?,?,?);';
-		    	connection.query(query_string, [list_id, name, id], function(error2, results, fields) {
+	    		//query the database to add a new list with a specific id
+		    	var query_string = 'INSERT INTO Lists VALUES (?,?,?,?);';
+		    	connection.query(query_string, [list_id, name, id, description], function(error2, results, fields) {
 			        if (error2) {
 						console.error("An error occured adding list to database: %s", error2);
 						callback(false);
@@ -124,10 +106,6 @@ exports.createList = function createList(id, name, list_id, callback) {
 			        }
 		    	});
 	    	}
-
-
-
-
 	    }
   	});
 }
@@ -135,7 +113,9 @@ exports.createList = function createList(id, name, list_id, callback) {
 /*
 Upon success, this function adds an item row in the database
 name: string, picture_url: string, buyer: string, purchased: int (0 if false), list_id: int
-//NOTE: picture_url, buyer, and purchased can be null
+//NOTE: picture_url, buyer, item_id and purchased can be null
+item_id: option to create id with custom id (used for testing purposes)
+		 set to null to ignore this option
 callback function returns a boolean value
 */
 exports.createItem = function createItem(name, picture_url, buyer, purchased, list_id, item_id, callback) {
