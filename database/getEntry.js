@@ -176,7 +176,3 @@ exports.getLists = function getLists(user_id, callback) {
 	});
 	      
 }
-
-module.exports.getUser = getUser;
-module.exports.getItems = getItems;
-module.exports.getLists = getLists;

@@ -32,6 +32,7 @@ router.get('/', function(req, res, next) {
 
   //serve the items page
   res.render('itemsExample');
+  //<object hidden id="listid" value='<%= listid %>'></object>
 });
 
 module.exports = router;
