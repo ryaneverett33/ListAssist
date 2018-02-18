@@ -5,7 +5,7 @@ function user(name, email, providerId, image, id) {
     this.email = email;
     this.image = image;
     this.id = id;
-    this.providerId = providerId;
+    //this.providerId = providerId;
     //other info
     this.getName = function() {
         return this.name;

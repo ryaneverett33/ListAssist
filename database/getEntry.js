@@ -53,14 +53,14 @@ exports.getUser = function getUser(user_id, callback) {
 	    	//query the database to add a new user
 	    	connection.query('SELECT * FROM Users WHERE id=?;', [user_id], function(error2, results, fields) {
 		        if (error2) {
-					console.error("An error occured getting user from database: %s", error2);
-					callback(false);
-					pool.disconnect(connection);
-					return;
+							console.error("An error occured getting user from database: %s", error2);
+							callback(false);
+							pool.disconnect(connection);
+							return;
 		        } else {
-					callback(results);
-					pool.disconnect(connection);
-					return;
+							callback(results);
+							pool.disconnect(connection);
+							return;
 		        }
 	      });
 	    }
@@ -177,3 +177,6 @@ exports.getLists = function getLists(user_id, callback) {
 	      
 }
 
+module.exports.getUser = getUser;
+module.exports.getItems = getItems;
+module.exports.getLists = getLists;
