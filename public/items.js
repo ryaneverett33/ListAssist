@@ -1,5 +1,6 @@
 $(document).ready(function() {
 	var itemsCount = 8;
+	var currentItemCard;
 
 	$("#customRadio").click(function() {
 		$("#customFields").show();
@@ -11,6 +12,7 @@ $(document).ready(function() {
 		$("#customFields").hide();
 	});
 
+	//this is the add item button on the page
 	$("#addItemButton").click(function() {
 		//clear inputs
 		$("#addItemNameField").val("");
@@ -19,6 +21,7 @@ $(document).ready(function() {
 		$("#addItemLinkField").val("");
 	});
 
+	//this is the add item button on the new item modal
 	$("#addItemModalButton").click(function() {
 		var name;
 		var description;
@@ -48,7 +51,7 @@ $(document).ready(function() {
 					<div class="card-body">
 						<h5 class="card-title">` + name + `</h5>
 						<p class="card-text">` + description + `</p>
-						<button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#editItemModal">Edit</button>
+						<button type="button" class="btn btn-outline-primary btn-sm editItemButton" data-toggle="modal" data-target="#editItemModal">Edit</button>
 					</div>
 				</div>
 			</div>`;
@@ -63,5 +66,49 @@ $(document).ready(function() {
 		}
 
 		itemsCount++;
+
+		//reassign the click event listeners on the edit item buttons
+		assignEditItemButtonFunctionality();
+
+		//update the backend with the new item...
+		
 	}
+
+	//this is the saves changes button on the edit item modal
+	$("#editItemSaveChangesButton").click(function() {
+		var name = $("#editItemNameField").val();
+		var description = $("#editItemDescriptionField").val();
+		var image = $("#editItemImageField").val();
+
+		currentItemCard.find(".card-body .card-title").text(name);
+		currentItemCard.find(".card-body .card-text").text(description);
+		currentItemCard.find(".card-img-top").attr("src", image);
+
+		//update the backend with the new item information...
+
+
+		//close the modal
+		$("#editItemModal").modal("toggle");
+	});
+
+	var assignEditItemButtonFunctionality = function() {
+		$(".editItemButton").off();
+
+		//this is the edit item button on each of the item entries
+		$(".editItemButton").click(function () {
+			var card = $(event.target).parent().parent();
+			currentItemCard = card;
+
+			var name = card.find(".card-body .card-title").text();
+			var description = card.find(".card-body .card-text").text();
+			var image = card.find(".card-img-top").attr("src");
+
+			$("#editItemNameField").val(name);
+			$("#editItemDescriptionField").val(description);
+			$("#editItemImageField").val(image);
+		});
+	}
+	assignEditItemButtonFunctionality();
+
+
 });
