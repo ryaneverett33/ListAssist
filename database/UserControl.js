@@ -12,12 +12,14 @@ var getter = require('./getEntry');
 //MIGHT NOT BE NECESSARY
 exports.isUserInDb = function(userObj, callback) {
     //callback(true);
-    throw 'Not Implemented';
+    this.getUser(userObj.id, function(user) {
+        callback(!(user == null || user === null));
+    });
 }
 //callback (boolean)
 //if successfully put in db
 exports.putUser = function(userObj, callback) {
-    if (userObj.name == null || userObj.imageUrl == null || userObj.email == null || userObj.providerid == null) {
+    if (userObj.name == null || userObj.profile_pic == null || userObj.email == null || userObj.id == null) {
         console.error("UserControl::putUser() has invalid arguments: %s", userObj);
     }
     pool.connect(function(err, conn) {
@@ -32,7 +34,7 @@ exports.putUser = function(userObj, callback) {
         else {
             //set the user in the database
             //id, username (null), name, email, image
-            conn.query('INSERT into Users Values(?,NULL,?,?,?);', [userObj.providerid, userObj.name, userObj.email, userObj.imageUrl], function(queryerr) {
+            conn.query('INSERT into Users Values(?,NULL,?,?,?);', [userObj.id, userObj.name, userObj.email, userObj.profile_pic], function(queryerr) {
                 if (queryerr) {
                     console.error("UserControl::putUser() failed to insert user. Error: %s", queryerr);
                     if (callback != null) {
@@ -46,6 +48,7 @@ exports.putUser = function(userObj, callback) {
                         return;
                     }
                 }
+                conn.release();
             });
         }
     });
@@ -56,7 +59,7 @@ exports.getUser = function(id, callback) {
     //callback(new User.user("test", "email", 0, "image", 0));
     getter.getUser(id, function(row){
         //getUser returns the entire row so that's we have to parse that (which is stupid)
-        if (row == null || row === false) {
+        if (row == null || row === false || row[0] == null) {
             console.error('UserControl::getUser got nothing from getEntry::getUser()');
             if (callback != null) {
                 callback(null);
@@ -72,6 +75,6 @@ exports.getUser = function(id, callback) {
         }
     });
 }
-exports.getUserBySearch = function(providerid, name, email, callback) {
+exports.getUserBySearch = function(id, name, email, callback) {
 
 }
