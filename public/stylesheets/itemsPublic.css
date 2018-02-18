@@ -1,0 +1,21 @@
+body {
+	margin: auto;
+	margin-top: 10px;
+	width: 1200px;
+}
+
+.col {
+    padding: 10px;
+}
+
+h1 {
+    padding-left: 10px;
+}
+
+.card {
+    margin-bottom: 30px;
+}
+
+img {
+    cursor: pointer;
+}

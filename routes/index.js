@@ -10,6 +10,9 @@ router.get('/', function(req, res, next) {
 
   //serve the items page
   res.render('itemsExample');
+
+  //serve the public items page
+  //res.render('itemsPublicExample');
 });
 
 module.exports = router;
