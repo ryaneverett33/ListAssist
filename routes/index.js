@@ -9,8 +9,8 @@ router.get('/', function(req, res, next) {
   //res.render('login');
 
   //serve the items page
-  //res.render('itemsExample');
-  res.sendFile('../public/index.html');
+  res.render('itemsExample');
+  //res.sendFile('../public/index.html');
 });
 
 module.exports = router;
