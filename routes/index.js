@@ -11,6 +11,8 @@ router.get('/', function(req, res, next) {
   //serve the items page
   res.render('itemsExample');
   //res.sendFile('../public/index.html');
+  //serve the public items page
+  //res.render('itemsPublicExample');
 });
 
 module.exports = router;

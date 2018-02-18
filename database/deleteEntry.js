@@ -2,34 +2,12 @@ var pool = require('./connections.js');
 
 //pool.initiate();
 
-
-deleteUser(1, function(success) {
-	if (success) {
-		console.log("success.");
-	} else {
-		console.log("ooooh");
-	}
-})
-deleteUser(2, function(success) {
-	if (success) {
-		console.log("success.");
-	} else {
-		console.log("ooooh");
-	}
-})
-deleteUser(3, function(success) {
-	if (success) {
-		console.log("success.");
-	} else {
-		console.log("ooooh");
-	}
-})
 /*
 Deletes a user, given a user id.
 All lists and items user has will also be deleted
 callback(boolean)
 */
-function deleteUser(id, callback) {
+exports.deleteUser = function deleteUser(id, callback) {
 	pool.connect(function(error, connection) {
 		//check for errors
 	    if (error) {
@@ -62,7 +40,7 @@ Deletes a list, given a list id.
 All items in the list will also be deleted
 callback(boolean)
 */
-function deleteList(id, callback) {
+exports.deleteList = function deleteList(id, callback) {
 	pool.connect(function(error, connection) {
 		//check for errors
 	    if (error) {
@@ -93,7 +71,7 @@ function deleteList(id, callback) {
 Deletes an item, given an item id.
 callback(boolean)
 */
-function deleteItem(id, callback) {
+exports.deleteItem = function deleteItem(id, callback) {
 	pool.connect(function(error, connection) {
 		//check for errors
 	    if (error) {

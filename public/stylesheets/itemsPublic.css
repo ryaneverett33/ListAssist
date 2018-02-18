@@ -12,18 +12,10 @@ h1 {
     padding-left: 10px;
 }
 
-#addItemButton {
-    margin-right: 10px;
-}
-
-#radioControl {
-    margin-bottom: 20px;
-}
-
-#shareListButton {
-    margin-right: 10px;
-}
-
 .card {
     margin-bottom: 30px;
+}
+
+img {
+    cursor: pointer;
 }
