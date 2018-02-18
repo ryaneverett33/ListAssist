@@ -27,6 +27,7 @@ deleteUser(3, function(success) {
 /*
 Deletes a user, given a user id.
 All lists and items user has will also be deleted
+callback(boolean)
 */
 function deleteUser(id, callback) {
 	pool.connect(function(error, connection) {
@@ -59,6 +60,7 @@ function deleteUser(id, callback) {
 /*
 Deletes a list, given a list id.
 All items in the list will also be deleted
+callback(boolean)
 */
 function deleteList(id, callback) {
 	pool.connect(function(error, connection) {
@@ -89,6 +91,7 @@ function deleteList(id, callback) {
 }
 /*
 Deletes an item, given an item id.
+callback(boolean)
 */
 function deleteItem(id, callback) {
 	pool.connect(function(error, connection) {
@@ -117,3 +120,6 @@ function deleteItem(id, callback) {
 	    }
   	});
 }
+module.exports.deleteUser = deleteUser;
+module.exports.deleteItem = deleteItem;
+module.exports.deleteList = deleteList;
