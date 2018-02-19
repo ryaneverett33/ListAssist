@@ -14,7 +14,7 @@ let userObj = {
 let cleanup = false;
 
 describe('UserControl', function() {
-    this.timeout(300);
+    this.timeout(1000);
     beforeEach(function() {
         require('../database/connections').initiate();
     });

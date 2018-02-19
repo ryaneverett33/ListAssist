@@ -98,6 +98,3 @@ exports.deleteItem = function deleteItem(id, callback) {
 	    }
   	});
 }
-module.exports.deleteUser = deleteUser;
-module.exports.deleteItem = deleteItem;
-module.exports.deleteList = deleteList;
