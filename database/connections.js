@@ -27,13 +27,13 @@ exports.initiate = function() {
 
 // get connection for the pool
 exports.connect = function(callback) {
-	this.initiate();
+	//this.initiate();
 	pool.getConnection(callback);
 } 
 
 // free up connection and put back in the pool
 exports.disconnect = function(connection) {
-	this.initiate();
+	//this.initiate();
 	connection.release();
 }
 /*

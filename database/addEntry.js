@@ -23,7 +23,7 @@ exports.createUser = function createUser(id, name, callback) {
 	    }
 	    else {
 	    	//query the database to add a new user
-	    	var query_string = 'INSERT INTO Users VALUES (?,?);';
+	    	var query_string = 'INSERT INTO Users (id, username) VALUES (?,?);';
 	    	connection.query(query_string, [id, name], function(error2, results, fields) {
 		        if (error2) {
 					console.error("An error occured adding user to database: %s", error2);
@@ -77,7 +77,7 @@ exports.createList = function createList(id, name, description, list_id, callbac
 	    else {
 	    	if (list_id == null) {
 		    	//query the database to add a new list with an auto_incremented id
-		    	var query_string = 'INSERT INTO Lists VALUES (NULL,?,?,?);';
+		    	var query_string = 'INSERT INTO Lists (id, name, user_id, description) VALUES (NULL,?,?,?);';
 		    	connection.query(query_string, [name, id, description], function(error2, results, fields) {
 			        if (error2) {
 						console.error("An error occured adding list to database: %s", error2);
@@ -92,7 +92,7 @@ exports.createList = function createList(id, name, description, list_id, callbac
 		    	});
 	    	} else {
 	    		//query the database to add a new list with a specific id
-		    	var query_string = 'INSERT INTO Lists VALUES (?,?,?,?);';
+		    	var query_string = 'INSERT INTO Lists (id, name, user_id, description) VALUES (?,?,?,?);';
 		    	connection.query(query_string, [list_id, name, id, description], function(error2, results, fields) {
 			        if (error2) {
 						console.error("An error occured adding list to database: %s", error2);
@@ -130,7 +130,7 @@ exports.createItem = function createItem(name, picture_url, buyer, purchased, li
 	    	if (item_id == null) {
 
 	    		//query the database to add a new item
-		    	var query_string = 'INSERT INTO Items VALUES (NULL,?,?,?,?,?);';
+		    	var query_string = 'INSERT INTO Items (id, name, picture_url, buyer, purchased, list_id) VALUES (NULL,?,?,?,?,?);';
 		    	connection.query(query_string, [name, picture_url, buyer, purchased, list_id], function(error2, results, fields) {
 			        if (error2) {
 						console.error("An error occured adding item to database: %s", error2);
@@ -146,7 +146,7 @@ exports.createItem = function createItem(name, picture_url, buyer, purchased, li
 		      	});
 	    	} else {
 	    			    		//query the database to add a new item
-		    	var query_string = 'INSERT INTO Items VALUES (?,?,?,?,?,?);';
+		    	var query_string = 'INSERT INTO Items (id, name, picture_url, buyer, purchased, list_id) VALUES (?,?,?,?,?,?);';
 		    	connection.query(query_string, [item_id, name, picture_url, buyer, purchased, list_id], function(error2, results, fields) {
 			        if (error2) {
 						console.error("An error occured adding item to database: %s", error2);

@@ -6,7 +6,7 @@ var cleaner = require('../database/./cleanDatabase.js');
 global.expect = chai.expect;
 
 describe('setUserDatabase', function() {
-	this.timeout(15000);
+	this.timeout(20000);
 	
 	before(function(done) {
 		cleaner.cleanUsers(function() {
@@ -55,7 +55,7 @@ describe('setUserDatabase', function() {
 });
 
 describe('setListDatabase', function() {
-	this.timeout(15000);
+	this.timeout(20000);
 	before(function(done) {
 		cleaner.cleanUsers(function() {
 			cleaner.cleanLists(function() {
@@ -115,7 +115,7 @@ describe('setListDatabase', function() {
 
 
 describe('setItemDatabase', function() {
-	this.timeout(15000);
+	this.timeout(20000);
 	before(function(done) {
 		cleaner.cleanUsers(function() {
 			cleaner.cleanLists(function() {
