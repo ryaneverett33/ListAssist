@@ -16,7 +16,7 @@ let cleanup = false;
 describe('UserControl', function() {
     this.timeout(1000);
     beforeEach(function() {
-        require('../database/connections').initiate();
+        require('../database/connections').useRegular();
     });
     it("successfully puts userObj into db", function(done) {
         UserControl.putUser(userObj, function(success) {
