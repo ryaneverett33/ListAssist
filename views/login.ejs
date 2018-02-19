@@ -11,45 +11,32 @@
 		<script>
 			function onSignIn(googleUser) {
 				var profile = googleUser.getBasicProfile();
-				console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-				console.log('Name: ' + profile.getName());
-				console.log('Image URL: ' + profile.getImageUrl());
-				console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+				//console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+				//console.log('Name: ' + profile.getName());
+				//console.log('Image URL: ' + profile.getImageUrl());
+				//console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
 
-				var xhr = new XMLHttpRequest();
-				xhr.open("POST", "/user/login");
-				xhr.onload = function() {
-					console.log(this.responseText)
-				}
-				xhr.send(JSON.stringify({
-					tokenId : googleUser.getAuthResponse().id_token,
-					provider : 'google',
-					name : profile.getName(),
-					email : profile.getEmail()
-				}));
-
-				/*var data = {};
+				var data = {};
 				data["tokenId"] = googleUser.getAuthResponse().id_token;
 				data["provider"] = "google";
 				data["name"] = profile.getName();
 				data["email"] = profile.getEmail();
 				data = JSON.stringify(data);
-
-				console.log(data);
+				//console.log(data);
 
 				var xhr = new XMLHttpRequest();
 				xhr.open("POST", "/user/login");
-				//xhr.open("POST", "https://listassist.duckdns.org/user/login");
 				xhr.onload = function() {
-					console.log(this.responseText);
+					//console.log(this.responseText);
+
 					if(xhr.status == 200) {
-						console.log("We logged in bois");
+						console.log("Login successful");
 					}
 					else {
-						console.log("Get wit it");
+						console.log("Login unsuccessful");
 					}
 				};
-				xhr.send(data);*/
+				xhr.send(data);
 			}
 		</script>
 
