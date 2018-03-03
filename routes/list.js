@@ -95,6 +95,48 @@ router.post('/edit', function(req, res, next) {
     });
   });
 });
+//Add item to a list
+/*
+token : user token
+name : name of item,
+list_id : list to add to,
+picture : url of picture,
+*/
+router.post('/add', function(req, res, next) {
+  helpers.resolveBody(req, function(body) {
+    if (body == null) {
+      res.setHeader("content-type", "application/json");
+      res.status(400).send(JSON.stringify({ error: "Empty Request" }));
+      return;
+    }
+    var json = helpers.toJson(body);
+    if (json == null) {
+      res.setHeader("content-type", "application/json");
+      res.status(400).send(JSON.stringify({ error: "Bad JSON" }));
+      return;
+    }
+    if (json.token == null || json.name == null || json.list_id == null) {
+      res.setHeader("content-type", "application/json");
+      res.status(400).send(JSON.stringify({ error : "Invalid Arguments"}));
+      return;
+    }
+    if (json.picture == null) json.picture = 'NULL';
+    UserManagement.getUser(json.token, function(User) {
+      if (User == null) {
+        res.setHeader("content-type", "application/json");
+        res.status(400).send(JSON.stringify({ error : "Unable to retrieve user"}));
+        return;
+      }
+      else {
+        //this should probably return the item id
+        ListManagement.addItem(json.name, json.list_id, json.picture, function(success) {
+          res.setHeader("content-type", "application/json");
+          res.status(success ? 200 : 400).send();
+        });
+      }
+    });
+  });
+});
 
 /* Get the lists of a user */
 /*

@@ -1,5 +1,6 @@
 var getEntry = require('./getEntry');
 var setEntry = require('./setEntry');
+var addEntry = require('./addEntry');
 var helpers = require('../routes/helpers');
 var pool = require('./connections');
 //callback(listObj|null)
@@ -89,4 +90,11 @@ exports.editList = function(list_id, newname, callback) {
     setEntry.setList(list_id, "name", newname, function(success) {
         callback(success);
     });
+}
+exports.addItem = function(name, list_id, picture, callback) {
+    if (callback == null) {
+        console.error("ListControl::addItem() no callback");
+        return;
+    }
+    addEntry.createItem(name, picture, null, null, list_id, null, callback);
 }
