@@ -48,3 +48,7 @@ exports.getLists = function(userid, callback) {
         }
     });*/
 }
+//callback(null|listid)
+exports.createList = function(listname, userid, callback) {
+    ListControl.createList(listname, userid, callback);
+};

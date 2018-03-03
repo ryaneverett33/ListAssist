@@ -1,5 +1,6 @@
 var getEntry = require('./getEntry');
 var helpers = require('../routes/helpers');
+var pool = require('./connections');
 //callback(listObj|null)
 /*
 listObj : [
@@ -41,5 +42,41 @@ exports.getListsByUserId = function(userid, callback) {
             helpers.renameKey(lists[i], "row", "info");
         }
         callback(lists);
+    });
+}
+//callback(null|listid)
+exports.createList = function(name, userid, callback) {
+    if (callback == null) {
+        console.error("ListControl::createUser() no callback");
+        return;
+    }
+    pool.connect(function(err, conn) {
+        if (err) {
+            console.error("ListControl::createUser() failed to get pool connection: %d", err);
+            callback(null);
+            return;
+        }
+        conn.query('INSERT INTO Lists Values(0,?,?);', [name, userid], function(queryerr) {
+            if (queryerr) {
+                console.error("ListControl::createUser() failed to query pool: %d", err);
+                callback(null);
+                return;
+            }
+            else {
+                conn.query("SELECT * FROM Lists WHERE name=? AND user_id=?;", [name, userid], function(queryerr2, results, fields) {
+                    
+                    if (queryerr2) {
+                        console.error("ListControl::createUser() failed to query twice pool: %s", queryerr2);
+                        callback(null);
+                        return;
+                    }
+                    else { 
+                        //console.log(results.id);
+                        callback(Number(results[0].id));
+                        return;
+                    }
+                });
+            }
+        });
     });
 }
