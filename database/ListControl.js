@@ -1,4 +1,5 @@
 var getEntry = require('./getEntry');
+var setEntry = require('./setEntry');
 var helpers = require('../routes/helpers');
 var pool = require('./connections');
 //callback(listObj|null)
@@ -78,5 +79,14 @@ exports.createList = function(name, userid, callback) {
                 });
             }
         });
+    });
+}
+exports.editList = function(list_id, newname, callback) {
+    if (callback == null) {
+        console.error("ListControl::editList() no callback");
+        return;
+    }
+    setEntry.setList(list_id, "name", newname, function(success) {
+        callback(success);
     });
 }

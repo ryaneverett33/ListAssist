@@ -52,3 +52,6 @@ exports.getLists = function(userid, callback) {
 exports.createList = function(listname, userid, callback) {
     ListControl.createList(listname, userid, callback);
 };
+exports.editList = function(list_id, newname, callback) {
+    ListControl.editList(list_id, newname, callback);
+};
