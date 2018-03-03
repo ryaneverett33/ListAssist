@@ -86,13 +86,16 @@ exports.getUser = function(token, callback) {
 exports.getUserInfo = function(id, callback) {
     if(id == null) {
         console.error("id is null");
+        callback(null);
         return;
     }
     if(callback == null) {
         console.error("callback is null");
+        callback(null);
         return;
     }
-
+    console.error("userManagement::getUserInfo() NOT IMPLEMENTED");
+    callback(null);
 }
 //remove token from 
 exports.logoutUser = function(token) {

@@ -16,6 +16,9 @@ exports.isUserInDb = function(userObj, callback) {
         callback(!(user == null || user === null));
     });
 }
+exports.isUserIdInDb = function(userid, callback) {
+    this.isUserInDb({ id : userid }, callback);
+}
 //callback (boolean)
 //if successfully put in db
 exports.putUser = function(userObj, callback) {
