@@ -157,11 +157,12 @@ exports.getLists = function getLists(user_id, callback) {
 			    getItems(row.id, function(item_arr) {
 			    	var items;
 			    	if (item_arr) {
-			    		items = item_arr;
+						items = item_arr;
 			    	} else {
 			    		items = [];
 			    	}
-			    	list = {row, items}
+					list = {row, items}
+					list.row.count = item_arr.length;
 			    	lists.push(list);  //add items to list, if any
 			    	connection.resume();  //resume the connection now that the item query is complete
 			    });

@@ -23,6 +23,7 @@ exports.initiate = function() {
 	    password 		: 'KrHqBChH',
 	    database 		: 'listassist'
 	});
+	this.useRegular();
 	initialized = true;
 }
 
