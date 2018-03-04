@@ -27,10 +27,14 @@
 				var xhr = new XMLHttpRequest();
 				xhr.open("POST", "/user/login");
 				xhr.onload = function() {
-					//console.log(this.responseText);
+					var result = JSON.parse(this.responseText);
+					//console.log(result);
 
 					if(xhr.status == 200) {
 						console.log("Login successful");
+
+						//set the cookie
+						document.cookie = "token=" + result.token;
 					}
 					else {
 						console.log("Login unsuccessful");
