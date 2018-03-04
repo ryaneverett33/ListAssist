@@ -2,6 +2,9 @@ var osmosis = require('osmosis');
 
 var scrapeAmazonList = function (url) {
   return new Promise((resolve, reject) => {
+    if (!url) {
+      reject('Url not defined');
+    }
     let items = [];
     osmosis
     .get(url)
@@ -12,8 +15,7 @@ var scrapeAmazonList = function (url) {
     .find('.g-item-sortable:gt(0)')
     .set({
       itemTitle: '.g-item-details .a-link-normal',
-      link: '.g-item-details .a-link-normal@href',
-      price: '.a-offscreen'
+      link: '.g-item-details .a-link-normal@href'
     })
     .data(item => items.push(item))
     .done(() => {
@@ -29,8 +31,8 @@ var scrapeAmazonList = function (url) {
       for (var i = 0; i < items.length; i++) {
         ret.items.push({
           itemTitle: items[i].itemTitle,
-          link: 'http://amazon.com' + items[i].link,
-          price: parseFloat(items[i].price.substring(1))
+          link: 'http://amazon.com' + items[i].link
+          // price: parseFloat(items[i].price.substring(1))
         })
       }
 

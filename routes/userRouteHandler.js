@@ -119,7 +119,7 @@ router.post('/get', function (req, res, next) {
         }
         userManager.getUser(token, function (User) {
             if (User === null) {
-                res.status(200).send(JSON.stringify({ error: "Invalid Token, unable to retrieve user" }));
+                res.status(404).send(JSON.stringify({ error: "Invalid Token, unable to retrieve user" }));
                 return;
             }
             /*
