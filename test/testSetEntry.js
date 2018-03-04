@@ -2,18 +2,21 @@ var chai = require('chai');
 var setter = require('../database/./setEntry.js');
 var creator = require('../database/./addEntry.js');
 var cleaner = require('../database/./cleanDatabase.js');
+var pool = require('../database/./connections.js');
 
 global.expect = chai.expect;
 
 describe('setUserDatabase', function() {
 	this.timeout(20000);
-	
+
 	before(function(done) {
+		pool.initiate_test();
+
 		cleaner.cleanUsers(function() {
 			cleaner.cleanLists(function() {
 				cleaner.cleanItems(function() {
-					creator.createUser(11, "family", function(success) {
-						creator.createUser(111, "matters", function(success) {
+					creator.createUser("11", "family", null, "d@gmail.com", null,  function(success) {
+						creator.createUser("111", "matters", null, "d@gmail.com", null,  function(success) {
 							done();
 						});
 					});
@@ -56,14 +59,17 @@ describe('setUserDatabase', function() {
 
 describe('setListDatabase', function() {
 	this.timeout(20000);
+
 	before(function(done) {
+		pool.initiate_test();
+
 		cleaner.cleanUsers(function() {
 			cleaner.cleanLists(function() {
 				cleaner.cleanItems(function() {
-					creator.createUser(11, "family", function(success) {
-						creator.createUser(111, "matters", function(success) {
-							creator.createList(111, "list 2", "desc", 33, function(success) {
-								creator.createList(11, "list 1", "Desc", 10, function(success) {
+					creator.createUser("11", "family", null, "d@gmail.com", null,  function(success) {
+						creator.createUser("111", "matters", null, "d@gmail.com", null,  function(success) {
+							creator.createList("111", "list 2", 33, function(success) {
+								creator.createList("11", "list 1", 10, function(success) {
 									done();						
 								});
 							});
@@ -116,14 +122,17 @@ describe('setListDatabase', function() {
 
 describe('setItemDatabase', function() {
 	this.timeout(20000);
+
 	before(function(done) {
+		pool.initiate_test();
+
 		cleaner.cleanUsers(function() {
 			cleaner.cleanLists(function() {
 				cleaner.cleanItems(function() {
-					creator.createUser(11, "family", function(success) {
-						creator.createUser(111, "matters", function(success) {
-							creator.createList(111, "list 2", "desc", 33, function(success) {
-								creator.createList(11, "list 1", "desc", 10, function(success) {
+					creator.createUser("11", "family", null, "d@gmail.com", null,  function(success) {
+						creator.createUser("111", "matters", null, "d@gmail.com", null,  function(success) {
+							creator.createList("111", "list 2", 33, function(success) {
+								creator.createList("11", "list 1", 10, function(success) {
 									creator.createItem("an item", "www.picture.com", "Ronald McDonald", 1, 11, 100, function(success) {
 										done();	
 									});					

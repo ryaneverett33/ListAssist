@@ -5,15 +5,42 @@ var pool = require('./connections.js');
 Upon success, this function adds a user row in the database
 id: int, this should be the unique id acquired via the google login in the frontend
 name: string
+username and image can be null
 callback function returns a boolean value
 */
-exports.createUser = function createUser(id, name, callback) {
-	var len = name.length
-	if (len > 64 || len < 1) {
-		console.error("Username size must be between 1 and 64 characters");
+exports.createUser = function createUser(id, name, username, email, image, callback) {
+	var len_id = id.length
+	var len_name = name.length
+	var len_e = email.length
+	
+	if (username != null) {
+		var len_uname = username.length
+		if (len_uname > 64 || len_uname < 1) {
+			console.error("username size must be between 1 and 250 characters");
+			callback(false);
+			return;
+		}
+	}
+	if (image != null) {
+		var len_i = image.length
+		if (len_i > 250 || len_i < 1) {
+			console.error("image url size must be between 1 and 250 characters");
+			callback(false);
+			return;
+		}
+	}
+
+	if (len_id > 30 || len_id < 1) {
+		console.error("id size must be between 1 and 30 characters");
 		callback(false);
 		return;
 	}
+	if (len_name > 50 || len_name < 1 || len_e > 50 || len_e < 1) {
+		console.error("Name and email size must be between 1 and 50 characters");
+		callback(false);
+		return;
+	}
+	
 	pool.connect(function(error, connection) {
 		//check for errors
 	    if (error) {
@@ -23,8 +50,8 @@ exports.createUser = function createUser(id, name, callback) {
 	    }
 	    else {
 	    	//query the database to add a new user
-	    	var query_string = 'INSERT INTO Users (id, username) VALUES (?,?);';
-	    	connection.query(query_string, [id, name], function(error2, results, fields) {
+	    	var query_string = 'INSERT INTO Users (id, username, name, email, image) VALUES (?,?,?,?,?);';
+	    	connection.query(query_string, [id, username, name, email, image], function(error2, results, fields) {
 		        if (error2) {
 					console.error("An error occured adding user to database: %s", error2);
 					callback(false);
@@ -46,10 +73,9 @@ id: int, name: string
 list_id: option to create list with custom id (used for testing purposes)
 		 set to null to ignore this option
 name: name of list
-description: can be null, descpition of list
 callback function returns a boolean value
 */
-exports.createList = function createList(id, name, description, list_id, callback) {
+exports.createList = function createList(id, name, list_id, callback) {
 	pool.connect(function(error, connection) {
 		//check for errors
 		if (!(typeof name === 'string') && !(name instanceof String)) {
@@ -57,12 +83,7 @@ exports.createList = function createList(id, name, description, list_id, callbac
 			callback(false);
 			return;
 		}
-		if (!(typeof description === 'string') && !(description instanceof String)) {
-			console.error("description must be a string");
-			callback(false);
-			return;
-		}
-		if (name.length < 1 || description.length < 1) {
+		if (name.length < 1) {
 			console.error("string lengths must be > 0");
 			callback(false);
 			return;
@@ -77,8 +98,8 @@ exports.createList = function createList(id, name, description, list_id, callbac
 	    else {
 	    	if (list_id == null) {
 		    	//query the database to add a new list with an auto_incremented id
-		    	var query_string = 'INSERT INTO Lists (id, name, user_id, description) VALUES (NULL,?,?,?);';
-		    	connection.query(query_string, [name, id, description], function(error2, results, fields) {
+		    	var query_string = 'INSERT INTO Lists (id, name, user_id) VALUES (NULL,?,?);';
+		    	connection.query(query_string, [name, id], function(error2, results, fields) {
 			        if (error2) {
 						console.error("An error occured adding list to database: %s", error2);
 						callback(false);
@@ -92,8 +113,8 @@ exports.createList = function createList(id, name, description, list_id, callbac
 		    	});
 	    	} else {
 	    		//query the database to add a new list with a specific id
-		    	var query_string = 'INSERT INTO Lists (id, name, user_id, description) VALUES (?,?,?,?);';
-		    	connection.query(query_string, [list_id, name, id, description], function(error2, results, fields) {
+		    	var query_string = 'INSERT INTO Lists (id, name, user_id) VALUES (?,?,?);';
+		    	connection.query(query_string, [list_id, name, id], function(error2, results, fields) {
 			        if (error2) {
 						console.error("An error occured adding list to database: %s", error2);
 						callback(false);

@@ -58,3 +58,6 @@ exports.editList = function(list_id, newname, callback) {
 exports.addItem = function(name, list_id, picture, callback) {
     ListControl.addItem(name, list_id, picture, callback);
 }
+exports.editItem = function(id, column, new_value, callback) {
+    ListControl.editItem(id, column, new_value, callback);
+}

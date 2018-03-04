@@ -1,6 +1,6 @@
-var pool = require('./connections.js');
-//pool.initiate_test();
-pool.initiate_test();
+var pool = require('../database/./connections.js');
+
+//pool.initiate();
 
 var clearUsersQuery = "DELETE FROM Users;";
 var clearListsQuery = "DELETE FROM Lists;";
