@@ -3,6 +3,8 @@ var router = express.Router();
 var UserManagement = require('../management/userManagement');
 var ListManagement = require('../management/listManagement');
 var helpers = require('./helpers');
+var scrapeAmazonList = require('../util/listscraper');
+var scrapeAmazonItem = require('../util/itemscraper');
 
 /* get the page for creating a new list */
 router.get('/new', function(req, res, next) {
@@ -215,5 +217,66 @@ router.get('/:id', function(req, res, next) {
   res.render('list', { title: 'List' });
 });
 
+/**
+ * Imports an amazon list
+ * input: token, 
+ */
+router.post('/import', function (req, res, next) {
+  helpers.resolveBody(req, function (body) {
+    if (body == null) {
+      res.setHeader("content-type", "application/json");
+      res.status(400).send(JSON.stringify({ error: "Empty Request" }));
+      return;
+    }
+    var json = helpers.toJson(body);
+    if (json == null) {
+      res.setHeader("content-type", "application/json");
+      res.status(400).send(JSON.stringify({ error: "Bad JSON" }));
+      return;
+    }
+    if (json.listUrl == null || json.token == null) {
+      res.setHeader("content-type", "application/json");
+      res.status(400).send(JSON.stringify({ error: "Invalid Arguments" }));
+      return;
+    }
+    UserManagement.getUser(json.token, function (User) {
+      if (User == null) {
+        res.setHeader("content-type", "application/json");
+        res.status(500).send(JSON.stringify({ error: "Unable to retrieve user" }));
+        return;
+      }
+      else {
+        scrapeAmazonList(json.listUrl).then(list => {
+          ListManagement.createList(list.listTitle, User.getId(), function (newListId) {
+            if (newListId == null) {
+              res.setHeader("content-type", "application/json");
+              res.status(400).send(JSON.stringify({ error: "Unable to create List" }));
+              return;
+            }
+            else {
+              list.items.forEach(listItem => {
+                scrapeAmazonItem(listItem.link).then(scrapedItem => {
+                  ListManagement.addItem(listItem.itemTitle, newListId, scrapedItem.itemImg, () => {
+                    console.log("ListItem added: ", scrapedItem.itemTitle)
+                  });
+                }).catch((err) => {
+                  console.error("Failed to add parsed item: ", err);
+                })
+
+              });
+              res.setHeader("content-type", "application/json");
+              res.status(200).send(JSON.stringify({ id: newListId }));
+              return;
+            }
+          });
+        }).catch(() => {
+          res.setHeader("content-type", "application/json");
+          res.status(500).send(JSON.stringify({ error: "Failed to scrape list" }));
+        })
+
+      }
+    });
+  });
+});
 
 module.exports = router;
