@@ -8,7 +8,7 @@ global.expect = chai.expect;
 //ADD USERS
 describe('createUserDatabasae', function() {
 	this.timeout(15000);
-	beforeEach(function(done) {
+	before(function(done) {
 		cleaner.cleanUsers(function() {
 			cleaner.cleanLists(function() {
 				cleaner.cleanItems(function() {
@@ -75,7 +75,7 @@ describe('createUserDatabasae', function() {
 });
 
 //ADD LISTS (needs user_id, name)
-describe('createListDatabasae', function() {
+describe('createListDatabase', function() {
 	this.timeout(15000);
 	
 	before(function(done) {
@@ -95,14 +95,14 @@ describe('createListDatabasae', function() {
 
 
 	it('add list', function (done) {
-		creator.createList("11", "pams List 1", null, function(success) {
+		creator.createList("11", "stevens List", null, function(success) {
 			expect(success).to.equal(true);
 			done();
 		});
 	});
 
 	it('add list', function (done) {
-		creator.createList("111", "pams List 1", null, function(success) {
+		creator.createList("111", "pams List", null, function(success) {
 			expect(success).to.equal(true);
 			done();
 		});

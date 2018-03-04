@@ -51,7 +51,7 @@ exports.createUser = function createUser(id, name, username, email, image, callb
 	    else {
 	    	//query the database to add a new user
 	    	var query_string = 'INSERT INTO Users (id, username, name, email, image) VALUES (?,?,?,?,?);';
-	    	connection.query(query_string, [id, name, username, email, image], function(error2, results, fields) {
+	    	connection.query(query_string, [id, username, name, email, image], function(error2, results, fields) {
 		        if (error2) {
 					console.error("An error occured adding user to database: %s", error2);
 					callback(false);

@@ -16,9 +16,9 @@ describe('list/item/edit', function(done) {
             cleaner.cleanLists(function() {
                 cleaner.cleanItems(function() {
                     //create new user
-                    creator.createUser(1, "Genghis Khan", function(success) {
+                    creator.createUser("1", "Ryan Everett", null, "ryaneverett33@outlook.com", null, function(success) {
                         //create list for user
-                        creator.createList(1, "Potential Countries to Invade", "desc", 1, function(success) {
+                        creator.createList("1", "Potential Countries to Invade", "desc", 1, function(success) {
                             //create item in list
                             creator.createItem("Persia", "www.picture.com", null, 1, 1, 1, function(success) {
                                 done(); 
