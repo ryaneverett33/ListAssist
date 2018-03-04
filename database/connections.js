@@ -3,6 +3,14 @@ var pool;  //connection pool for faster querying
 var regpool;
 var initialized; //boolean
 
+/*exports.stacktrace = function() { 
+	function st2(f) {
+	  return !f ? [] : 
+		  st2(f.caller).concat([f.toString().split('(')[0].substring(9) + '(' + f.arguments.join(',') + ')']);
+	}
+	return st2(arguments.callee.caller);
+}*/
+
 //creates pool, must be called before any other database related function 
 exports.initiate_test = function() {
 	pool = mysql.createPool({

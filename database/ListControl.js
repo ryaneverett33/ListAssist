@@ -3,6 +3,7 @@ var setEntry = require('./setEntry');
 var addEntry = require('./addEntry');
 var helpers = require('../routes/helpers');
 var pool = require('./connections');
+var helpers = require('../routes/helpers');
 //callback(listObj|null)
 /*
 listObj : [
@@ -60,7 +61,7 @@ exports.createList = function(name, userid, callback) {
         }
         conn.query('INSERT INTO Lists Values(0,?,?);', [name, userid], function(queryerr) {
             if (queryerr) {
-                console.error("ListControl::createUser() failed to query pool: %d", err);
+                console.error("ListControl::createUser() failed to query pool: %s", queryerr);
                 callback(null);
                 return;
             }
@@ -73,8 +74,12 @@ exports.createList = function(name, userid, callback) {
                         return;
                     }
                     else { 
+                        helpers.renameKey(results[0], "LAST_INSERT_ID()", "id");
+                        //console.log(results);
+                        console.log(JSON.stringify(results[0]));
+                        //console.log(results[LAST_INSERT_ID()]);
                         //console.log(results.id);
-                        callback(Number(results));
+                        callback(results[0].id);
                         return;
                     }
                 });
