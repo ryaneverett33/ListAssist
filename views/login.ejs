@@ -35,6 +35,9 @@
 
 						//set the cookie
 						document.cookie = "token=" + result.token;
+
+						//redirect to the list page
+						window.location.href = "/listpage.html";
 					}
 					else {
 						console.log("Login unsuccessful");
