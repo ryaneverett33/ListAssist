@@ -1,4 +1,10 @@
 $(document).ready(function() {
+	//get the token cookie
+	var token = document.cookie.split(";")[1].split("=")[1];
+
+	//get the title of the list page
+	var title = window.location.href.split("?")[1];
+
 	var itemsCount = 8;
 	var currentItemCard;
 
@@ -19,6 +25,10 @@ $(document).ready(function() {
 		$("#addItemDescriptionField").val("");
 		$("#addItemImageField").val("");
 		$("#addItemLinkField").val("");
+
+		//clear invalid classes
+		$("#addItemNameField").removeClass("is-invalid");
+		$("#addItemImageField").removeClass("is-invalid");
 	});
 
 	//this is the add item button on the new item modal
@@ -31,16 +41,33 @@ $(document).ready(function() {
 			name = $("#addItemNameField").val();
 			description = $("#addItemDescriptionField").val();
 			image = $("#addItemImageField").val();
+
+			//ensure name isn't empty
+			if(name == "") {
+				$("#addItemNameField").addClass("is-invalid");
+				return;
+			}
+
+			//ensure the image exists
+			imageExists(image, function(exists) {
+				if(exists) {
+					addItem(name, description, image);
+					$("#addItemModal").modal("toggle");
+				}
+				else {
+					$("#addItemImageField").addClass("is-invalid");
+				}
+			});
 		}
 		else {
 			//run amazon web scraper to find name, description and image
 			var link = $("#addItemLinkField").val();
 		}
 
-		addItem(name, description, image);
+		//addItem(name, description, image);
 
 		//close the modal
-		$("#addItemModal").modal("toggle");
+		//$("#addItemModal").modal("toggle");
 	});
 
 	var addItem = function(name, description, image) {
@@ -74,21 +101,33 @@ $(document).ready(function() {
 		
 	}
 
-	//this is the saves changes button on the edit item modal
+	//this is the save changes button on the edit item modal
 	$("#editItemSaveChangesButton").click(function() {
 		var name = $("#editItemNameField").val();
 		var description = $("#editItemDescriptionField").val();
 		var image = $("#editItemImageField").val();
 
-		currentItemCard.find(".card-body .card-title").text(name);
-		currentItemCard.find(".card-body .card-text").text(description);
-		currentItemCard.find(".card-img-top").attr("src", image);
+		//ensure name isn't empty
+		if(name == "") {
+			$("#editItemNameField").addClass("is-invalid");
+			return;
+		}
 
-		//update the backend with the new item information...
+		//ensure the image exists
+		imageExists(image, function(exists) {
+			if(exists) {
+				currentItemCard.find(".card-body .card-title").text(name);
+				currentItemCard.find(".card-body .card-text").text(description);
+				currentItemCard.find(".card-img-top").attr("src", image);
 
+				//update the backend with the new item information...
 
-		//close the modal
-		$("#editItemModal").modal("toggle");
+				$("#editItemModal").modal("toggle");
+			}
+			else {
+				$("#editItemImageField").addClass("is-invalid");
+			}
+		});
 	});
 
 	var assignEditItemButtonFunctionality = function() {
@@ -106,9 +145,53 @@ $(document).ready(function() {
 			$("#editItemNameField").val(name);
 			$("#editItemDescriptionField").val(description);
 			$("#editItemImageField").val(image);
+
+			//clear the invalid classes
+			$("#editItemNameField").removeClass("is-invalid");
+			$("#editItemImageField").removeClass("is-invalid");
 		});
 	}
 	assignEditItemButtonFunctionality();
 
+	var accessServer = function(url, data, onSuccess, onFail) {
+		var xhr = new XMLHttpRequest();
+		xhr.open("POST", url);
+		xhr.onload = function () {
+			if(xhr.status === 200) {
+				onSuccess(xhr.response);
+			}
+			else {
+				console.log("FAILED TO ACCESS SERVER");
+				console.log("DATA: " + data);
+				console.log("RESULT: " + xhr.response);
+				onFail(xhr.response);
+			}
+		};
 
+		xhr.send(data);
+	}
+
+	function imageExists(url, callback) {
+		var img = new Image();
+		img.onload = function() { callback(true); };
+		img.onerror = function() { callback(false); };
+		img.src = url;
+	  }
+
+	//initially fill up the page with the list items
+	var data = {
+		token: token
+	};
+	data = JSON.stringify(data);
+	console.log(data);
+
+	accessServer("/list/get", data, function(result) {
+		console.log(result);
+
+		//parse the result for the list
+			//parse the list for the items and call addItem() on each
+	},
+	function(result) {
+		console.log(result);
+	});
 });
