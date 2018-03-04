@@ -2,6 +2,8 @@ var chai = require('chai');
 var creator = require('../database/./addEntry.js');
 var getter = require('../database/./getEntry.js');
 var cleaner = require('../database/./cleanDatabase.js');
+var pool = require('../database/./connections.js');
+pool.initiate_test();
 
 global.expect = chai.expect;
 
@@ -101,7 +103,7 @@ describe('getListDatabase', function() {
 
 
 describe('getItemsDatabase', function() {
-	this.timeout(15000);
+	this.timeout(20000);
 	before(function(done) {
 		cleaner.cleanUsers(function() {
 			cleaner.cleanLists(function() {

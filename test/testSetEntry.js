@@ -2,13 +2,16 @@ var chai = require('chai');
 var setter = require('../database/./setEntry.js');
 var creator = require('../database/./addEntry.js');
 var cleaner = require('../database/./cleanDatabase.js');
+var pool = require('../database/./connections.js');
 
 global.expect = chai.expect;
 
 describe('setUserDatabase', function() {
 	this.timeout(20000);
-	
+
 	before(function(done) {
+		pool.initiate_test();
+
 		cleaner.cleanUsers(function() {
 			cleaner.cleanLists(function() {
 				cleaner.cleanItems(function() {
@@ -56,7 +59,10 @@ describe('setUserDatabase', function() {
 
 describe('setListDatabase', function() {
 	this.timeout(20000);
+
 	before(function(done) {
+		pool.initiate_test();
+
 		cleaner.cleanUsers(function() {
 			cleaner.cleanLists(function() {
 				cleaner.cleanItems(function() {
@@ -116,7 +122,10 @@ describe('setListDatabase', function() {
 
 describe('setItemDatabase', function() {
 	this.timeout(20000);
+
 	before(function(done) {
+		pool.initiate_test();
+
 		cleaner.cleanUsers(function() {
 			cleaner.cleanLists(function() {
 				cleaner.cleanItems(function() {

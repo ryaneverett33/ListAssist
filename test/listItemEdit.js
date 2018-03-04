@@ -5,27 +5,32 @@ var listHandler = require('../routes/list');
 var expect = require('chai').expect;
 var cleaner = require('../database/./cleanDatabase.js');
 var creator = require('../database/./addEntry.js');
-
-
+var pool = require('../database/./connections.js');
+pool.initiate_test();
 
 chai.use(chaihttp);
 
 let item_edit_url = 'list/item/edit';
-let app = 'http://listassist.duckdns.org/'
+//let app = 'http://listassist.duckdns.org/'
+var app = require('../app')
 
 describe('list/item/edit', function(done) {
-    before(function() {
-        //clean test_database
+    this.timeout(15000);
+    before(function(done) {
         cleaner.cleanUsers(function() {
             cleaner.cleanLists(function() {
                 cleaner.cleanItems(function() {
-                    //create new user
-                    creator.createUser("102313598252495021716", "will johnston", null, "willjohnston23@gmail.com", "https://lh5.googleusercontent.com/-mpqQ8Rzzz-8/AAAAAAAAAAI/AAAAAAAAAAA/AGi4gfx8kM2LmSvYhg13thOWxm2OjFjw7Q/s96-c/photo.jpg", function(success) {
-                        //create list for user
-                        creator.createList("1", "Cs classes I <3", "desc", 1, function(success) {
-                            //create item in list
-                            creator.createItem("null", "www.picture.com", null, 1, 1, 1, function(success) {
-                                done(); 
+                    creator.createUser("102313598252495021716", "will johnston", null, "willjohnston23@gmail.com", null,  function(success) {
+                        creator.createList("102313598252495021716", "Mitch's list", 10, function(success2) {
+                            creator.createList("102313598252495021716", "Mitch's list 2", 11, function(success2) {
+                                //creator.createUser("10", "Ashay", null, "d@gmail.com", null,  function(success) {
+                                    //name, picture_url, buyer, purchased, list_id, item_id, callback
+                                    creator.createItem("an item", "www.picture.com", "Ronald McDonald", 1, 11, 37, function(success) {
+                                        creator.createItem("item 2", "www.picturesque.com", "Tim Duncan", 0, 11, 38, function(success) {
+                                            done();
+                                        });
+                                    });
+                                //});
                             });
                         });
                     });
@@ -41,7 +46,7 @@ describe('list/item/edit', function(done) {
     it("edit an item name", function(done) {
         var data = {
             token : validtoken,
-            id : 1,
+            id : 11,
             column : 'name',
             new_value : 'cs101'
         };
@@ -50,6 +55,8 @@ describe('list/item/edit', function(done) {
             done();
         });
     });
+    
+
 
     it("edit an item picture_url", function(done) {
         var data = {

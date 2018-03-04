@@ -3,6 +3,10 @@ var chai = require('chai');
 var expect = require('chai').expect;
 var deleter = require('../database/deleteEntry');
 var UserControl = require('../database/UserControl');
+var pool = require('../database/./connections.js');
+pool.initiate_test();
+
+
 
 let userObj = {
     name : "testy name",
@@ -15,9 +19,7 @@ let cleanup = false;
 
 describe('UserControl', function() {
     this.timeout(1000);
-    beforeEach(function() {
-        require('../database/connections').useRegular();
-    });
+
     it("successfully puts userObj into db", function(done) {
         UserControl.putUser(userObj, function(success) {
             //expect(success).equal(true, "Put userObj in db");

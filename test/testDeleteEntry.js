@@ -3,6 +3,8 @@ var creator = require('../database/./addEntry.js');
 var getter = require('../database/./getEntry.js');
 var deleter = require('../database/./deleteEntry.js');
 var cleaner = require('../database/./cleanDatabase.js');
+var pool = require('../database/./connections.js');
+pool.initiate_test();
 
 global.expect = chai.expect;
 
