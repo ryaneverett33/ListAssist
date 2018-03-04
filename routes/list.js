@@ -37,14 +37,14 @@ router.post('/new', function(req, res, next) {
     UserManagement.getUser(json.token, function(User) {
       if (User == null) {
         res.setHeader("content-type", "application/json");
-        res.status(400).send(JSON.stringify({ error : "Unable to retrieve user"}));
+        res.status(404).send(JSON.stringify({ error : "Unable to retrieve user"}));
         return;
       }
       else {
         ListManagement.createList(json.name, User.getId(), function(id) {
           if (id == null) {
             res.setHeader("content-type", "application/json");
-            res.status(400).send(JSON.stringify({ error : "Unable to create List"}));
+            res.status(500).send(JSON.stringify({ error : "Unable to create List"}));
             return;
           }
           else {
@@ -85,13 +85,13 @@ router.post('/edit', function(req, res, next) {
     UserManagement.getUser(json.token, function(User) {
       if (User == null) {
         res.setHeader("content-type", "application/json");
-        res.status(400).send(JSON.stringify({ error : "Unable to retrieve user"}));
+        res.status(404).send(JSON.stringify({ error : "Unable to retrieve user"}));
         return;
       }
       else {
         ListManagement.editList(json.id, json.name, function(success) {
           res.setHeader("content-type", "application/json");
-          res.status(success ? 200 : 400).send();
+          res.status(success ? 200 : 500).send();
         });
       }
     });
@@ -126,14 +126,14 @@ router.post('/add', function(req, res, next) {
     UserManagement.getUser(json.token, function(User) {
       if (User == null) {
         res.setHeader("content-type", "application/json");
-        res.status(400).send(JSON.stringify({ error : "Unable to retrieve user"}));
+        res.status(404).send(JSON.stringify({ error : "Unable to retrieve user"}));
         return;
       }
       else {
         //this should probably return the item id
         ListManagement.addItem(json.name, json.list_id, json.picture, function(success) {
           res.setHeader("content-type", "application/json");
-          res.status(success ? 200 : 400).send();
+          res.status(success ? 200 : 500).send();
         });
       }
     });
@@ -172,14 +172,14 @@ router.post('/get', function(req, res, next) {
       UserManagement.getUser(json.token, function(User) {
         if (User == null) {
           res.setHeader("content-type", "application/json");
-          res.status(400).send(JSON.stringify({ error : "Unable to retrieve user"}));
+          res.status(404).send(JSON.stringify({ error : "Unable to retrieve user"}));
           return;
         }
         else {
           ListManagement.getLists(User.getId(), function(lists) {
             if (lists == null) {
               res.setHeader("content-type", "application/json");
-              res.status(400).send(JSON.stringify({ error : "Unable to retrive lists" }));
+              res.status(404).send(JSON.stringify({ error : "Unable to retrive lists" }));
               return;
             }
             else {
@@ -196,7 +196,7 @@ router.post('/get', function(req, res, next) {
       ListManagement.getLists(json.userid, function(lists) {
         if (lists == null) {
           res.setHeader("content-type", "application/json");
-          res.status(400).send(JSON.stringify({ error : "Unable to retrive lists" }));
+          res.status(404).send(JSON.stringify({ error : "Unable to retrive lists" }));
           return;
         }
         else {
@@ -242,7 +242,7 @@ router.post('/import', function (req, res, next) {
     UserManagement.getUser(json.token, function (User) {
       if (User == null) {
         res.setHeader("content-type", "application/json");
-        res.status(500).send(JSON.stringify({ error: "Unable to retrieve user" }));
+        res.status(404).send(JSON.stringify({ error: "Unable to retrieve user" }));
         return;
       }
       else {
@@ -250,7 +250,7 @@ router.post('/import', function (req, res, next) {
           ListManagement.createList(list.listTitle, User.getId(), function (newListId) {
             if (newListId == null) {
               res.setHeader("content-type", "application/json");
-              res.status(400).send(JSON.stringify({ error: "Unable to create List" }));
+              res.status(500).send(JSON.stringify({ error: "Unable to create List" }));
               return;
             }
             else {
