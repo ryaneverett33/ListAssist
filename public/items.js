@@ -1,4 +1,10 @@
 $(document).ready(function() {
+	//get the token cookie
+	var token = document.cookie.split(";")[1].split("=")[1];
+
+	//get the title of the list page
+	var title = window.location.href.split("?")[1];
+
 	var itemsCount = 8;
 	var currentItemCard;
 
@@ -110,5 +116,38 @@ $(document).ready(function() {
 	}
 	assignEditItemButtonFunctionality();
 
+	var accessServer = function(url, data, onSuccess, onFail) {
+		var xhr = new XMLHttpRequest();
+		xhr.open("POST", url);
+		xhr.onload = function () {
+			if(xhr.status === 200) {
+				onSuccess(xhr.response);
+			}
+			else {
+				console.log("FAILED TO ACCESS SERVER");
+				console.log("DATA: " + data);
+				console.log("RESULT: " + xhr.response);
+				onFail(xhr.response);
+			}
+		};
 
+		xhr.send(data);
+	}
+
+	//initially fill up the page with the list items
+	var data = {
+		token: token
+	};
+	data = JSON.stringify(data);
+	console.log(data);
+
+	accessServer("/list/get", data, function(result) {
+		console.log(result);
+
+		//parse the result for the list
+			//parse the list for the items and call addItem() on each
+	},
+	function(result) {
+		console.log(result);
+	});
 });
