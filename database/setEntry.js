@@ -101,7 +101,6 @@ exports.setList = function setList(id, column, new_value, callback) {
 			console.log(typeof new_value)
 			console.log("user_id must be a number");
 			callback(false);
-
 			return;
 		}
 	} else {

@@ -11,8 +11,8 @@ describe('getUserDatabase', function() {
 		cleaner.cleanUsers(function() {
 			cleaner.cleanLists(function() {
 				cleaner.cleanItems(function() {
-					creator.createUser(555, "Mitch Daniels", function(success) {
-						creator.createUser(888, "Cornelius Vanderbilt", function(success2) {
+					creator.createUser("555", "Mitch Daniels", null, "d@gmail.com", null,  function(success) {
+						creator.createUser("888", "Cornelius Vanderbilt", null, "d@gmail.com", null,  function(success2) {
 							done();
 						});
 					});
@@ -51,10 +51,10 @@ describe('getListDatabase', function() {
 		cleaner.cleanUsers(function() {
 			cleaner.cleanLists(function() {
 				cleaner.cleanItems(function() {
-					creator.createUser(555, "Mitch Daniels", function(success) {
-						creator.createList(555, "Mitch's list", "boilermakerz", 10, function(success2) {
-							creator.createList(555, "Mitch's list 2", "IU sucks", 11, function(success2) {
-								creator.createUser(10, "Ashay", function(success) {
+					creator.createUser("555", "Mitch Daniels", null, "d@gmail.com", null,  function(success) {
+						creator.createList("555", "Mitch's list", 10, function(success2) {
+							creator.createList("555", "Mitch's list 2", 11, function(success2) {
+								creator.createUser("10", "Ashay", null, "d@gmail.com", null,  function(success) {
 									//name, picture_url, buyer, purchased, list_id, item_id, callback
 									creator.createItem("an item", "www.picture.com", "Ronald McDonald", 1, 11, null, function(success) {
 										done();
@@ -106,10 +106,10 @@ describe('getItemsDatabase', function() {
 		cleaner.cleanUsers(function() {
 			cleaner.cleanLists(function() {
 				cleaner.cleanItems(function() {
-					creator.createUser(555, "Mitch Daniels", function(success) {
-						creator.createList(555, "Mitch's list", "boilermakerz", 10, function(success2) {
-							creator.createList(555, "Mitch's list 2", "IU sucks", 11, function(success2) {
-								creator.createUser(10, "Ashay", function(success) {
+					creator.createUser("555", "Mitch Daniels", null, "d@gmail.com", null,  function(success) {
+						creator.createList("555", "Mitch's list", 10, function(success2) {
+							creator.createList("555", "Mitch's list 2", 11, function(success2) {
+								creator.createUser("10", "Ashay", null, "d@gmail.com", null,  function(success) {
 									//name, picture_url, buyer, purchased, list_id, item_id, callback
 									creator.createItem("an item", "www.picture.com", "Ronald McDonald", 1, 11, 37, function(success) {
 										creator.createItem("item 2", "www.picturesque.com", "Tim Duncan", 0, 11, 38, function(success) {

@@ -20,7 +20,8 @@ describe('createUserDatabasae', function() {
 	});
 
 	it('add user Phil with id=1', function(done) {
-		creator.createUser(1, "Phil", success => {
+		//id, username, name, email, image
+		creator.createUser("1", "Phil", "Phil M", "email@email.com" , "url", success => {
 			expect(success).to.be.true;
 			done();
 			//return;
@@ -28,7 +29,7 @@ describe('createUserDatabasae', function() {
 	});
 
 	it('add user with too large an id', function (done) {
-		creator.createUser(2147483648, "Darrell", function(success) {
+		creator.createUser("0123456789012345678901234567890", "Darrell", "Darrel W", "gmail@gmail.com", "url.com", function(success) {
 			expect(success).to.equal(false);
 			done();
 
@@ -36,7 +37,7 @@ describe('createUserDatabasae', function() {
 	});
 
 	it('add user with too small an id', function (done) {
-		creator.createUser(-2147483649, "Darrell", function(success) {
+		creator.createUser("", "Darrell", null, "d@gmail.com", null, function(success) {
 			expect(success).to.equal(false);
 			done();
 
@@ -45,8 +46,8 @@ describe('createUserDatabasae', function() {
 	});
 
 	it('add user with duplicate id', function (done) {
-		creator.createUser(8, "Darrell", function(success) {
-			creator.createUser(8, "Tarence", function(success2) {
+		creator.createUser("8", "Darrell", null, "d@gmail.com", null, function(success) {
+			creator.createUser("8", "Tarence", null, "t@gmail.com", null,  function(success2) {
 				expect(success2).to.equal(false);
 				done();
 			});
@@ -58,7 +59,7 @@ describe('createUserDatabasae', function() {
 	});
 
 	it('add user, no name in username field', function (done) {
-		creator.createUser(99, "", function(success) {
+		creator.createUser("99", "", null, "d@gmail.com", null,  function(success) {
 			expect(success).to.equal(false);
 			done();
 		});
@@ -66,7 +67,7 @@ describe('createUserDatabasae', function() {
 		
 	it('add user, too large a name', function (done) {
 		var sixty_five = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-		creator.createUser(99, sixty_five, function(success) {
+		creator.createUser("99", sixty_five, null, "d@gmail.com", null,  function(success) {
 			expect(success).to.equal(false);
 			done();
 		});
@@ -81,8 +82,8 @@ describe('createListDatabasae', function() {
 		cleaner.cleanUsers(function() {
 			cleaner.cleanLists(function() {
 				cleaner.cleanItems(function() {
-					creator.createUser(11, "steven", function(success) {
-						creator.createUser(111, "Pam", function(success) {
+					creator.createUser("11", "steven", null, "d@gmail.com", null,  function(success) {
+						creator.createUser("111", "Pam", null, "d@gmail.com", null,  function(success) {
 							done();
 						});
 					});
@@ -94,70 +95,37 @@ describe('createListDatabasae', function() {
 
 
 	it('add list', function (done) {
-		creator.createList(11, "pams List 1", "desciption", null, function(success) {
+		creator.createList("11", "pams List 1", null, function(success) {
 			expect(success).to.equal(true);
 			done();
 		});
 	});
 
 	it('add list', function (done) {
-		creator.createList(111, "pams List 1", "11456", null, function(success) {
+		creator.createList("111", "pams List 1", null, function(success) {
 			expect(success).to.equal(true);
 			done();
 		});
 	});
 
 	it('add list not a user', function (done) {
-		creator.createList(1111111, "pams List 1", "I want these for xmas pls", null, function(success) {
+		creator.createList("1111111", "pams List 1", null, function(success) {
 			expect(success).to.equal(false);
 			done();
 		});
 	});
 
-	it('add list id out of bounds', function (done) {
-		creator.createList(-1111111111111111, "pams List 1", null, null, function(success) {
-			expect(success).to.equal(false);
-			done();
-		});
-	});
-
-	it('add list id out of bounds', function (done) {
+	it('add list name too large', function (done) {
 		var sixty_five = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-		creator.createList(-1111111111111111, sixty_five, null, null, function(success) {
+		creator.createList("11", sixty_five, null, function(success) {
 			expect(success).to.equal(false);
 			done();
 		});
 	});
 
-	it('add list id list of size 0', function (done) {
+	it('add list name of size 0', function (done) {
 		var zero = ""
-		creator.createList(-1111111111111111, zero, null, null, function(success) {
-			expect(success).to.equal(false);
-			done();
-		});
-	});
-
-	it('add list invalid desciption not string', function (done) {
-		creator.createList(111, "pams List 1", 7, null, function(success) {
-			expect(success).to.equal(false);
-			done();
-		});
-	});
-
-	it('add list invalid desciption size', function (done) {
-		creator.createList(111, "pams List 1", "" , null, function(success) {
-			expect(success).to.equal(false);
-			done();
-		});
-	});
-
-	it('add list invalid desciption size', function (done) {
-		var two_fify_six = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\
-		aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\
-		aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\
-		aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-
-		creator.createList(111, "pams List 1", two_fify_six , null, function(success) {
+		creator.createList("11", zero, null, function(success) {
 			expect(success).to.equal(false);
 			done();
 		});
@@ -172,10 +140,10 @@ describe('createItemsDatabase', function() {
 		cleaner.cleanUsers(function() {
 			cleaner.cleanLists(function() {
 				cleaner.cleanItems(function() {
-					creator.createUser(11, "steven", function(success) {
-						creator.createUser(111, "Pam", function(success) {
-							creator.createList(111, "list 2", "desc", 33, function(success) {
-								creator.createList(11, "list 1", "desc", 10, function(success) {
+					creator.createUser("11", "steven", null, "d@gmail.com", null,  function(success) {
+						creator.createUser("111", "Pam", null, "d@gmail.com", null,  function(success) {
+							creator.createList("111", "list 2", 33, function(success) {
+								creator.createList("11", "list 1", 10, function(success) {
 									done();
 								});
 							});
