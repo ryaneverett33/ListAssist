@@ -172,7 +172,7 @@ router.post('/item/edit', function(req, res, next) {
       else {
         ListManagement.editItem(json.id, json.column, json.new_value, function(success) {
           res.setHeader("content-type", "application/json");
-          res.status(success ? 200 : 400).send();
+          res.status(success ? 200 : 500).send();
         });
       }
     });

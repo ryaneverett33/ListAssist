@@ -65,7 +65,7 @@ exports.createList = function(name, userid, callback) {
                 return;
             }
             else {
-                conn.query("SELECT * FROM Lists WHERE name=? AND user_id=?;", [name, userid], function(queryerr2, results, fields) {
+                conn.query("SELECT LAST_INSERT_ID() FROM Lists WHERE name=? AND user_id=?;", [name, userid], function(queryerr2, results, fields) {
                     
                     if (queryerr2) {
                         console.error("ListControl::createUser() failed to query twice pool: %s", queryerr2);
@@ -74,7 +74,7 @@ exports.createList = function(name, userid, callback) {
                     }
                     else { 
                         //console.log(results.id);
-                        callback(Number(results[0].id));
+                        callback(Number(results));
                         return;
                     }
                 });
