@@ -234,7 +234,7 @@ router.post('/import', function (req, res, next) {
       res.status(400).send(JSON.stringify({ error: "Bad JSON" }));
       return;
     }
-    if (json.listUrl == null || json.token == null) {
+    if (!json.listUrl || json.token == null) {
       res.setHeader("content-type", "application/json");
       res.status(400).send(JSON.stringify({ error: "Invalid Arguments" }));
       return;
