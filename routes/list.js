@@ -138,6 +138,47 @@ router.post('/add', function(req, res, next) {
   });
 });
 
+/*edits an item in a list
+arguments needed:
+  token
+  id (int, which is the id of item)
+  column: name, picture_url, buyer, purchased, or list_id
+  new_value (must be the correct type, all ints except name and picture_url)
+*/
+router.post('/item/edit', function(req, res, next) {
+  helpers.resolveBody(req, function(body) {
+    if (body == null) {
+      res.setHeader("content-type", "application/json");
+      res.status(400).send(JSON.stringify({ error: "Empty Request" }));
+      return;
+    }
+    var json = helpers.toJson(body);
+    if (json == null) {
+      res.setHeader("content-type", "application/json");
+      res.status(400).send(JSON.stringify({ error: "Bad JSON" }));
+      return;
+    }
+    if (json.token == null || json.id == null || json.column == null || json.new_value) {
+      res.setHeader("content-type", "application/json");
+      res.status(400).send(JSON.stringify({ error : "Invalid Arguments"}));
+      return;
+    }
+    UserManagement.getUser(json.token, function(User) {
+      if (User == null) {
+        res.setHeader("content-type", "application/json");
+        res.status(400).send(JSON.stringify({ error : "Unable to retrieve user"}));
+        return;
+      }
+      else {
+        ListManagement.editItem(json.id, json.column, json.new_value, function(success) {
+          res.setHeader("content-type", "application/json");
+          res.status(success ? 200 : 400).send();
+        });
+      }
+    });
+  });
+});
+
 /* Get the lists of a user */
 /*
 token : "user login token" || userid : "user id"

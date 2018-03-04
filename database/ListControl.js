@@ -98,3 +98,11 @@ exports.addItem = function(name, list_id, picture, callback) {
     }
     addEntry.createItem(name, picture, null, null, list_id, null, callback);
 }
+
+exports.editItem = function(id, column, new_value, callback) {
+    if (callback == null) {
+        console.error("ListControl::editItem() no callback");
+        return;
+    }
+    setEntry.setItem(id, column, new_value, callback);
+} 
