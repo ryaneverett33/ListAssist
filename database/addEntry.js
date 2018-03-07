@@ -154,7 +154,7 @@ exports.createItem = function createItem(name, picture_url, buyer, purchased, li
 		    	var query_string = 'INSERT INTO Items (id, name, picture_url, buyer, purchased, list_id) VALUES (NULL,?,?,?,?,?);';
 		    	connection.query(query_string, [name, picture_url, buyer, purchased, list_id], function(error2, results, fields) {
 			        if (error2) {
-						console.error("An error occured adding item to database: %s", error2);
+						console.error("An error occured adding item to database 1: %s", error2);
 						callback(false);
 						pool.disconnect(connection);
 						return;
@@ -170,7 +170,7 @@ exports.createItem = function createItem(name, picture_url, buyer, purchased, li
 		    	var query_string = 'INSERT INTO Items (id, name, picture_url, buyer, purchased, list_id) VALUES (?,?,?,?,?,?);';
 		    	connection.query(query_string, [item_id, name, picture_url, buyer, purchased, list_id], function(error2, results, fields) {
 			        if (error2) {
-						console.error("An error occured adding item to database: %s", error2);
+						console.error("An error occured adding item to database 2: %s", error2);
 						callback(false);
 						pool.disconnect(connection);
 						return;

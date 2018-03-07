@@ -1,6 +1,7 @@
 var getEntry = require('./getEntry');
 var setEntry = require('./setEntry');
 var addEntry = require('./addEntry');
+var deleteEntry = require('./deleteEntry');
 var helpers = require('../routes/helpers');
 var pool = require('./connections');
 //callback(listObj|null)
@@ -105,4 +106,20 @@ exports.editItem = function(id, column, new_value, callback) {
         return;
     }
     setEntry.setItem(id, column, new_value, callback);
+} 
+
+exports.deleteList = function(id, callback) {
+    if (callback == null) {
+        console.error("ListControl::deleteList() no callback");
+        return;
+    }
+    deleteEntry.deleteList(id, callback);
+}
+
+exports.deleteItem = function(id, callback) {
+    if (callback == null) {
+        console.error("ListControl::deleteItem() no callback");
+        return;
+    }
+    deleteEntry.deleteItem(id, callback);
 } 

@@ -30,6 +30,6 @@ var scrapeAmazonItem = function (url) {
 }
 
 // debug code
-// scrapeAmazonItem('https://www.amazon.com/gp/product/B073ZK95P6').then(console.log);
+//scrapeAmazonItem('https://www.amazon.com/gp/product/B073ZK95P6').then(console.log);
 
 module.exports = scrapeAmazonItem;
