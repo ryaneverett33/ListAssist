@@ -18,7 +18,7 @@ let userObj = {
 let cleanup = false;
 
 describe('UserControl', function() {
-    this.timeout(1000);
+    this.timeout(15000);
 
     it("successfully puts userObj into db", function(done) {
         UserControl.putUser(userObj, function(success) {
