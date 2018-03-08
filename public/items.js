@@ -114,7 +114,7 @@ $(document).ready(function() {
 		}
 
 		//ensure the image exists
-		imageExists(image, function(exists) {
+		imageExists(image, null, function(exists, passOut) {
 			if(exists) {
 				currentItemCard.find(".card-body .card-title").text(name);
 				currentItemCard.find(".card-body .card-text").text(description);
@@ -171,25 +171,48 @@ $(document).ready(function() {
 		xhr.send(data);
 	}
 
-	function imageExists(url, callback) {
+	function imageExists(url, passIn, callback) {
 		var img = new Image();
-		img.onload = function() { callback(true); };
-		img.onerror = function() { callback(false); };
+		img.onload = function() { callback(true, passIn); };
+		img.onerror = function() { callback(false, passIn); };
 		img.src = url;
 	  }
 
 	//initially fill up the page with the list items
 	var data = {
-		token: token
+		token: "eyJhbGciOiJSUzI1NiIsImtpZCI6ImFjMmI2M2ZhZWZjZjgzNjJmNGM1MjhlN2M3ODQzMzg3OTM4NzAxNmIifQ.eyJhenAiOiI1NzM1OTkyMTEyMzEtcWNlOG9saTltNGtqbGI5ZmwwYWgzNWV2ZzRlOHNlanUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI1NzM1OTkyMTEyMzEtcWNlOG9saTltNGtqbGI5ZmwwYWgzNWV2ZzRlOHNlanUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDQ0MjIxNjA4MDAyOTYxODY5NjMiLCJlbWFpbCI6Imt5bGUubi5idXJrZUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6IlExdGtkaXd4MUctMUEzTEhwM0U1MHciLCJleHAiOjE1MjA1NTYyMjgsImlzcyI6ImFjY291bnRzLmdvb2dsZS5jb20iLCJqdGkiOiIzNTA3M2JiNTExYzI1YjExYzU2YmZjNmZlYjhiOTNlOGUwNmI5ZWRlIiwiaWF0IjoxNTIwNTUyNjI4LCJuYW1lIjoiS3lsZSBCdXJrZSIsInBpY3R1cmUiOiJodHRwczovL2xoNC5nb29nbGV1c2VyY29udGVudC5jb20vLUFUNUVoWVZBbDV3L0FBQUFBQUFBQUFJL0FBQUFBQUFBRTgwL2pkTEdjQmRYQ25rL3M5Ni1jL3Bob3RvLmpwZyIsImdpdmVuX25hbWUiOiJLeWxlIiwiZmFtaWx5X25hbWUiOiJCdXJrZSIsImxvY2FsZSI6ImVuIn0.be_k-zdJIL6BOnX_qnuziVBmUyNh4GQyLdX3KJwNrJ8RAAxqJ3-boSv69_Mob7TZXrIk0kK7IFmS1CP_EVP0wl8cZ8wKwbS5HkT1oQxHCo4176LJL1HqpxT74lDNkeaK2LdEqdM4AI76wmfGPdrwoNFLTCVKnXKUI7sXM5eEetfQb0JdQzn5a_d2rpJNxmNJGQdPUV6_6wVSeebBA5uPO4g-43jGd-SWibHEt2BGyWyEBxGdI-tm9vTWT44iLLlUPu3RH_grgkhGImY9XKhWNzEhUS0l8P_8zRm2p-KBcfpxz73hasQCgjTRB2xczVAyLfZQl2C8v0hmZJkTbroFWA"
 	};
 	data = JSON.stringify(data);
 	console.log(data);
 
-	accessServer("/list/get", data, function(result) {
+	accessServer("http://listassist.duckdns.org/list/get", data, function(result) {
+		json = JSON.parse(result);
 		console.log(result);
 
-		//parse the result for the list
-			//parse the list for the items and call addItem() on each
+		var items = json[0]["items"];
+
+		for(var i = 0; i < items.length; i++) {
+			var name = items[i].name;
+			console.log(name);
+			var desc = "none"; //not returned from list/get
+			var picURL = items[i].picture_url;
+
+			if(!picURL.startsWith("http://") || !picURL.startsWith("https://")) {
+				picURL = "/defaultItem.png";
+			}
+
+			//ensure the image exists
+			imageExists(picURL, name, function(exists, name) {
+				if(exists) {
+					console.log("exists");
+					addItem(name, "none", picURL);
+				}
+				else {
+					addItem(name, "none", "/defaultItem.png");
+				}
+			});
+		}
+
 	},
 	function(result) {
 		console.log(result);
