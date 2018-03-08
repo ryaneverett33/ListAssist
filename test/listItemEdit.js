@@ -6,6 +6,7 @@ var expect = require('chai').expect;
 var cleaner = require('../database/./cleanDatabase.js');
 var creator = require('../database/./addEntry.js');
 var pool = require('../database/./connections.js');
+var listManager = require('../management/listManagement');
 pool.initiate_test();
 
 chai.use(chaihttp);
@@ -50,10 +51,17 @@ describe('list/item/edit', function(done) {
             column : 'name',
             new_value : 'cs101'
         };
-        chai.request(app).post(item_edit_url).send(data).end(function(err, res) {
-            expect(res.status).equals(200);
+        listManager.editItem(data.id, "name", data.new_value, function(success) {
+            console.log(success);
+            expect(success).to.be.true;
             done();
         });
+        /*chai.request(app).post(item_edit_url).send(data).end(function(err, res) {
+            console.log(err);
+            console.log(res);
+            expect(res.status).equals(200);
+            done();
+        });*/
     });
     
 
@@ -65,8 +73,13 @@ describe('list/item/edit', function(done) {
             column : 'picture_url',
             new_value : 'www.edited.com'
         };
-        chai.request(app).post(item_edit_url).send(data).end(function(err, res) {
+        /*chai.request(app).post(item_edit_url).send(data).end(function(err, res) {
             expect(res.status).equals(200);
+            done();
+        });*/
+        listManager.editItem(data.id, data.column, data.new_value, function(success) {
+            console.log(success);
+            expect(success).to.be.true;
             done();
         });
     });
@@ -78,8 +91,13 @@ describe('list/item/edit', function(done) {
             column : 'buyer',
             new_value : 'Mitch Daniels'
         };
-        chai.request(app).post(item_edit_url).send(data).end(function(err, res) {
+        /*chai.request(app).post(item_edit_url).send(data).end(function(err, res) {
             expect(res.status).equals(200);
+            done();
+        });*/
+        listManager.editItem(data.id, data.column, data.new_value, function(success) {
+            console.log(success);
+            expect(success).to.be.true;
             done();
         });
     });
@@ -89,10 +107,15 @@ describe('list/item/edit', function(done) {
             token : validtoken,
             id : 1,
             column : 'purchased',
-            new_value : '2'
+            new_value : 2
         };
-        chai.request(app).post(item_edit_url).send(data).end(function(err, res) {
+        /*chai.request(app).post(item_edit_url).send(data).end(function(err, res) {
             expect(res.status).equals(200);
+            done();
+        });*/
+        listManager.editItem(data.id, data.column, data.new_value, function(success) {
+            console.log(success);
+            expect(success).to.be.true;
             done();
         });
     });
@@ -104,23 +127,40 @@ describe('list/item/edit', function(done) {
             column : 'list_id',
             new_value : '7'
         };
-        chai.request(app).post(item_edit_url).send(data).end(function(err, res) {
+        /*chai.request(app).post(item_edit_url).send(data).end(function(err, res) {
             expect(res.status).equals(500);
             done();
         }).end(function(err, res) {
             expect(res.status).equals(500);
             done();
+        });*/
+        listManager.editItem(data.id, data.column, data.new_value, function(success) {
+            console.log(success);
+            expect(success).to.be.false;
+            done();
         });
     });
 
     it("edit an item failed", function(done) {
-        chai.request(app).post(loginurl).send({
+        var data = {
+            token : invalidtoken,
+            id : 1,
+            column : null,
+            new_value : 'cs101'
+        };
+        /*chai.request(app).post(loginurl).send({
             token : invalidtoken,
             id : 1,
             column : 'name',
             new_value : 'cs101'
         }).end(function(err, res) {
             expect(res.status).equals(500);
+            done();
+        });*/
+        
+        listManager.editItem(data.id, data.column, data.new_value, function(success) {
+            console.log(success);
+            expect(success).to.be.false;
             done();
         });
     });

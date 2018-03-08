@@ -48,7 +48,7 @@ exports.getListsByUserId = function(userid, callback) {
 }
 //callback(null|listid)
 exports.createList = function(name, userid, callback) {
-    if (callback == null) {
+    if (callback === null) {
         console.error("ListControl::createUser() no callback");
         return;
     }
@@ -83,7 +83,12 @@ exports.createList = function(name, userid, callback) {
     });
 }
 exports.editList = function(list_id, newname, callback) {
-    if (callback == null) {
+    console.log("testy");
+    console.log("list: ", list_id);
+    console.log("name: ", newname);
+    console.log("callback ", callback);
+    if (callback === null) {
+        console.log("HELLO");
         console.error("ListControl::editList() no callback");
         return;
     }
@@ -92,7 +97,7 @@ exports.editList = function(list_id, newname, callback) {
     });
 }
 exports.addItem = function(name, list_id, picture, callback) {
-    if (callback == null) {
+    if (callback === null) {
         console.error("ListControl::addItem() no callback");
         return;
     }
@@ -100,7 +105,7 @@ exports.addItem = function(name, list_id, picture, callback) {
 }
 
 exports.editItem = function(id, column, new_value, callback) {
-    if (callback == null) {
+    if (callback === null) {
         console.error("ListControl::editItem() no callback");
         return;
     }
