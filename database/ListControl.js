@@ -42,6 +42,7 @@ exports.getListsByUserId = function(userid, callback) {
         var iterate = true;
         //don't know how many items are in the list
         for (var i = 0; i < listcount; i++) {
+            if (lists[i] === null || lists[i] === undefined) continue;
             helpers.renameKey(lists[i], "row", "info");
         }
         callback(lists);
@@ -73,10 +74,14 @@ exports.createList = function(name, userid, callback) {
                         callback(null);
                         return;
                     }
-                    else { 
+                    else {
+                        if (results == null || results[0] == null) {
+                            callback(null);
+                            return;
+                        }
                         helpers.renameKey(results[0], "LAST_INSERT_ID()", "id");
                         //console.log(results);
-                        console.log(JSON.stringify(results[0]));
+                        //console.log(JSON.stringify(results[0]));
                         //console.log(results[LAST_INSERT_ID()]);
                         //console.log(results.id);
                         callback(results[0].id);
@@ -96,6 +101,7 @@ exports.editList = function(list_id, newname, callback) {
         callback(success);
     });
 }
+//callback(bool)
 exports.addItem = function(name, list_id, picture, callback) {
     if (callback == null) {
         console.error("ListControl::addItem() no callback");

@@ -56,6 +56,9 @@ exports.toJson = function(body) {
 }
 //obj.oldkey -> obj.newkey
 exports.renameKey = function(obj, oldkey, newkey) {
+    if (obj == null) {
+        return;
+    }
     if (oldkey !== newkey) {
         Object.defineProperty(obj, newkey, 
             Object.getOwnPropertyDescriptor(obj, oldkey));
