@@ -43,11 +43,19 @@ app.use('/', index);
 app.use('/user', userRoutes);
 app.use('/list', listRoutes);
 
-// catch 404 and forward to error handler
+// catch 404 and 404 it
 app.use(function(req, res, next) {
-  var err = new Error('Not Found');
+  /*var err = new Error('Not Found');
   err.status = 404;
-  next(err);
+  next(err);*/
+  res.render('404', {
+    method : req.method,
+    path : req.path,
+    host : req.hostname,
+    headers : JSON.stringify(req.headers),
+    ips : req.ips,
+    url : req.url
+  })
 });
 
 // error handler

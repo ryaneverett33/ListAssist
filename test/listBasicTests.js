@@ -10,6 +10,7 @@ require('../database/connections').initiate_test();
 var successfulId = "100946702532171911600";
 var incorrectId = "-1";
 var createdListId;
+var itemId;
 describe('list/new', function() {
     it('successfully creates a list lists', function(done){
         ListManagement.createList("testy listy", successfulId, function(id) {
@@ -44,7 +45,6 @@ describe('list/edit', function() {
         ListManagement.getLists(successfulId, function(lists) {
             expect(lists).to.not.be.null;
             expect(lists[0]).to.not.be.null;
-            console.log(lists);
             var list = null;
             for (var i = 0; i < lists.length; i++) {
                 var tmp_list = lists[i];
@@ -56,6 +56,7 @@ describe('list/edit', function() {
             }
             expect(list).to.not.be.null;
             var item = list.items[0];
+            itemId = item.id;
             ListManagement.editItem(item.id, "picture_url", "http://google.com", function(success) {
                 expect(success).to.be.true;
                 done();
@@ -83,4 +84,24 @@ describe('list/get', function() {
             done();
         });
     });
+});
+describe('list/item/purchase', function() {
+    it("Successfully purchases an item", function(done) {
+        ListManagement.purchaseItem(itemId, "test purchase", function(success){
+            expect(success).to.be.true;
+            done();
+        });
+    });
+    it("fails to purchase an item", function(done) {
+        ListManagement.purchaseItem(itemId, "test purchase again", function(success){
+            expect(success).to.be.false;
+            done();
+        });
+    });
+    it("fails to purchase invalid item", function(done) {
+        ListManagement.purchaseItem(-1, "test invalid purchase", function(success) {
+            expect(success).to.be.false;
+            done();
+        });
+    })
 });

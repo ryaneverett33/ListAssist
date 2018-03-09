@@ -4,6 +4,10 @@
 		<title>List Assist</title>
 		<link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
 		<link rel='stylesheet' href='/stylesheets/itemsPublic.css' />
+		<div id="data_list_id" data-id="<%= id %>"></div>
+		<script type="text/javascript">
+		console.log(document.getElementById("data_list_id").getAttribute("data-id"));
+		</script>
 	</head>
 <body>
 	<script src="jquery-3.3.1.min.js"></script>
