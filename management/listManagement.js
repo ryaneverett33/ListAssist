@@ -78,12 +78,14 @@ exports.purchaseItem = function(itemid, name, callback) {
             return;
         }
         else {
-            ListControl.purchae(itemid, name, function(success) {
+            ListControl.purchaseItem(itemid, name, function(success) {
                 if (success) {
-
+                    callback(true);
+                    return;
                 }
                 else {
-                    
+                    callback(false);
+                    return;
                 }
             });
         }

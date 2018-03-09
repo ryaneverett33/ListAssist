@@ -142,18 +142,51 @@ exports.deleteItem = function(id, callback) {
 
 //callback(bool|null)
 exports.isPurchased = function(id, callback) {
-    Getter.getEntry(id, function(exists) {
-        if (exists == null || exists == undefined) {
+    getEntry.getItem(id, function(exists) {
+        if (exists[0] == null || exists[0] == undefined) {
             callback(null);
             return;
         }
         else {
-            callback(exists.purchased == true);
+            //console.log(exists);
+            //console.log("exists.purchased %d, == %d === %d == 1", exists[0].purchased, exists.purchased == true, exists.purchased === true, exists.purchased == 1);
+            callback(exists[0].purchased == true);
             return;
         }
     });
 }
 //callback(bool|null)
 exports.purchaseItem = function(id, name, callback) {
-    //this.
+    this.isPurchased(id, function(purchased) {
+        if (purchased == null) {
+            callback(null);
+            return;
+        }
+        if (purchased) {
+            callback(false);
+            return;
+        }
+        else {
+            setEntry.setItem(id, "buyer", name, function(setbuyer) {
+                if (!setbuyer) {
+                    console.error("Failed to set buyer");
+                    callback(false);
+                    return;
+                }
+                else {
+                    setEntry.setItem(id, "purchased", 1, function(setpurchased) {
+                        if (!setpurchased) {
+                            console.error("Failed to set buyer");
+                            callback(false);
+                            return;
+                        }
+                        else {
+                            callback(true);
+                            return;
+                        }
+                    });
+                }
+            });
+        }
+    });
 }
