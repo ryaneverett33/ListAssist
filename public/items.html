@@ -39,10 +39,6 @@
 								<input type="text" class="form-control" id="addItemNameField" maxlength="30">
 							</div>
 							<div class="form-group">
-								<label for="addItemDescriptionField">Description</label>
-								<input type="text" class="form-control" id="addItemDescriptionField" maxlength="100">
-							</div>
-							<div class="form-group">
 								<label for="addItemImageField">Image</label>
 								<input type="text" class="form-control" id="addItemImageField" placeholder="http://">
 							</div>
@@ -80,17 +76,13 @@
 							<input type="text" class="form-control" id="editItemNameField" maxlength="25">
 						</div>
 						<div class="form-group">
-							<label for="editItemDescriptionField">Description</label>
-							<input type="text" class="form-control" id="editItemDescriptionField" maxlength="100">
-						</div>
-						<div class="form-group">
 							<label for="editItemImageField">Image</label>
 							<input type="text" class="form-control" id="editItemImageField" placeholder="http://">
 						</div>
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-danger mr-auto">Remove</button>
+					<button type="button" class="btn btn-danger mr-auto" id="editItemRemoveButton">Remove</button>
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 					<button type="button" class="btn btn-primary" id="editItemSaveChangesButton">Save changes</button>
 				</div>
@@ -110,7 +102,7 @@
 				</div>
 				<div class="modal-body">
 					<div class="form-group">
-						<input type="text" readonly class="form-control" id="shareItemField" value="https://listassist.duckdns.org/some_unique_list_identifier">
+						<input type="text" readonly class="form-control" id="shareListField" value="">
 					</div>
 				</div>
 				<div class="modal-footer">
@@ -123,91 +115,9 @@
 	<!-- Main content -->
 	<button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#addItemModal" id="addItemButton">Add item</button>
 	<button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#shareListModal" id="shareListButton">Share</button>
-	<h1>List Title</h1>
+	<h1 id="listTitle">List Title</h1>
 	<div id="table" class="container-fluid">
 		<div class="row">
-			<div class="col-3">
-				<div class="card">
-					<img class="card-img-top" src="/defaultItem.png">
-					<div class="card-body">
-						<h5 class="card-title">Item Title</h5>
-						<p class="card-text">Description</p>
-						<button type="button" class="btn btn-outline-primary btn-sm editItemButton" data-toggle="modal" data-target="#editItemModal">Edit</button>
-					</div>
-				</div>
-			</div>
-			<div class="col-3">
-				<div class="card">
-					<img class="card-img-top" src="/defaultItem.png">
-					<div class="card-body">
-						<h5 class="card-title">Item Title</h5>
-						<p class="card-text">Description</p>
-						<button type="button" class="btn btn-outline-primary btn-sm editItemButton" data-toggle="modal" data-target="#editItemModal">Edit</button>
-					</div>
-				</div>
-			</div>
-			<div class="col-3">
-				<div class="card">
-					<img class="card-img-top" src="/defaultItem.png">
-					<div class="card-body">
-						<h5 class="card-title">Item title</h5>
-						<p class="card-text">Description</p>
-						<button type="button" class="btn btn-outline-primary btn-sm editItemButton" data-toggle="modal" data-target="#editItemModal">Edit</button>
-					</div>
-				</div>
-			</div>
-			<div class="col-3">
-				<div class="card">
-					<img class="card-img-top" src="/defaultItem.png">
-					<div class="card-body">
-						<h5 class="card-title">Item title</h5>
-						<p class="card-text">Description</p>
-						<button type="button" class="btn btn-outline-primary btn-sm editItemButton" data-toggle="modal" data-target="#editItemModal">Edit</button>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-3">
-				<div class="card">
-					<img class="card-img-top" src="/defaultItem.png">
-					<div class="card-body">
-						<h5 class="card-title">Item title</h5>
-						<p class="card-text">Description</p>
-						<button type="button" class="btn btn-outline-primary btn-sm editItemButton" data-toggle="modal" data-target="#editItemModal">Edit</button>
-					</div>
-				</div>
-			</div>
-			<div class="col-3">
-				<div class="card">
-					<img class="card-img-top" src="/defaultItem.png">
-					<div class="card-body">
-						<h5 class="card-title">Item title</h5>
-						<p class="card-text">Description</p>
-						<button type="button" class="btn btn-outline-primary btn-sm editItemButton" data-toggle="modal" data-target="#editItemModal">Edit</button>
-					</div>
-				</div>
-			</div>
-			<div class="col-3">
-				<div class="card">
-					<img class="card-img-top" src="/defaultItem.png">
-					<div class="card-body">
-						<h5 class="card-title">Item title</h5>
-						<p class="card-text">Description</p>
-						<button type="button" class="btn btn-outline-primary btn-sm editItemButton" data-toggle="modal" data-target="#editItemModal">Edit</button>
-					</div>
-				</div>
-			</div>
-			<div class="col-3">
-				<div class="card">
-					<img class="card-img-top" src="/defaultItem.png">
-					<div class="card-body">
-						<h5 class="card-title">Item title</h5>
-						<p class="card-text">Description</p>
-						<button type="button" class="btn btn-outline-primary btn-sm editItemButton" data-toggle="modal" data-target="#editItemModal">Edit</button>
-					</div>
-				</div>
-			</div>
 		</div>
 	</div>
 </body>

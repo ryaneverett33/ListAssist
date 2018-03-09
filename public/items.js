@@ -1,11 +1,12 @@
 $(document).ready(function() {
 	//get the token cookie
 	var token = document.cookie.split(";")[1].split("=")[1];
+	//var token = "eyJhbGciOiJSUzI1NiIsImtpZCI6ImFjMmI2M2ZhZWZjZjgzNjJmNGM1MjhlN2M3ODQzMzg3OTM4NzAxNmIifQ.eyJhenAiOiI1NzM1OTkyMTEyMzEtcWNlOG9saTltNGtqbGI5ZmwwYWgzNWV2ZzRlOHNlanUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI1NzM1OTkyMTEyMzEtcWNlOG9saTltNGtqbGI5ZmwwYWgzNWV2ZzRlOHNlanUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDQ0MjIxNjA4MDAyOTYxODY5NjMiLCJlbWFpbCI6Imt5bGUubi5idXJrZUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6Inlfd2RiLXFCMUtudDB2ci1IVm1LREEiLCJleHAiOjE1MjA2MzU1MzgsImlzcyI6ImFjY291bnRzLmdvb2dsZS5jb20iLCJqdGkiOiI2Y2I2OTRhNzY5MmJkOTUyNTJhZWUyYzUyMmI3ZjQyOWM1MTYwYTVkIiwiaWF0IjoxNTIwNjMxOTM4LCJuYW1lIjoiS3lsZSBCdXJrZSIsInBpY3R1cmUiOiJodHRwczovL2xoNC5nb29nbGV1c2VyY29udGVudC5jb20vLUFUNUVoWVZBbDV3L0FBQUFBQUFBQUFJL0FBQUFBQUFBRTgwL2pkTEdjQmRYQ25rL3M5Ni1jL3Bob3RvLmpwZyIsImdpdmVuX25hbWUiOiJLeWxlIiwiZmFtaWx5X25hbWUiOiJCdXJrZSIsImxvY2FsZSI6ImVuIn0.PkA1YMOHjkQv52q-GaVzv1KASxX6izr6_r_wKb8l92diSpBqMjkmNXYUTEpcp3A0z4vjSuKVMv_DK9mPQtMH0DJ7eOtTJEPe8Ggwy0nBM1NY4E7PUwlZtHLLRy-3B8hRavadkqI3EMnqWhHq6l9AumjLf-jDyqIg_GNTPuoQU6Oi86WMVGhUaxIhgjt3lNKcJvXZt3eVk6gOWog7FPK7PvRXVw2MM_r-TvX1y_wlbEwWCLPIohVjAk9xu_Zvjmy5S90VLFbLr5vg99h7JBCHI9enWv6Fag7FXk-1dc1Vc1BNL2zf5ZpKhnMTe7l-dFTS1xARm-Q9i3XTASjEEX98lA";
 
-	//get the title of the list page
-	var title = window.location.href.split("?")[1];
+	//get the id of the list
+	var id = window.location.href.split("?")[1];
 
-	var itemsCount = 8;
+	var itemsCount = 0;
 	var currentItemCard;
 
 	$("#customRadio").click(function() {
@@ -22,7 +23,6 @@ $(document).ready(function() {
 	$("#addItemButton").click(function() {
 		//clear inputs
 		$("#addItemNameField").val("");
-		$("#addItemDescriptionField").val("");
 		$("#addItemImageField").val("");
 		$("#addItemLinkField").val("");
 
@@ -34,12 +34,10 @@ $(document).ready(function() {
 	//this is the add item button on the new item modal
 	$("#addItemModalButton").click(function() {
 		var name;
-		var description;
 		var image;
 
 		if($("#customRadio").is(":checked")) {
 			name = $("#addItemNameField").val();
-			description = $("#addItemDescriptionField").val();
 			image = $("#addItemImageField").val();
 
 			//ensure name isn't empty
@@ -49,9 +47,28 @@ $(document).ready(function() {
 			}
 
 			//ensure the image exists
-			imageExists(image, function(exists) {
+			imageExists(image, null, function(exists) {
 				if(exists) {
-					addItem(name, description, image);
+					//addItem(name, image);
+
+					//update backend with new item
+					var data = {
+						token: token,
+						name: name,
+						list_id: id,
+						picture: image
+					};
+					data = JSON.stringify(data);
+
+					accessServer("http://listassist.duckdns.org/list/add", data, function(result) {
+						console.log(result);
+						window.location.reload();
+					},
+					function(result) {
+						console.log(result);
+					});
+
+					//close the modal
 					$("#addItemModal").modal("toggle");
 				}
 				else {
@@ -63,21 +80,15 @@ $(document).ready(function() {
 			//run amazon web scraper to find name, description and image
 			var link = $("#addItemLinkField").val();
 		}
-
-		//addItem(name, description, image);
-
-		//close the modal
-		//$("#addItemModal").modal("toggle");
 	});
 
-	var addItem = function(name, description, image) {
+	var addItem = function(name, image, itemID) {
 		var itemHTML = `
 			<div class="col-3">
-				<div class="card">
+				<div class="card" itemID="` + itemID + `">
 					<img class="card-img-top" src="` + image + `">
 					<div class="card-body">
 						<h5 class="card-title">` + name + `</h5>
-						<p class="card-text">` + description + `</p>
 						<button type="button" class="btn btn-outline-primary btn-sm editItemButton" data-toggle="modal" data-target="#editItemModal">Edit</button>
 					</div>
 				</div>
@@ -96,38 +107,91 @@ $(document).ready(function() {
 
 		//reassign the click event listeners on the edit item buttons
 		assignEditItemButtonFunctionality();
-
-		//update the backend with the new item...
-		
 	}
 
 	//this is the save changes button on the edit item modal
 	$("#editItemSaveChangesButton").click(function() {
-		var name = $("#editItemNameField").val();
-		var description = $("#editItemDescriptionField").val();
-		var image = $("#editItemImageField").val();
+		var oldName = currentItemCard.find(".card-body .card-title").text();
+		var oldImage = currentItemCard.find(".card-img-top").attr("src");
+		var newName = $("#editItemNameField").val();
+		var newImage = $("#editItemImageField").val();
 
-		//ensure name isn't empty
-		if(name == "") {
+		//ensure name or image isn't empty
+		if(newName == "") {
 			$("#editItemNameField").addClass("is-invalid");
 			return;
 		}
 
-		//ensure the image exists
-		imageExists(image, function(exists) {
-			if(exists) {
-				currentItemCard.find(".card-body .card-title").text(name);
-				currentItemCard.find(".card-body .card-text").text(description);
-				currentItemCard.find(".card-img-top").attr("src", image);
+		if(newImage == "") {
+			$("#editItemImageField").addClass("is-invalid");
+			return;
+		}
 
-				//update the backend with the new item information...
+		if(newName != oldName) {
+			//update the backend with the new item information
+			var data = {
+				token: token,
+				id: currentItemCard.attr("itemid"),
+				column: "name",
+				new_value: newName
+			};
+			data = JSON.stringify(data);
 
+			accessServer("https://listassist.duckdns.org/list/item/edit", data, function(result) {
+				console.log(result);
+				currentItemCard.find(".card-body .card-title").text(newName);
 				$("#editItemModal").modal("toggle");
-			}
-			else {
-				$("#editItemImageField").addClass("is-invalid");
-			}
+			},
+			function(result) {
+				console.log(result);
+			});
+		}
+
+		if(newImage != oldImage) {
+			//ensure the image exists
+			imageExists(newImage, null, function(exists, passOut) {
+				if(exists) {
+					//update the backend with the new item information
+					var data = {
+						token: token,
+						id: currentItemCard.attr("itemid"),
+						column: "picture_url",
+						new_value: newImage
+					};
+					data = JSON.stringify(data);
+					console.log(data);
+
+					accessServer("https://listassist.duckdns.org/list/item/edit", data, function(result) {
+						console.log(result);
+						currentItemCard.find(".card-img-top").attr("src", newImage);
+						$("#editItemModal").modal("toggle");
+					},
+					function(result) {
+						console.log(result);
+					});
+				}
+				else {
+					$("#editItemImageField").addClass("is-invalid");
+				}
+			});
+		}
+	});
+
+	$("#editItemRemoveButton").click(function() {
+		var data = {
+			token: token,
+			id: currentItemCard.attr("itemid")
+		}
+		data = JSON.stringify(data);
+
+		accessServer("https://listassist.duckdns.org/list/item/delete", data, function(result) {
+			console.log(result);
+			window.location.reload();
+		},
+		function(result) {
+			console.log(result);
 		});
+
 	});
 
 	var assignEditItemButtonFunctionality = function() {
@@ -135,15 +199,12 @@ $(document).ready(function() {
 
 		//this is the edit item button on each of the item entries
 		$(".editItemButton").click(function () {
-			var card = $(event.target).parent().parent();
-			currentItemCard = card;
+			currentItemCard = $(event.target).parent().parent();;
 
-			var name = card.find(".card-body .card-title").text();
-			var description = card.find(".card-body .card-text").text();
-			var image = card.find(".card-img-top").attr("src");
+			var name = currentItemCard.find(".card-body .card-title").text();
+			var image = currentItemCard.find(".card-img-top").attr("src");
 
 			$("#editItemNameField").val(name);
-			$("#editItemDescriptionField").val(description);
 			$("#editItemImageField").val(image);
 
 			//clear the invalid classes
@@ -171,25 +232,65 @@ $(document).ready(function() {
 		xhr.send(data);
 	}
 
-	function imageExists(url, callback) {
+	function imageExists(url, passIn, callback) {
 		var img = new Image();
-		img.onload = function() { callback(true); };
-		img.onerror = function() { callback(false); };
+		img.onload = function() { callback(true, passIn); };
+		img.onerror = function() { callback(false, passIn); };
 		img.src = url;
 	  }
 
-	//initially fill up the page with the list items
+	//set the link on the share list modal
+	$("#shareListField").attr("value", "https://listassist.duckdns.org/itemsPublic.html?" + id);
+
+	//initially fill up the page with the items and update the name
 	var data = {
 		token: token
 	};
 	data = JSON.stringify(data);
-	console.log(data);
 
-	accessServer("/list/get", data, function(result) {
-		console.log(result);
+	accessServer("https://listassist.duckdns.org/list/get", data, function(result) {
+		json = JSON.parse(result);
+		var items = null;
 
-		//parse the result for the list
-			//parse the list for the items and call addItem() on each
+		//find the list
+		for(var i = 0; i < json.length; i++) {
+			if(json[i].info.id == id) {
+				items = json[i].items;
+
+				//update the name
+				$("#listTitle").html(json[i].info.name);
+
+				break;
+			}
+		}
+
+		if(items == null) {
+			//the list with this id wasn't found
+			alert("this list was not found");
+			return;
+		}
+
+		for(var i = 0; i < items.length; i++) {
+			var name = items[i].name;
+			var picURL = items[i].picture_url;
+			var itemID = items[i].id;
+
+			if(!picURL.startsWith("http://") && !picURL.startsWith("https://")) {
+				picURL = "/defaultItem.png";
+				console.log("here");
+			}
+
+			//ensure the image exists
+			imageExists(picURL, {name: name, itemID: itemID, picURL: picURL}, function(exists, passOut) {
+				if(exists) {
+					addItem(passOut.name, passOut.picURL, passOut.itemID);
+				}
+				else {
+					addItem(passOut.name, "/defaultItem.png", passOut.itemID);
+				}
+			});
+		}
+
 	},
 	function(result) {
 		console.log(result);
