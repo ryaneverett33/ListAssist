@@ -160,7 +160,7 @@ router.post('/item/edit', function(req, res, next) {
       res.status(400).send(JSON.stringify({ error: "Bad JSON" }));
       return;
     }
-    if (json.token == null || json.id == null || json.column == null || json.new_value) {
+    if (json.token == null || json.id == null || json.column == null || json.new_value == null) {
       res.setHeader("content-type", "application/json");
       res.status(400).send(JSON.stringify({ error : "Invalid Arguments"}));
       return;
