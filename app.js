@@ -4,7 +4,9 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var cors = require('cors');
 require('./database/connections').initiate();
+require('./database/connections').useRegular();
 require('./management/authenticator').init();
 require('./management/userManagement').init();
 
@@ -19,6 +21,13 @@ var app = express();
 require('./util/http-root').setRoot(path.join(__dirname, 'public'));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
+var corsOptions = {
+  origin: '*',
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+app.use(cors(corsOptions));
+
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));

@@ -37,7 +37,7 @@ router.post('/new', function(req, res, next) {
     UserManagement.getUser(json.token, function(User) {
       if (User == null) {
         res.setHeader("content-type", "application/json");
-        res.status(404).send(JSON.stringify({ error : "Unable to retrieve user"}));
+        res.status(401).send(JSON.stringify({ error : "Unable to retrieve user"}));
         return;
       }
       else {
@@ -85,7 +85,7 @@ router.post('/edit', function(req, res, next) {
     UserManagement.getUser(json.token, function(User) {
       if (User == null) {
         res.setHeader("content-type", "application/json");
-        res.status(404).send(JSON.stringify({ error : "Unable to retrieve user"}));
+        res.status(401).send(JSON.stringify({ error : "Unable to retrieve user"}));
         return;
       }
       else {
@@ -126,7 +126,7 @@ router.post('/add', function(req, res, next) {
     UserManagement.getUser(json.token, function(User) {
       if (User == null) {
         res.setHeader("content-type", "application/json");
-        res.status(404).send(JSON.stringify({ error : "Unable to retrieve user"}));
+        res.status(401).send(JSON.stringify({ error : "Unable to retrieve user"}));
         return;
       }
       else {
@@ -168,7 +168,7 @@ router.post('/item/edit', function(req, res, next) {
     UserManagement.getUser(json.token, function(User) {
       if (User == null) {
         res.setHeader("content-type", "application/json");
-        res.status(400).send(JSON.stringify({ error : "Unable to retrieve user"}));
+        res.status(401).send(JSON.stringify({ error : "Unable to retrieve user"}));
         return;
       }
       else {
@@ -213,7 +213,7 @@ router.post('/get', function(req, res, next) {
       UserManagement.getUser(json.token, function(User) {
         if (User == null) {
           res.setHeader("content-type", "application/json");
-          res.status(404).send(JSON.stringify({ error : "Unable to retrieve user"}));
+          res.status(401).send(JSON.stringify({ error : "Unable to retrieve user"}));
           return;
         }
         else {
@@ -260,7 +260,7 @@ router.get('/:id', function(req, res, next) {
 
 /**
  * Imports an amazon list
- * input: token, 
+ * input: token, listUrl
  */
 router.post('/import', function (req, res, next) {
   helpers.resolveBody(req, function (body) {
@@ -283,18 +283,20 @@ router.post('/import', function (req, res, next) {
     UserManagement.getUser(json.token, function (User) {
       if (User == null) {
         res.setHeader("content-type", "application/json");
-        res.status(404).send(JSON.stringify({ error: "Unable to retrieve user" }));
+        res.status(401).send(JSON.stringify({ error: "Unable to retrieve user" }));
         return;
       }
       else {
         scrapeAmazonList(json.listUrl).then(list => {
           ListManagement.createList(list.listTitle, User.getId(), function (newListId) {
-            if (newListId == null) {
+            if (!newListId) {
               res.setHeader("content-type", "application/json");
               res.status(500).send(JSON.stringify({ error: "Unable to create List" }));
               return;
             }
             else {
+              res.setHeader("content-type", "application/json");
+              res.status(200).send(JSON.stringify({ id: newListId }));
               list.items.forEach(listItem => {
                 scrapeAmazonItem(listItem.link).then(scrapedItem => {
                   ListManagement.addItem(listItem.itemTitle, newListId, scrapedItem.itemImg, () => {
@@ -305,8 +307,7 @@ router.post('/import', function (req, res, next) {
                 })
 
               });
-              res.setHeader("content-type", "application/json");
-              res.status(200).send(JSON.stringify({ id: newListId }));
+              
               return;
             }
           });
@@ -319,5 +320,82 @@ router.post('/import', function (req, res, next) {
     });
   });
 });
+
+/**
+ * Delete a list
+ * input : id, token
+ */
+router.post('/delete', function(req, res, next) {
+  helpers.resolveBody(req, function(body) {
+    if (body == null) {
+      res.setHeader("content-type", "application/json");
+      res.status(400).send(JSON.stringify({ error: "Empty Request" }));
+      return;
+    }
+    var json = helpers.toJson(body);
+    if (json == null) {
+      res.setHeader("content-type", "application/json");
+      res.status(400).send(JSON.stringify({ error: "Bad JSON" }));
+      return;
+    }
+    if (json.token == null || json.id == null) {
+      res.setHeader("content-type", "application/json");
+      res.status(400).send(JSON.stringify({ error : "Invalid Arguments"}));
+      return;
+    }
+    UserManagement.getUser(json.token, function(User) {
+      if (User == null) {
+        res.setHeader("content-type", "application/json");
+        res.status(401).send(JSON.stringify({ error : "Unable to retrieve user"}));
+        return;
+      }
+
+      ListManagement.deleteList(json.id, function(success) {
+        res.setHeader("content-type", "application/json");
+        res.status(success ? 200 : 500).send();
+      });
+
+    });
+  });
+});
+
+/**
+ * Delete a list item
+ * input : id, token
+ */
+router.post('/item/delete', function(req, res, next) {
+  helpers.resolveBody(req, function(body) {
+    if (body == null) {
+      res.setHeader("content-type", "application/json");
+      res.status(400).send(JSON.stringify({ error: "Empty Request" }));
+      return;
+    }
+    var json = helpers.toJson(body);
+    if (json == null) {
+      res.setHeader("content-type", "application/json");
+      res.status(400).send(JSON.stringify({ error: "Bad JSON" }));
+      return;
+    }
+    if (json.token == null || json.id == null) {
+      res.setHeader("content-type", "application/json");
+      res.status(400).send(JSON.stringify({ error : "Invalid Arguments"}));
+      return;
+    }
+    UserManagement.getUser(json.token, function(User) {
+      if (User == null) {
+        res.setHeader("content-type", "application/json");
+        res.status(401).send(JSON.stringify({ error : "Unable to retrieve user"}));
+        return;
+      }
+
+      ListManagement.deleteItem(json.id, function(success) {
+        res.setHeader("content-type", "application/json");
+        res.status(success ? 200 : 500).send();
+      });
+
+    });
+  });
+});
+
 
 module.exports = router;

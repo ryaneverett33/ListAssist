@@ -1,8 +1,10 @@
 var getEntry = require('./getEntry');
 var setEntry = require('./setEntry');
 var addEntry = require('./addEntry');
+var deleteEntry = require('./deleteEntry');
 var helpers = require('../routes/helpers');
 var pool = require('./connections');
+var helpers = require('../routes/helpers');
 //callback(listObj|null)
 /*
 listObj : [
@@ -41,6 +43,7 @@ exports.getListsByUserId = function(userid, callback) {
         var iterate = true;
         //don't know how many items are in the list
         for (var i = 0; i < listcount; i++) {
+            if (lists[i] === null || lists[i] === undefined) continue;
             helpers.renameKey(lists[i], "row", "info");
         }
         callback(lists);
@@ -60,7 +63,7 @@ exports.createList = function(name, userid, callback) {
         }
         conn.query('INSERT INTO Lists Values(0,?,?);', [name, userid], function(queryerr) {
             if (queryerr) {
-                console.error("ListControl::createUser() failed to query pool: %d", err);
+                console.error("ListControl::createUser() failed to query pool: %s", queryerr);
                 callback(null);
                 return;
             }
@@ -72,9 +75,17 @@ exports.createList = function(name, userid, callback) {
                         callback(null);
                         return;
                     }
-                    else { 
+                    else {
+                        if (results == null || results[0] == null) {
+                            callback(null);
+                            return;
+                        }
+                        helpers.renameKey(results[0], "LAST_INSERT_ID()", "id");
+                        //console.log(results);
+                        //console.log(JSON.stringify(results[0]));
+                        //console.log(results[LAST_INSERT_ID()]);
                         //console.log(results.id);
-                        callback(Number(results));
+                        callback(results[0].id);
                         return;
                     }
                 });
@@ -96,6 +107,7 @@ exports.editList = function(list_id, newname, callback) {
         callback(success);
     });
 }
+//callback(bool)
 exports.addItem = function(name, list_id, picture, callback) {
     if (callback === null) {
         console.error("ListControl::addItem() no callback");
@@ -110,4 +122,20 @@ exports.editItem = function(id, column, new_value, callback) {
         return;
     }
     setEntry.setItem(id, column, new_value, callback);
+} 
+
+exports.deleteList = function(id, callback) {
+    if (callback == null) {
+        console.error("ListControl::deleteList() no callback");
+        return;
+    }
+    deleteEntry.deleteList(id, callback);
+}
+
+exports.deleteItem = function(id, callback) {
+    if (callback == null) {
+        console.error("ListControl::deleteItem() no callback");
+        return;
+    }
+    deleteEntry.deleteItem(id, callback);
 } 
