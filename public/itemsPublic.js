@@ -1,4 +1,6 @@
 $(document).ready(function() {
+	//get the id of the list
+	var id = window.location.href.split("?")[1];
     var currentItemCard;
 
     $("img").click(function() {
@@ -32,9 +34,24 @@ $(document).ready(function() {
         currentItemCard.find(".card-text").append("<br/>Bought by " + name);
 
         //update backend...
-        
+        var data = {
+            
+        };
+        data = JSON.stringify(data);
+    
+        accessServer("https://listassist.duckdns.org/...", data, function(result) {
+            json = JSON.parse(result);
+
+        },
+        function(result) {
+            console.log(result);
+        });
 
         //close the modal
 		$("#markAsBoughtModal").modal("toggle");
     });
+
+    //initially fill up the page with the items and update the name
+	
+    
 });
