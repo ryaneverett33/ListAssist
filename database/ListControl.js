@@ -190,3 +190,10 @@ exports.purchaseItem = function(id, name, callback) {
         }
     });
 }
+
+//callback(bool)
+exports.listExists = function(id, callback) {
+    getEntry.getItems(id, function(list) {
+        callback(list !== false);
+    });
+}

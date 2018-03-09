@@ -253,9 +253,28 @@ router.post('/get', function(req, res, next) {
 /* display a list */
 router.get('/:id', function(req, res, next) {
   // todo: get the list from the database
-
+  var listId = Number(req.params.id);
+  if (listId == NaN || listId == null) {
+    res.render('404');
+    return;
+  }
+  else {
+    ListManagement.listExists(listId, function(exists) {
+      if (exists) {
+        res.render('itemsPublicExample', {
+          id : listId
+        });
+        return;
+      }
+      else {
+        res.status(404);
+        res.render('404');
+        return;
+      }
+    })
+  }
   // todo:
-  res.render('list', { title: 'List' });
+  //res.render('list', { title: 'List' });
 });
 
 /**

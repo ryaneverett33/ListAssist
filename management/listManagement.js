@@ -91,3 +91,6 @@ exports.purchaseItem = function(itemid, name, callback) {
         }
     });
 }
+exports.listExists = function(listid, callback) {
+    ListControl.listExists(listid, callback);
+}
