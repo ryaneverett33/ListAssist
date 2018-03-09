@@ -179,7 +179,7 @@ exports.setItem = function setItem(id, column, new_value, callback) {
 	    	return;
 	    }
 	    var len = new_value.length
-		if (column == "name" && (len > 64 || len < 1)) {
+		if ((column == "name" || column == "buyer") && (len > 64 || len < 1)) {
 			console.error("Username/buyer size must be between 1 and 64 characters");
 			callback(false);
 			return;
