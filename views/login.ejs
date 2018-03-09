@@ -3,7 +3,7 @@
 	<head>
 		<title>List Assist - Sign in</title>
 
-		<meta name="google-signin-client_id" content="573599211231-qce8oli9m4kjlb9fl0ah35evg4e8seju.apps.googleusercontent.com">
+		<meta name="google-signin-client_id" content="1032367753855-k81843peclct63utjvcb4e95vu74icsp.apps.googleusercontent.com">
 		<link rel='stylesheet' href='/stylesheets/style.css' />
 	</head>
 	<body>
@@ -11,44 +11,18 @@
 		<script>
 			function onSignIn(googleUser) {
 				var profile = googleUser.getBasicProfile();
-				//console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-				//console.log('Name: ' + profile.getName());
-				//console.log('Image URL: ' + profile.getImageUrl());
-				//console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-
-				var data = {};
-				data["tokenId"] = googleUser.getAuthResponse().id_token;
-				data["provider"] = "google";
-				data["name"] = profile.getName();
-				data["email"] = profile.getEmail();
-				data = JSON.stringify(data);
-				//console.log(data);
-
-				var xhr = new XMLHttpRequest();
-				xhr.open("POST", "/user/login");
-				xhr.onload = function() {
-					var result = JSON.parse(this.responseText);
-					//console.log(result);
-
-					if(xhr.status == 200) {
-						console.log("Login successful");
-
-						//set the cookie
-						document.cookie = "token=" + result.token;
-
-						//redirect to the list page
-						window.location.href = "/listpage.html";
-					}
-					else {
-						console.log("Login unsuccessful");
-					}
-				};
-				xhr.send(data);
+				console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+				console.log('Name: ' + profile.getName());
+				console.log('Image URL: ' + profile.getImageUrl());
+				console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
 			}
 		</script>
+		<div id="sign_in_div">
+			<h1 id="main_header">List Assist</h1>
+			<h2 id="sign_in_header">Sign in with Google</h2>
+			<div class="g-signin2" data-onsuccess="onSignIn"></div>
+		</div>
 
-		<h1>List Assist Sign In</h1>
-		<div class="g-signin2" data-onsuccess="onSignIn"></div>
 
 	</body>
 </html>
