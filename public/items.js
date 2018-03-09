@@ -2,8 +2,8 @@ $(document).ready(function() {
 	//get the token cookie
 	var token = document.cookie.split(";")[1].split("=")[1];
 
-	//get the title of the list page
-	var title = window.location.href.split("?")[1];
+	//get the id of the list
+	var id = window.location.href.split("?")[1];
 
 	var itemsCount = 8;
 	var currentItemCard;
@@ -183,17 +183,26 @@ $(document).ready(function() {
 		token: "eyJhbGciOiJSUzI1NiIsImtpZCI6ImFjMmI2M2ZhZWZjZjgzNjJmNGM1MjhlN2M3ODQzMzg3OTM4NzAxNmIifQ.eyJhenAiOiI1NzM1OTkyMTEyMzEtcWNlOG9saTltNGtqbGI5ZmwwYWgzNWV2ZzRlOHNlanUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI1NzM1OTkyMTEyMzEtcWNlOG9saTltNGtqbGI5ZmwwYWgzNWV2ZzRlOHNlanUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDQ0MjIxNjA4MDAyOTYxODY5NjMiLCJlbWFpbCI6Imt5bGUubi5idXJrZUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6IlExdGtkaXd4MUctMUEzTEhwM0U1MHciLCJleHAiOjE1MjA1NTYyMjgsImlzcyI6ImFjY291bnRzLmdvb2dsZS5jb20iLCJqdGkiOiIzNTA3M2JiNTExYzI1YjExYzU2YmZjNmZlYjhiOTNlOGUwNmI5ZWRlIiwiaWF0IjoxNTIwNTUyNjI4LCJuYW1lIjoiS3lsZSBCdXJrZSIsInBpY3R1cmUiOiJodHRwczovL2xoNC5nb29nbGV1c2VyY29udGVudC5jb20vLUFUNUVoWVZBbDV3L0FBQUFBQUFBQUFJL0FBQUFBQUFBRTgwL2pkTEdjQmRYQ25rL3M5Ni1jL3Bob3RvLmpwZyIsImdpdmVuX25hbWUiOiJLeWxlIiwiZmFtaWx5X25hbWUiOiJCdXJrZSIsImxvY2FsZSI6ImVuIn0.be_k-zdJIL6BOnX_qnuziVBmUyNh4GQyLdX3KJwNrJ8RAAxqJ3-boSv69_Mob7TZXrIk0kK7IFmS1CP_EVP0wl8cZ8wKwbS5HkT1oQxHCo4176LJL1HqpxT74lDNkeaK2LdEqdM4AI76wmfGPdrwoNFLTCVKnXKUI7sXM5eEetfQb0JdQzn5a_d2rpJNxmNJGQdPUV6_6wVSeebBA5uPO4g-43jGd-SWibHEt2BGyWyEBxGdI-tm9vTWT44iLLlUPu3RH_grgkhGImY9XKhWNzEhUS0l8P_8zRm2p-KBcfpxz73hasQCgjTRB2xczVAyLfZQl2C8v0hmZJkTbroFWA"
 	};
 	data = JSON.stringify(data);
-	console.log(data);
 
 	accessServer("http://listassist.duckdns.org/list/get", data, function(result) {
 		json = JSON.parse(result);
-		console.log(result);
 
-		var items = json[0]["items"];
+		var items = null;
+
+		//find the list
+		for(var i = 0; i < json.length; i++) {
+			if(json[i].info.id == id) {
+				items = json[i].items;
+				break;
+			}
+		}
+
+		if(items == null) {
+			//the list with this id wasn't found
+		}
 
 		for(var i = 0; i < items.length; i++) {
 			var name = items[i].name;
-			console.log(name);
 			var desc = "none"; //not returned from list/get
 			var picURL = items[i].picture_url;
 
@@ -204,7 +213,6 @@ $(document).ready(function() {
 			//ensure the image exists
 			imageExists(picURL, name, function(exists, name) {
 				if(exists) {
-					console.log("exists");
 					addItem(name, "none", picURL);
 				}
 				else {
