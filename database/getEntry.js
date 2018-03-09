@@ -1,41 +1,6 @@
 var pool = require('./connections.js');
 
 /*
-pool.initiate();
-
-getUser(1, function(results) {
-	if (!results) {
-		console.log("unable to query database");
-	} else {
-		console.log(results);
-		//console.log(results['id']);
-		console.log(results[0].id);
-
-	}
-});
-
-getLists(1, function(results) {
-	if (!results) {
-		console.log("failure.");
-	} else {
-		console.log("ok!");
-		//console.log(results);
-	}
-});
-
-
-getItems(4, function(results) {
-	if (!results) {
-		console.log("failure.");
-	} else {
-		console.log("ok!");
-		console.log(results);
-	}
-});
-*/
-
-
-/*
 This function will return a RowDataPacket, which can be parsed in the following manner: results[<index>].column
 Users table columns: id, username
 user_id: unique id of user stored in database, accessible from google login
