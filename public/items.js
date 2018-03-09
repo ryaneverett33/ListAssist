@@ -1,7 +1,7 @@
 $(document).ready(function() {
 	//get the token cookie
 	//var token = document.cookie.split(";")[1].split("=")[1];
-	var token = "eyJhbGciOiJSUzI1NiIsImtpZCI6ImFjMmI2M2ZhZWZjZjgzNjJmNGM1MjhlN2M3ODQzMzg3OTM4NzAxNmIifQ.eyJhenAiOiI1NzM1OTkyMTEyMzEtcWNlOG9saTltNGtqbGI5ZmwwYWgzNWV2ZzRlOHNlanUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI1NzM1OTkyMTEyMzEtcWNlOG9saTltNGtqbGI5ZmwwYWgzNWV2ZzRlOHNlanUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDQ0MjIxNjA4MDAyOTYxODY5NjMiLCJlbWFpbCI6Imt5bGUubi5idXJrZUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6IlExdGtkaXd4MUctMUEzTEhwM0U1MHciLCJleHAiOjE1MjA1NTYyMjgsImlzcyI6ImFjY291bnRzLmdvb2dsZS5jb20iLCJqdGkiOiIzNTA3M2JiNTExYzI1YjExYzU2YmZjNmZlYjhiOTNlOGUwNmI5ZWRlIiwiaWF0IjoxNTIwNTUyNjI4LCJuYW1lIjoiS3lsZSBCdXJrZSIsInBpY3R1cmUiOiJodHRwczovL2xoNC5nb29nbGV1c2VyY29udGVudC5jb20vLUFUNUVoWVZBbDV3L0FBQUFBQUFBQUFJL0FBQUFBQUFBRTgwL2pkTEdjQmRYQ25rL3M5Ni1jL3Bob3RvLmpwZyIsImdpdmVuX25hbWUiOiJLeWxlIiwiZmFtaWx5X25hbWUiOiJCdXJrZSIsImxvY2FsZSI6ImVuIn0.be_k-zdJIL6BOnX_qnuziVBmUyNh4GQyLdX3KJwNrJ8RAAxqJ3-boSv69_Mob7TZXrIk0kK7IFmS1CP_EVP0wl8cZ8wKwbS5HkT1oQxHCo4176LJL1HqpxT74lDNkeaK2LdEqdM4AI76wmfGPdrwoNFLTCVKnXKUI7sXM5eEetfQb0JdQzn5a_d2rpJNxmNJGQdPUV6_6wVSeebBA5uPO4g-43jGd-SWibHEt2BGyWyEBxGdI-tm9vTWT44iLLlUPu3RH_grgkhGImY9XKhWNzEhUS0l8P_8zRm2p-KBcfpxz73hasQCgjTRB2xczVAyLfZQl2C8v0hmZJkTbroFWA";
+	var token = "eyJhbGciOiJSUzI1NiIsImtpZCI6ImFjMmI2M2ZhZWZjZjgzNjJmNGM1MjhlN2M3ODQzMzg3OTM4NzAxNmIifQ.eyJhenAiOiI1NzM1OTkyMTEyMzEtcWNlOG9saTltNGtqbGI5ZmwwYWgzNWV2ZzRlOHNlanUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI1NzM1OTkyMTEyMzEtcWNlOG9saTltNGtqbGI5ZmwwYWgzNWV2ZzRlOHNlanUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDQ0MjIxNjA4MDAyOTYxODY5NjMiLCJlbWFpbCI6Imt5bGUubi5idXJrZUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6IlNZamliTmg4aGNrbUpvcDNQOG5XZVEiLCJleHAiOjE1MjA1NjAyNDQsImlzcyI6ImFjY291bnRzLmdvb2dsZS5jb20iLCJqdGkiOiI4NTY3ODQxMzYyNTVlM2JlMWY2MTI0MWM0ZmQ5M2JhZDM2NmY3YmQzIiwiaWF0IjoxNTIwNTU2NjQ0LCJuYW1lIjoiS3lsZSBCdXJrZSIsInBpY3R1cmUiOiJodHRwczovL2xoNC5nb29nbGV1c2VyY29udGVudC5jb20vLUFUNUVoWVZBbDV3L0FBQUFBQUFBQUFJL0FBQUFBQUFBRTgwL2pkTEdjQmRYQ25rL3M5Ni1jL3Bob3RvLmpwZyIsImdpdmVuX25hbWUiOiJLeWxlIiwiZmFtaWx5X25hbWUiOiJCdXJrZSIsImxvY2FsZSI6ImVuIn0.CYoNUd1D1eFlYc6WNXsMuHKhult8uWDCBGjoNwuchoO18q7aRUXLsBS5RUZ2r_kL3XOMITclOCW-OBQ5xmA9aji5g_NZKZyMYrBtxctWMOJKpufCWNFLmv8Qhlox1O2fxwH9uk1kmLpPIRDPudfU_8eHVryiXyr9X1P1iOLJ50zLjUWEge8OVe8bkJOQwmrPb7ko1xU2Q-FsyUv96dBBoOK47nPOevFGZgoFOJjW5l2DDMg-H5QhUatLpQwXTRK5dJmI5Ammu52z_kndEQPh-W0u71bsKEoPbWvZiJY8WR0RZkWuMa83FletO4xNmxujWe_jBCqae5MErjU0eBWbTg";
 
 	//get the id of the list
 	var id = window.location.href.split("?")[1];
@@ -23,7 +23,6 @@ $(document).ready(function() {
 	$("#addItemButton").click(function() {
 		//clear inputs
 		$("#addItemNameField").val("");
-		$("#addItemDescriptionField").val("");
 		$("#addItemImageField").val("");
 		$("#addItemLinkField").val("");
 
@@ -35,12 +34,10 @@ $(document).ready(function() {
 	//this is the add item button on the new item modal
 	$("#addItemModalButton").click(function() {
 		var name;
-		var description;
 		var image;
 
 		if($("#customRadio").is(":checked")) {
 			name = $("#addItemNameField").val();
-			description = $("#addItemDescriptionField").val();
 			image = $("#addItemImageField").val();
 
 			//ensure name isn't empty
@@ -52,7 +49,7 @@ $(document).ready(function() {
 			//ensure the image exists
 			imageExists(image, null, function(exists) {
 				if(exists) {
-					addItem(name, description, image);
+					addItem(name, image);
 
 					//update backend with new item
 					var data = {
@@ -84,14 +81,13 @@ $(document).ready(function() {
 		}
 	});
 
-	var addItem = function(name, description, image) {
+	var addItem = function(name, image) {
 		var itemHTML = `
 			<div class="col-3">
 				<div class="card">
 					<img class="card-img-top" src="` + image + `">
 					<div class="card-body">
 						<h5 class="card-title">` + name + `</h5>
-						<p class="card-text">` + description + `</p>
 						<button type="button" class="btn btn-outline-primary btn-sm editItemButton" data-toggle="modal" data-target="#editItemModal">Edit</button>
 					</div>
 				</div>
@@ -110,15 +106,11 @@ $(document).ready(function() {
 
 		//reassign the click event listeners on the edit item buttons
 		assignEditItemButtonFunctionality();
-
-		//update the backend with the new item...
-		
 	}
 
 	//this is the save changes button on the edit item modal
 	$("#editItemSaveChangesButton").click(function() {
 		var name = $("#editItemNameField").val();
-		var description = $("#editItemDescriptionField").val();
 		var image = $("#editItemImageField").val();
 
 		//ensure name isn't empty
@@ -131,7 +123,6 @@ $(document).ready(function() {
 		imageExists(image, null, function(exists, passOut) {
 			if(exists) {
 				currentItemCard.find(".card-body .card-title").text(name);
-				currentItemCard.find(".card-body .card-text").text(description);
 				currentItemCard.find(".card-img-top").attr("src", image);
 
 				//update the backend with the new item information...
@@ -153,11 +144,9 @@ $(document).ready(function() {
 			currentItemCard = card;
 
 			var name = card.find(".card-body .card-title").text();
-			var description = card.find(".card-body .card-text").text();
 			var image = card.find(".card-img-top").attr("src");
 
 			$("#editItemNameField").val(name);
-			$("#editItemDescriptionField").val(description);
 			$("#editItemImageField").val(image);
 
 			//clear the invalid classes
@@ -192,7 +181,7 @@ $(document).ready(function() {
 		img.src = url;
 	  }
 
-	//initially fill up the page with the list items
+	//initially fill up the page with the items and update the name
 	var data = {
 		token: token
 	};
@@ -207,17 +196,21 @@ $(document).ready(function() {
 		for(var i = 0; i < json.length; i++) {
 			if(json[i].info.id == id) {
 				items = json[i].items;
+
+				//update the name
+				$("#listTitle").html(json[i].info.name);
+
 				break;
 			}
 		}
 
 		if(items == null) {
 			//the list with this id wasn't found
+			alert("this list was not found");
 		}
 
 		for(var i = 0; i < items.length; i++) {
 			var name = items[i].name;
-			var desc = "none"; //not returned from list/get
 			var picURL = items[i].picture_url;
 
 			if(!picURL.startsWith("http://") || !picURL.startsWith("https://")) {
@@ -227,10 +220,10 @@ $(document).ready(function() {
 			//ensure the image exists
 			imageExists(picURL, name, function(exists, name) {
 				if(exists) {
-					addItem(name, "none", picURL);
+					addItem(name, picURL);
 				}
 				else {
-					addItem(name, "none", "/defaultItem.png");
+					addItem(name, "/defaultItem.png");
 				}
 			});
 		}

@@ -39,10 +39,6 @@
 								<input type="text" class="form-control" id="addItemNameField" maxlength="30">
 							</div>
 							<div class="form-group">
-								<label for="addItemDescriptionField">Description</label>
-								<input type="text" class="form-control" id="addItemDescriptionField" maxlength="100">
-							</div>
-							<div class="form-group">
 								<label for="addItemImageField">Image</label>
 								<input type="text" class="form-control" id="addItemImageField" placeholder="http://">
 							</div>
@@ -78,10 +74,6 @@
 						<div class="form-group">
 							<label for="editItemNameField">Name</label>
 							<input type="text" class="form-control" id="editItemNameField" maxlength="25">
-						</div>
-						<div class="form-group">
-							<label for="editItemDescriptionField">Description</label>
-							<input type="text" class="form-control" id="editItemDescriptionField" maxlength="100">
 						</div>
 						<div class="form-group">
 							<label for="editItemImageField">Image</label>
@@ -123,7 +115,7 @@
 	<!-- Main content -->
 	<button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#addItemModal" id="addItemButton">Add item</button>
 	<button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#shareListModal" id="shareListButton">Share</button>
-	<h1>List Title</h1>
+	<h1 id="listTitle">List Title</h1>
 	<div id="table" class="container-fluid">
 		<div class="row">
 		</div>
