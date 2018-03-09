@@ -142,3 +142,48 @@ exports.getLists = function getLists(user_id, callback) {
 	});
 	      
 }
+
+/*
+item: {
+	id : int, 
+	name : var(255),
+	picture_url : var(255),
+	buyer : var(64),
+	purchased : bool,
+	list_id : int
+} OR NULL
+*/
+exports.getItem = function(itemid, callback) {
+	if (callback == null) {
+		console.error("getEntry::getItem() callback is null");
+		return;
+	}
+	pool.connect(function(err, conn) {
+		if (err) {
+			console.error("Error getting connection : %s", err);
+			callback(null);
+			pool.disconnect(conn);
+			return;
+		}
+		else {
+			conn.query('SELECT * FROM Items WHERE id=?;', [itemid], function(err2, results) {
+				if (err2) {
+					console.error("Couldn't get item : %s", err2);
+					callback(null);
+					return;
+				}
+				else {
+					if (results == null || results == undefined) {
+						callback(null);
+						return;
+					}
+					else {
+						results.purchased = Boolean(results.purchased);
+						callback(results);
+						return;
+					}
+				}
+			});
+		}
+	})
+}

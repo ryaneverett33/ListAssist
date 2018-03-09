@@ -139,3 +139,21 @@ exports.deleteItem = function(id, callback) {
     }
     deleteEntry.deleteItem(id, callback);
 } 
+
+//callback(bool|null)
+exports.isPurchased = function(id, callback) {
+    Getter.getEntry(id, function(exists) {
+        if (exists == null || exists == undefined) {
+            callback(null);
+            return;
+        }
+        else {
+            callback(exists.purchased == true);
+            return;
+        }
+    });
+}
+//callback(bool|null)
+exports.purchaseItem = function(id, name, callback) {
+    //this.
+}

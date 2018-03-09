@@ -397,5 +397,75 @@ router.post('/item/delete', function(req, res, next) {
   });
 });
 
+/*
+Purchases an item from the list
+id : item id
+token : optional,
+name : optional
+either name or token supplied
+*/
+router.post('/item/purchase', function(req, res, next){
+  helpers.resolveBody(req, function(body) {
+    if (body == null) {
+      res.setHeader("content-type", "application/json");
+      res.status(400).send(JSON.stringify({ error: "Empty Request" }));
+      return;
+    }
+    var json = helpers.toJson(body);
+    if (json == null) {
+      res.setHeader("content-type", "application/json");
+      res.status(400).send(JSON.stringify({ error: "Bad JSON" }));
+      return;
+    }
+    if ((json.token == null && json.name == null ) || json.id == null) {
+      res.setHeader("content-type", "application/json");
+      res.status(400).send(JSON.stringify({ error : "Invalid Arguments"}));
+      return;
+    }
+    if (json.token != null && json.name != null) {
+      res.setHeader("content-type", "application/json");
+      res.status(400).send(JSON.stringify({ error : "ya can't have both"}));
+      return;
+    }
+    if (json.token != null) {
+      UserManagement.getUser(json.token, function(user) {
+        if (user == null) {
+          res.setHeader("content-type", "application/json");
+          res.status(401).send(JSON.stringify({ error : "Unable to retrieve user"}));
+          return;
+        }
+        else {
+          ListManagement.purchaseItem(json.id, user.getName(), function(success) {
+            if (success) {
+              res.setHeader("content-type", "application/json");
+              res.status(200).send();
+              return;
+            }
+            else {
+              res.setHeader("content-type", "application/json");
+              res.status(500).send(JSON.stringify({ error : "already purchased" }))
+              return;
+            }
+          });
+        }
+      });
+    }
+    else {
+      ListManagement.purchaseItem(json.id, json.name, function(success) {
+        if (success) {
+          res.setHeader("content-type", "application/json");
+          res.status(200).send();
+          return;
+        }
+        else {
+          res.setHeader("content-type", "application/json");
+          res.status(500).send(JSON.stringify({ error : "already purchased" }))
+          return;
+        }
+      })
+    }
+  }) 
+});
+
 
 module.exports = router;

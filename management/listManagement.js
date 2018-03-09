@@ -70,3 +70,22 @@ exports.deleteList = function(id, callback) {
 exports.deleteItem = function(id, callback) {
     ListControl.deleteItem(id, callback);
 }
+//callback(true|false)
+exports.purchaseItem = function(itemid, name, callback) {
+    ListControl.isPurchased(itemid, function(purchased) {
+        if (purchased) {
+            callback(false);
+            return;
+        }
+        else {
+            ListControl.purchae(itemid, name, function(success) {
+                if (success) {
+
+                }
+                else {
+                    
+                }
+            });
+        }
+    });
+}
