@@ -31,7 +31,12 @@ router.get('/', function(req, res, next) {
   //res.render('login');
 
   //serve the items page
-  res.render('itemsExample');
+  try {
+    res.render('itemsExample');
+  }
+  catch(err) {
+    res.status(500).send(JSON.stringify({error:err}));
+  }
   //<object hidden id="listid" value='<%= listid %>'></object>
 });
 
