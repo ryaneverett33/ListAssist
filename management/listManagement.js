@@ -109,7 +109,7 @@ exports.getList = function(listid, callback) {
     try {
         ListControl.getList(listid, function(list) {
             console.log("get list: " + list + JSON.stringify(list));
-            if (list == null || list[0] == null) {
+            if (list == null || list == undefined || list[0] == null) {
                 console.error("ListManagement::getLists() unable to get Lists");
                 callback(null);
                 return;
