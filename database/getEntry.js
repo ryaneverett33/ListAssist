@@ -53,11 +53,77 @@ exports.getItems = function getItems(list_id, callback) {
 		        	console.log("An error occured getting items for list: %s", error2)
 		        	callback(null);
 		        } else {
+					console.log(JSON.stringify(results));
+					//results.row.count = item_arr.length;
 		        	callback(results);
 		        }
 	        	pool.disconnect(connection);
 	        	return;
 		    });
+		}
+	});
+}
+function fixNull(value, type) {
+	//success ? 200 : 500
+	switch (type) {
+		case "bool" : 
+			return (value == null ? false : value);
+		case "string" :
+			return (value == null ? "" : value);
+		default : 
+			return value;
+	}
+}
+exports.getList = function(list_id, callback) {
+	pool.connect(function(error, connection) {
+		//check for errors
+	    if (error) {
+	      console.error("Error getting list from database: %s", error);
+	      callback(null);
+	      return;
+	    }
+	    else {
+	    	var lists = [];  //lists that user has, and it's items within
+	    	var items = [];
+	    	var query = connection.query('SELECT * FROM Lists where id=?', [list_id]);
+
+	    	query
+			  .on('error', function(err) {
+			  	console.error("An error occured getting list(s) from database: %s", err);
+			  	callback(null);
+			  	return;
+			    // Handle error, an 'end' event will be emitted after this as well
+			  })
+			  .on('result', function(row) {
+			    // Pausing the connnection to wait for items query (so that lists does not fill in empty arrays always)
+			    connection.pause();
+			    getItems(row.id, function(item_arr) {
+			    	var items;
+			    	if (item_arr) {
+						items = item_arr;
+			    	} else {
+			    		items = [];
+			    	}
+					list = {row, items}
+					list.row.count = item_arr.length;
+					//NULLABLE FIELDS, purchased, buyer, picture
+					for (var i = 0; i < item_arr.length; i++) {
+						var item = item_arr[i];
+						item.purchased = fixNull(item.purchased, "bool");
+						item.buyer = fixNull(item.buyer, "string");
+						item.picture_url = fixNull(item.picture_url, "string");
+					}
+
+			    	lists.push(list);  //add items to list, if any
+			    	connection.resume();  //resume the connection now that the item query is complete
+			    });
+
+			  })
+			  .on('end', function() {
+			    // all rows have been received
+			    callback(lists);
+			    return;
+			  });
 		}
 	});
 }
@@ -77,7 +143,7 @@ function getItems(list_id, callback) {
 		        if (error2) {
 		        	console.log("An error occured getting items for list: %s", error2)
 		        	callback(null);
-		        } else {
+		        } else {			
 		        	callback(results);
 		        }
 	        	pool.disconnect(connection);

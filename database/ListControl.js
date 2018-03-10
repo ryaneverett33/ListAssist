@@ -30,8 +30,21 @@ listObj : [
 */
 exports.getListsByUserId = function(userid, callback) {
     getEntry.getLists(userid, function(lists) {
-        if (lists.length == 0) {
+        if (lists === null || lists.row === null || lists.items === null) {
+            console.log("failed first round " + JSON.stringify(list));
             callback({});
+            return;
+        }
+        console.log("lists.length %d", lists.length);
+        //console.log("list.items.length %d", lists.items.length);
+        if (lists.length == 0) {
+            console.log("list length: 0, " + JSON.stringify(list));
+            callback({});
+            return;
+        }
+        if (list.length == 0) {
+            helpers.renameKey(lists, "row", "info");
+            callback(lists);
             return;
         }
         /*if (lists[0] == null) {
@@ -148,7 +161,7 @@ exports.isPurchased = function(id, callback) {
             return;
         }
         else {
-            //console.log(exists);
+            console.log(exists);
             //console.log("exists.purchased %d, == %d === %d == 1", exists[0].purchased, exists.purchased == true, exists.purchased === true, exists.purchased == 1);
             callback(exists[0].purchased == true);
             return;
@@ -159,10 +172,12 @@ exports.isPurchased = function(id, callback) {
 exports.purchaseItem = function(id, name, callback) {
     this.isPurchased(id, function(purchased) {
         if (purchased == null) {
+            console.log("failed to check if purchased");
             callback(null);
             return;
         }
         if (purchased) {
+            console.log("already purchased");
             callback(false);
             return;
         }
@@ -181,6 +196,7 @@ exports.purchaseItem = function(id, name, callback) {
                             return;
                         }
                         else {
+                            console.log("successfully purchased");
                             callback(true);
                             return;
                         }
@@ -195,5 +211,21 @@ exports.purchaseItem = function(id, name, callback) {
 exports.listExists = function(id, callback) {
     getEntry.getItems(id, function(list) {
         callback(list !== false);
+    });
+}
+exports.getList = function(listid, callback) {
+    getEntry.getList(listid, function(lists) {
+        if (lists.length == 0) {
+            console.log("length 0");
+            callback({});
+            return;
+        }
+        if (lists[0] === null || lists[0] === undefined) {
+            console.error("getList null");
+            callback({});
+            return;
+        }
+        helpers.renameKey(lists[0], "row", "info");
+        callback(lists);
     });
 }

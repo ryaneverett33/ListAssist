@@ -30,13 +30,15 @@ exports.getLists = function(userid, callback) {
         return;
     }
     ListControl.getListsByUserId(userid, function(lists) {
-        if (lists == null) {
+        if (lists == null || lists[0] == null) {
+            console.log(lists);
             console.error("ListManagement::getLists() unable to get Lists");
             callback(null);
             return;
         }
         else {
             callback(lists);
+            return;
         }
     });
     /*UserControl.isUserIdInDb(userid, function(yes) {
@@ -74,16 +76,19 @@ exports.deleteItem = function(id, callback) {
 exports.purchaseItem = function(itemid, name, callback) {
     ListControl.isPurchased(itemid, function(purchased) {
         if (purchased) {
+            console.log("already purchased");
             callback(false);
             return;
         }
         else {
             ListControl.purchaseItem(itemid, name, function(success) {
                 if (success) {
+                    console.log("successfully purchased!");
                     callback(true);
                     return;
                 }
                 else {
+                    console.log("failed to purchase item");
                     callback(false);
                     return;
                 }
@@ -94,3 +99,23 @@ exports.purchaseItem = function(itemid, name, callback) {
 exports.listExists = function(listid, callback) {
     ListControl.listExists(listid, callback);
 }
+//Assumes userindb has already been checked
+//callback(listObj|null)
+exports.getList = function(listid, callback) {
+    if(callback == null) {
+        console.error("ListManagement::getLists() callback function is null");
+        return;
+    }
+    ListControl.getList(listid, function(list) {
+        if (list == null || list[0] == null) {
+            console.error("ListManagement::getLists() unable to get Lists");
+            callback(null);
+            return;
+        }
+        else {
+            callback(list);
+            return;
+        }
+    });
+}
+exports.isPurchased = ListControl.isPurchased;
