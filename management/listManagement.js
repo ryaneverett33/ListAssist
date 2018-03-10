@@ -30,13 +30,14 @@ exports.getLists = function(userid, callback) {
         return;
     }
     ListControl.getListsByUserId(userid, function(lists) {
-        if (lists == null) {
+        if (lists == null || list[0] == null) {
             console.error("ListManagement::getLists() unable to get Lists");
             callback(null);
             return;
         }
         else {
             callback(lists);
+            return;
         }
     });
     /*UserControl.isUserIdInDb(userid, function(yes) {
@@ -93,4 +94,23 @@ exports.purchaseItem = function(itemid, name, callback) {
 }
 exports.listExists = function(listid, callback) {
     ListControl.listExists(listid, callback);
+}
+//Assumes userindb has already been checked
+//callback(listObj|null)
+exports.getList = function(listid, callback) {
+    if(callback == null) {
+        console.error("ListManagement::getLists() callback function is null");
+        return;
+    }
+    ListControl.getList(listid, function(list) {
+        if (list == null || list[0] == null) {
+            console.error("ListManagement::getLists() unable to get Lists");
+            callback(null);
+            return;
+        }
+        else {
+            callback(list);
+            return;
+        }
+    });
 }

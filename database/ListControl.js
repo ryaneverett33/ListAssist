@@ -197,3 +197,18 @@ exports.listExists = function(id, callback) {
         callback(list !== false);
     });
 }
+exports.getList = function(listid, callback) {
+    getEntry.getList(listid, function(lists) {
+        if (lists.length == 0) {
+            callback({});
+            return;
+        }
+        if (lists[0] === null || lists[0] === undefined) {
+            console.error("getList null");
+            callback({});
+            return;
+        }
+        helpers.renameKey(lists[0], "row", "info");
+        callback(lists);
+    });
+}
