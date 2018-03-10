@@ -30,7 +30,8 @@ exports.getLists = function(userid, callback) {
         return;
     }
     ListControl.getListsByUserId(userid, function(lists) {
-        if (lists == null || list[0] == null) {
+        if (lists == null || lists[0] == null) {
+            console.log(lists);
             console.error("ListManagement::getLists() unable to get Lists");
             callback(null);
             return;
@@ -75,16 +76,19 @@ exports.deleteItem = function(id, callback) {
 exports.purchaseItem = function(itemid, name, callback) {
     ListControl.isPurchased(itemid, function(purchased) {
         if (purchased) {
+            console.log("already purchased");
             callback(false);
             return;
         }
         else {
             ListControl.purchaseItem(itemid, name, function(success) {
                 if (success) {
+                    console.log("successfully purchased!");
                     callback(true);
                     return;
                 }
                 else {
+                    console.log("failed to purchase item");
                     callback(false);
                     return;
                 }
@@ -114,3 +118,4 @@ exports.getList = function(listid, callback) {
         }
     });
 }
+exports.isPurchased = ListControl.isPurchased;

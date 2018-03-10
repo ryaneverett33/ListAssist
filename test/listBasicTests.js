@@ -70,7 +70,7 @@ describe('list/edit', function() {
         });
     });
 });
-describe('list/get', function() {
+describe('list/all', function() {
     it('successfully gets all lists', function(done){
         ListManagement.getLists(successfulId, function(lists) {
             expect(lists).to.not.be.null;
@@ -79,13 +79,36 @@ describe('list/get', function() {
     });
     it('fails to get all lists', function(done){
         ListManagement.getLists(incorrectId, function(lists) {
-            console.log(lists);
-            expect(lists.length).to.be.undefined;
+            //console.log(lists);
+            expect(lists).to.be.null;
+            //expect(lists.length).to.be.undefined;
             done();
         });
     });
 });
+describe('list/get', function() {
+    it('successfully gets a list', function(done) {
+        ListManagement.getList(createdListId, function(list) {
+            expect(list).to.not.have.length(0);
+            done();
+        });
+    });
+    it('fails to get a list', function(done) {
+        ListManagement.getList(5, function(list) {
+            expect(list).to.be.null;
+            done();
+        });
+    })
+});
 describe('list/item/purchase', function() {
+    /*console.log(itemId);
+    it('checks if purchased', function(done) {
+        ListManagement.isPurchased(itemId, function(purchased) {
+            console.log(purchased);
+            expect(purchased).to.be.false;
+            done();
+        });
+    });*/
     it("Successfully purchases an item", function(done) {
         ListManagement.purchaseItem(itemId, "test purchase", function(success){
             expect(success).to.be.true;
@@ -103,5 +126,5 @@ describe('list/item/purchase', function() {
             expect(success).to.be.false;
             done();
         });
-    })
+    });
 });
