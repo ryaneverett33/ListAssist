@@ -108,6 +108,7 @@ exports.getList = function(list_id, callback) {
 					list.row.count = item_arr.length;
 					//NULLABLE FIELDS, purchased, buyer, picture
 					for (var i = 0; i < item_arr.length; i++) {
+						console.log("item: " + item_arr);
 						var item = item_arr[i];
 						item.purchased = fixNull(item.purchased, "bool");
 						item.buyer = fixNull(item.buyer, "string");
