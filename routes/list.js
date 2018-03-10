@@ -5,6 +5,7 @@ var ListManagement = require('../management/listManagement');
 var helpers = require('./helpers');
 var scrapeAmazonList = require('../util/listscraper');
 var scrapeAmazonItem = require('../util/itemscraper');
+var httproot = require('../util/http-root');
 
 /* get the page for creating a new list */
 /*router.get('/new', function (req, res, next) {
@@ -335,17 +336,17 @@ router.post('/all', function (req, res, next) {
     });
   }
   catch (err) {
-    console.log("/list/get encountered an error: " + err);
+    console.log("/list/all encountered an error: " + err);
     res.status(500).send(JSON.stringify({ error: err }));
     return;
   }
 });
 
 /* display a list */
-router.get('/:id', function (req, res, next) {
+/*router.get('/items.html', function (req, res, next) {
   try {
     // todo: get the list from the database
-    var listId = Number(req.params.id);
+    var listId = Number(req.location.split("?")[1]);
     if (listId == NaN || listId == null) {
       res.render('404');
       return;
@@ -353,9 +354,10 @@ router.get('/:id', function (req, res, next) {
     else {
       ListManagement.listExists(listId, function (exists) {
         if (exists) {
-          res.render('itemsPublicExample', {
+          /*res.render('itemsPublicExample', {
             id: listId
-          });
+          });*/
+/*          res.sendFile('/items.html', {root : httproot.getRoot()});
           return;
         }
         else {
@@ -372,7 +374,7 @@ router.get('/:id', function (req, res, next) {
   // todo:
   //res.render('list', { title: 'List' });
   //});
-});
+});*/
 
 /**
  * Imports an amazon list
