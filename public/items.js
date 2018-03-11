@@ -9,12 +9,12 @@ $(document).ready(function() {
 		}
 	}
 
+	//token = "eyJhbGciOiJSUzI1NiIsImtpZCI6ImFjMmI2M2ZhZWZjZjgzNjJmNGM1MjhlN2M3ODQzMzg3OTM4NzAxNmIifQ.eyJhenAiOiI1NzM1OTkyMTEyMzEtcWNlOG9saTltNGtqbGI5ZmwwYWgzNWV2ZzRlOHNlanUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI1NzM1OTkyMTEyMzEtcWNlOG9saTltNGtqbGI5ZmwwYWgzNWV2ZzRlOHNlanUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDQ0MjIxNjA4MDAyOTYxODY5NjMiLCJlbWFpbCI6Imt5bGUubi5idXJrZUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6ImgxTk9MNlF0cUQ4Qzl5dk5mbVNRNnciLCJleHAiOjE1MjA4MDAyOTAsImlzcyI6ImFjY291bnRzLmdvb2dsZS5jb20iLCJqdGkiOiJmNTM1ZDllNjFlOTNiNjBlYTJiZDZmZTAxMWM3YTIyYzlhMmRiNDYwIiwiaWF0IjoxNTIwNzk2NjkwLCJuYW1lIjoiS3lsZSBCdXJrZSIsInBpY3R1cmUiOiJodHRwczovL2xoNC5nb29nbGV1c2VyY29udGVudC5jb20vLUFUNUVoWVZBbDV3L0FBQUFBQUFBQUFJL0FBQUFBQUFBRTgwL2pkTEdjQmRYQ25rL3M5Ni1jL3Bob3RvLmpwZyIsImdpdmVuX25hbWUiOiJLeWxlIiwiZmFtaWx5X25hbWUiOiJCdXJrZSIsImxvY2FsZSI6ImVuIn0.Dg8WpgTk5oiZItxevDsb3PKu2BiAdak8_bQlq7kdq5ga2BO-rViJYGedbMXxo7o0cn35-1P-ZJf_Ab4IDbO3Aqg7kcUl6R7mG24dBhAnrIjktMxkH9H0zamoskcfdlyKcnW2eonCbF7ZkgChNTFcgFv29CKFjXuAdhCRfVelE73-7U_rkeNxYUcSjklArUI9oNBKA_dVUdc7bvGZdwT6QZv56AnspfAs6HHTr_PvetKUIcf-MWhRNAICr9taTJFDoa2USl9a-p1VyHsxB9XLf1s0boeUscd7hF0TnhxUr760DmzA2Ei7ab8wbcoIfZp0uSBRxsp0aQIZwwznhcNI_A";
+
 	if(token == null) {
 		//no token was found so redirect to the login page
 		window.location.href = "https://listassist.duckdns.org";
 	}
-
-	//token = "eyJhbGciOiJSUzI1NiIsImtpZCI6ImFjMmI2M2ZhZWZjZjgzNjJmNGM1MjhlN2M3ODQzMzg3OTM4NzAxNmIifQ.eyJhenAiOiI1NzM1OTkyMTEyMzEtcWNlOG9saTltNGtqbGI5ZmwwYWgzNWV2ZzRlOHNlanUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI1NzM1OTkyMTEyMzEtcWNlOG9saTltNGtqbGI5ZmwwYWgzNWV2ZzRlOHNlanUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDQ0MjIxNjA4MDAyOTYxODY5NjMiLCJlbWFpbCI6Imt5bGUubi5idXJrZUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6Inlfd2RiLXFCMUtudDB2ci1IVm1LREEiLCJleHAiOjE1MjA2MzU1MzgsImlzcyI6ImFjY291bnRzLmdvb2dsZS5jb20iLCJqdGkiOiI2Y2I2OTRhNzY5MmJkOTUyNTJhZWUyYzUyMmI3ZjQyOWM1MTYwYTVkIiwiaWF0IjoxNTIwNjMxOTM4LCJuYW1lIjoiS3lsZSBCdXJrZSIsInBpY3R1cmUiOiJodHRwczovL2xoNC5nb29nbGV1c2VyY29udGVudC5jb20vLUFUNUVoWVZBbDV3L0FBQUFBQUFBQUFJL0FBQUFBQUFBRTgwL2pkTEdjQmRYQ25rL3M5Ni1jL3Bob3RvLmpwZyIsImdpdmVuX25hbWUiOiJLeWxlIiwiZmFtaWx5X25hbWUiOiJCdXJrZSIsImxvY2FsZSI6ImVuIn0.PkA1YMOHjkQv52q-GaVzv1KASxX6izr6_r_wKb8l92diSpBqMjkmNXYUTEpcp3A0z4vjSuKVMv_DK9mPQtMH0DJ7eOtTJEPe8Ggwy0nBM1NY4E7PUwlZtHLLRy-3B8hRavadkqI3EMnqWhHq6l9AumjLf-jDyqIg_GNTPuoQU6Oi86WMVGhUaxIhgjt3lNKcJvXZt3eVk6gOWog7FPK7PvRXVw2MM_r-TvX1y_wlbEwWCLPIohVjAk9xu_Zvjmy5S90VLFbLr5vg99h7JBCHI9enWv6Fag7FXk-1dc1Vc1BNL2zf5ZpKhnMTe7l-dFTS1xARm-Q9i3XTASjEEX98lA";
 
 	//get the id of the list
 	var id = window.location.href.split("?")[1];
@@ -36,7 +36,7 @@ $(document).ready(function() {
 	$("#addItemButton").click(function() {
 		//clear inputs
 		$("#addItemNameField").val("");
-		$("#addItemImageField").val("");
+		$("#addItemImageField").val("defaultItem.png");
 		$("#addItemLinkField").val("");
 
 		//clear invalid classes
@@ -73,7 +73,7 @@ $(document).ready(function() {
 					};
 					data = JSON.stringify(data);
 
-					accessServer("http://listassist.duckdns.org/list/add", data, function(result) {
+					accessServer("https://listassist.duckdns.org/list/add", data, function(result) {
 						console.log(result);
 						window.location.reload();
 					},
