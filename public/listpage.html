@@ -2,90 +2,108 @@
 <html>
   <head>
     <title>List Page</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
     <link rel='stylesheet' href='/stylesheets/listpage.css' />
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   </head>
 
   <body>
+    <meta name="google-signin-client_id" content="573599211231-qce8oli9m4kjlb9fl0ah35evg4e8seju.apps.googleusercontent.com">
+
     <script src="/jquery-3.3.1.min.js"></script>
     <script src="/bootstrap.bundle.min.js"></script>
-    <script src="/items.js"></script>
+    <script src="/lists.js"></script>
+
+    <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+
+
+    <div class="modal fade" id="add_list_modal" tabindex="-1" role="dialog" aria-labelledby="add_list_modal" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="add_list_modal_label">Add List</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="form-group">
+                <label for="add_list_name_field">Name</label>
+                <input type="text" class="form-control" id="add_list_name_field" maxlength="64">
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" id="add_list_modal_button" class="btn btn-primary">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="edit_list_modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Edit list</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="edit_list_name_field">Name</label>
+              <input type="text" class="form-control" id="edit_list_name_field" maxlength="64">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" id="edit_list_modal_save" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
 
     <div class="top"> 
-      <button type="button" id="logout" class="btn btn-outline-danger">Logout</button>
+      <button type="button" id="logout" class="btn btn-outline-danger">Login/Logout</button>
       <div id="list_header">My Lists</div>
-      <button type="button" id="add_item" class="btn btn-outline-danger" data-toggle="modal" data-target="#add_item_modal">Add Item</button>
+      <button type="button" id="add_list" class="btn btn-outline-danger" data-toggle="modal" data-target="#add_list_modal">Add List</button>
     </div>
 
 
 
     <div class="center" id="center_div">
-      <div class="list">
-        <div class="pair">
-          <button type="button" class="btn btn-primary btn-lg">0123456789012345678901234567890123456789012345678901234567891234</button>
-          <button type="button" class="btn btn-success" data-toggle="modal" data-target="#edit_item_modal">Edit</button>
-        </div>
-        <div class="pair">
-          <button type="button" class="btn btn-primary btn-lg">1</button>
-          <button type="button" class="btn btn-success" data-toggle="modal" data-target="#edit_item_modal">Edit</button>
-        </div>
+      <div class="list" id="list">
       </div>
     </div>
 
-    <div class="modal fade" id="add_item_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Add an item</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form>
-              <div class="form-group">
-                <label for="editItemNameField">Name</label>
-                <input type="text" class="form-control" id="editItemNameField" maxlength="64">
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Add!</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="modal fade" id="edit_item_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <form>
-              <div class="form-group">
-                <label for="editItemNameField">Name</label>
-                <input type="text" class="form-control" id="editItemNameField" maxlength="64">
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-          </div>
-        </div>
-      </div>
-    </div>
 
   </body>
+
+      
+
+      <div class="modal fade" id="edit_list_modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Edit list</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="edit_list_name_field">Name</label>
+              <input type="text" class="form-control" id="edit_list_name_field" maxlength="64">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
 </html>
