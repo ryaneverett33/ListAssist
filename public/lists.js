@@ -2,17 +2,17 @@ $(document).ready(function() {
 	var itemsCount = 0;
 	var currList;
 
-  var assignEditListButtonFunctionality = function() {
-		$(".editListButton").off();
+  var assignRenameListButtonFunctionality = function() {
+		$(".renameListButton").off();
 
 		//this is the edit item button on each of the item entries
-		$(".editListButton").click(function () {
+		$(".renameListButton").click(function () {
 			var list = $(event.target).parent();
 			currList = list;
 
 		  var name = list.find(".list-group-item").text();
 
-			$("#editListNameField").val(name);
+			$("#renameListNameField").val(name);
 		});
 	}
 
@@ -40,7 +40,7 @@ $(document).ready(function() {
     var itemHTML = `<div class="list-body">
                     <a href="#" class="list-group-item">` + name +
                     `</a>
-                    <button type="button" class="btn btn-outline-primary btn-sm editListButton" data-toggle="modal" data-target="#editListModal">Edit</button>
+                    <button type="button" class="btn btn-outline-primary btn-sm renameListButton" data-toggle="modal" data-target="#renameListModal">Rename</button>
                     <button type="button" class="btn btn-outline-primary btn-sm shareListButton" data-toggle="modal" data-target="#shareListModal">Share</button>
                     <button type="button" class="btn btn-outline-primary btn-sm removeListButton" data-toggle="modal" data-target="#removeListModal">Remove</button>
                     </div>`;
@@ -49,22 +49,22 @@ $(document).ready(function() {
 		itemsCount++;
 
 		//reassign the click event listeners on the edit item buttons
-		assignEditListButtonFunctionality();
+		assignRenameListButtonFunctionality();
 
 		//update the backend with the new list...
 	}
 
   //this is the saves changes button on the list item modal
-	$("#editListSaveChangesButton").click(function() {
+	$("#renameListSaveChangesButton").click(function() {
     console.log("hello");
-    var name = $("#editListNameField").val();
+    var name = $("#renameListNameField").val();
     currList.find(".list-group-item").text(name);
 
 		//update the backend with the new item information...
 
 
 		//close the modal
-		$("#editListModal").modal("toggle");
+		$("#renameListModal").modal("toggle");
 	});
 
   $("#removeListButton").click(function() {
@@ -73,6 +73,6 @@ $(document).ready(function() {
     $("#removeListModal").modal("toggle");
   });
 
-  assignEditListButtonFunctionality();
+  assignRenameListButtonFunctionality();
 
 });
