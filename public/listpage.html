@@ -1,150 +1,127 @@
 <!DOCTYPE html>
-<html lang="en">
-	<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-		<!-- <title>List Assist</title> -->
-		<!-- <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' /> -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-      <script language="javascript" type="text/javascript" src="../public/lists.js"></script>
-	</head>
-<body>
+<html>
+  <head>
+    <title>List Page</title>
+    <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
+    <link rel='stylesheet' href='/stylesheets/listpage.css' />
+  </head>
 
-	<!-- New item modal -->
-	<div class="modal fade" id="addListModal" role="dialog">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">New List</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<form>
-						<div id="customFields">
-							<div class="form-group">
-								<label for="addItemNameField">Name</label>
-								<input type="text" class="form-control" id="addListNameField">
-							</div>
-						</div>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary" id="addListModalButton">Add</button>
-				</div>
-			</div>
-		</div>
-	</div>
+  <body>
+    <meta name="google-signin-client_id" content="573599211231-qce8oli9m4kjlb9fl0ah35evg4e8seju.apps.googleusercontent.com">
 
-	<!-- Edit List modal -->
-  <div class="modal fade" id="renameListModal" role="dialog">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">Edit List</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<form>
-						<div class="form-group">
-							<label for="renameListNameField">Name</label>
-							<input type="text" class="form-control" id="renameListNameField">
-						</div>
-					</form>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary" id="renameListSaveChangesButton">Save changes</button>
-				</div>
-			</div>
-		</div>
-	</div>
+    <script src="/jquery-3.3.1.min.js"></script>
+    <script src="/bootstrap.bundle.min.js"></script>
+    <script src="/lists.js"></script>
+
+    <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
 
 
-	<!-- Remove list modal -->
-	<div class="modal fade" id="removeListModal" role="dialog">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">Remove list</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<div class="form-group">
-            <p>Are you sure you want to remove this list?</p>
-            <div class="radio">
-              <label><input type="radio" name="optradio">Yes</label>
+    <div class="modal fade" id="add_list_modal" tabindex="-1" role="dialog" aria-labelledby="add_list_modal" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="add_list_modal_label">Add List</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form>
+                <div id="radioControl">
+                    <div class="custom-control custom-radio">
+                      <input type="radio" id="customRadio" name="customRadio" class="custom-control-input" checked="">
+                      <label class="custom-control-label active" for="customRadio">Custom</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                      <input type="radio" id="byLinkRadio" name="customRadio" class="custom-control-input">
+                      <label class="custom-control-label" for="byLinkRadio">By Amazon link</label>
+                    </div>
+                  </div>
+              <div id="customFields">
+                <div class="form-group">
+                  <label for="add_list_name_field">Name</label>
+                  <input type="text" class="form-control" id="add_list_name_field" maxlength="64">
+                </div>
+              </div>
+              <div id="byLinkFields" style="display: none">
+                  <div class="form-group">
+                    <label for="add_list_name_field_link">Link</label>
+                    <input type="text" class="form-control" id="add_list_name_field_link" maxlength="100">
+                  </div>
+                </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" id="add_list_modal_button" class="btn btn-primary">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="edit_list_modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Edit list</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="edit_list_name_field">Name</label>
+              <input type="text" class="form-control" id="edit_list_name_field" maxlength="64">
             </div>
-            <div class="radio">
-              <label><input type="radio" name="optradio">No</label>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" id="edit_list_modal_save" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <div class="top">
+      <button type="button" id="logout" class="btn btn-outline-danger">Login/Logout</button>
+      <div id="list_header">My Lists</div>
+      <button type="button" id="add_list" class="btn btn-outline-danger" data-toggle="modal" data-target="#add_list_modal">Add List</button>
+    </div>
+
+
+
+    <div class="center" id="center_div">
+      <div class="list" id="list">
+      </div>
+    </div>
+
+
+  </body>
+
+
+
+      <div class="modal fade" id="edit_list_modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Edit list</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="form-group">
+              <label for="edit_list_name_field">Name</label>
+              <input type="text" class="form-control" id="edit_list_name_field" maxlength="64">
             </div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" id="removeListButton">Submit</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-  <!-- Share list modal -->
-	<div class="modal fade" id="shareListModal" role="dialog">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">Share list</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<div class="form-group">
-						<input type="text" readonly class="form-control" id="shareItemField" value="https://listassist.duckdns.org/some_unique_list_identifier">
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-- Main content -->
-	<h1>My Lists</h1>
-
-  <div class="container">
-    <!-- <h2>My Lists</h2> -->
-    <div id="list" class="list-group">
-      <!--<div class="list-body">
-      <a href="#" class="list-group-item">First List</a>
-      <button type="button" class="btn btn-outline-primary btn-sm editListButton" data-toggle="modal" data-target="#editListModal">Edit</button>
-      <button type="button" class="btn btn-outline-primary btn-sm shareListButton" data-toggle="modal" data-target="#shareListModal">Share</button>
-      <button type="button" class="btn btn-outline-primary btn-sm removeListButton" data-toggle="modal" data-target="#removeListModal">Remove</button>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="list-body">
-      <a href="#" class="list-group-item">Second List</a>
-      <button type="button" class="btn btn-outline-primary btn-sm editListButton" data-toggle="modal" data-target="#editListModal">Edit</button>
-      <button type="button" class="btn btn-outline-primary btn-sm shareListButton" data-toggle="modal" data-target="#shareListModal">Share</button>
-      <button type="button" class="btn btn-outline-primary btn-sm removeListButton" data-toggle="modal" data-target="#removeListModal">Remove</button>
-    </div>
-    <div class="list-body">
-      <a href="#" class="list-group-item">Third List</a>
-      <button type="button" class="btn btn-outline-primary btn-sm editListButton" data-toggle="modal" data-target="#editListModal">Edit</button>
-      <button type="button" class="btn btn-outline-primary btn-sm shareListButton" data-toggle="modal" data-target="#shareListModal">Share</button>
-      <button type="button" class="btn btn-outline-primary btn-sm removeListButton" data-toggle="modal" data-target="#removeListModal">Remove</button>
-    </div> -->
-    </div>
-  </div>
-
-  <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#addListModal" id="addListButton">Add List</button>
-
 </html>

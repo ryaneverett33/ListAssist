@@ -5,17 +5,16 @@
 
 		<meta name="google-signin-client_id" content="573599211231-qce8oli9m4kjlb9fl0ah35evg4e8seju.apps.googleusercontent.com">
 		<link rel='stylesheet' href='/stylesheets/style.css' />
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	</head>
 	<body>
+
 		<script src="https://apis.google.com/js/platform.js" async defer></script>
 		<script>
+
+			var signed_in = false
 			function onSignIn(googleUser) {
 				var profile = googleUser.getBasicProfile();
-								//console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-				//console.log('Name: ' + profile.getName());
-				//console.log('Image URL: ' + profile.getImageUrl());
-				//console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-
 				var data = {};
 				data["tokenId"] = googleUser.getAuthResponse().id_token;
 				data["provider"] = "google";
@@ -32,12 +31,11 @@
 
 					if(xhr.status == 200) {
 						console.log("Login successful");
-
+						signed_in = true;
 						//set the cookie
 						document.cookie = "token=" + result.token;
 
 						//redirect to the list page
-						window.location.href = "/listpage.html";
 					}
 					else {
 						console.log("Login unsuccessful");
@@ -49,11 +47,41 @@
 				console.log('Image URL: ' + profile.getImageUrl());
 				console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
 			}
+
+			//sign out handling
+			$("#logout").click(function() {
+				if (signed_in) {
+
+				} else {
+					alert("You must be signed first!");
+				}
+			});
+			//redirect handling
+			function listHandle() {
+				if (signed_in) {
+					window.location.href = "/listpage.html";
+				} else {
+					alert("You must be signed first!");
+				}
+			}
+
+			function signOut() {
+			    var auth2 = gapi.auth2.getAuthInstance();
+			    auth2.signOut().then(function () {
+			      console.log('User signed out.');
+			    });
+			    document.cookie = "token=" + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+			    document.cookie = "G_AUTHUSER_H=" + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+			  }
+
 		</script>
+
 		<div id="sign_in_div">
 			<h1 id="main_header">List Assist</h1>
 			<h2 id="sign_in_header">Sign in with Google</h2>
 			<div class="g-signin2" data-onsuccess="onSignIn"></div>
+			<button type="button" class="btn" id="list_page" onclick="listHandle()">List page</button>
+			<button type="button" class="btn" id="logout" onclick="signOut()">Logout</button>
 		</div>
 
 
