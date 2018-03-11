@@ -30,11 +30,18 @@ listObj : [
 */
 exports.getListsByUserId = function(userid, callback) {
     getEntry.getLists(userid, function(lists) {
-        if (lists === null || lists.row === null || lists.items === null) {
-            console.log("failed first round " + JSON.stringify(list));
+        if (lists == null || lists.length == 0) {
+            console.log("failed first round " + JSON.stringify(lists));
+            var debug;
+            debug = 5;
             callback({});
             return;
         }
+        /*if (lists === null || lists.row === null || lists.items === null) {
+            console.log("failed first round " + JSON.stringify(list));
+            callback({});
+            return;
+        }*/
         console.log("lists.length %d", lists.length);
         //console.log("list.items.length %d", lists.items.length);
         if (lists.length == 0) {

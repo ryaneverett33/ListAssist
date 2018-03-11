@@ -98,6 +98,7 @@ exports.getList = function(list_id, callback) {
 			    // Pausing the connnection to wait for items query (so that lists does not fill in empty arrays always)
 			    connection.pause();
 			    getItems(row.id, function(item_arr) {
+					console.log("Got items: " + item_arr);
 			    	var items;
 			    	if (item_arr) {
 						items = item_arr;
