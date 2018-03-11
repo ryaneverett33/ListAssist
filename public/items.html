@@ -23,7 +23,7 @@
 				</div>
 				<div class="modal-body">
 					<form>
-						<div id="radioControl">
+						<div id="radioControl" style="display: none">
 							<div class="custom-control custom-radio">
 								<input type="radio" id="customRadio" name="customRadio" class="custom-control-input" checked="">
 								<label class="custom-control-label active" for="customRadio">Custom</label>
@@ -36,11 +36,11 @@
 						<div id="customFields">
 							<div class="form-group">
 								<label for="addItemNameField">Name</label>
-								<input type="text" class="form-control" id="addItemNameField" maxlength="30">
+								<input type="text" class="form-control" id="addItemNameField" maxlength="100">
 							</div>
 							<div class="form-group">
 								<label for="addItemImageField">Image</label>
-								<input type="text" class="form-control" id="addItemImageField" placeholder="http://">
+								<input type="text" class="form-control" id="addItemImageField" placeholder="http://" maxlength="100">
 							</div>
 						</div>
 						<div id="byLinkFields" style="display: none">
