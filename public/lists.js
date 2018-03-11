@@ -14,12 +14,22 @@ $(document).ready(function() {
 		}
 	}
 
-	//token = "eyJhbGciOiJSUzI1NiIsImtpZCI6ImFjMmI2M2ZhZWZjZjgzNjJmNGM1MjhlN2M3ODQzMzg3OTM4NzAxNmIifQ.eyJhenAiOiI1NzM1OTkyMTEyMzEtcWNlOG9saTltNGtqbGI5ZmwwYWgzNWV2ZzRlOHNlanUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI1NzM1OTkyMTEyMzEtcWNlOG9saTltNGtqbGI5ZmwwYWgzNWV2ZzRlOHNlanUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDQ0MjIxNjA4MDAyOTYxODY5NjMiLCJlbWFpbCI6Imt5bGUubi5idXJrZUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6IjBuX1NrdHhRZ1VrZi13OWN4NUJlTlEiLCJleHAiOjE1MjA3NDc3NzIsImlzcyI6ImFjY291bnRzLmdvb2dsZS5jb20iLCJqdGkiOiJhYmRlZDM1NDFjMDFiODcxNDBjNDUwNWUyNzBmNTdkNzFkNzQ2MzhmIiwiaWF0IjoxNTIwNzQ0MTcyLCJuYW1lIjoiS3lsZSBCdXJrZSIsInBpY3R1cmUiOiJodHRwczovL2xoNC5nb29nbGV1c2VyY29udGVudC5jb20vLUFUNUVoWVZBbDV3L0FBQUFBQUFBQUFJL0FBQUFBQUFBRTgwL2pkTEdjQmRYQ25rL3M5Ni1jL3Bob3RvLmpwZyIsImdpdmVuX25hbWUiOiJLeWxlIiwiZmFtaWx5X25hbWUiOiJCdXJrZSIsImxvY2FsZSI6ImVuIn0.m4B7-ceo-20LeKh7WpBzMX7b216SDRT08PRCSreH4hFAN2ompVl-HBAn8XmxsGC-V6S4nMagNjTJFLXKQ4X_3-aQ8bJfERgMGPZ3hdhs7nDBlHuCIKe-mWTlQFTElYxc_T0mg8iJZLrnqofmfJq-4PSjx18Uudb4TfnDbFe0DiJc9KlAYPa6P5TU4d1C2qemmA2idJcUCleEmrCgG0wcpABxFpAmLWUd9LcniBkldRnFYN6Z36PcHxNYVzKBp1HRC3hZ7DEgkgyj03z5DiTrEsFH-t37rBYHB7tua0ceRhD5SccKrW2WHIvxD2slEHAkuC1CPVrCkBttwHkJRKkC3w";
+	//token = "eyJhbGciOiJSUzI1NiIsImtpZCI6ImFjMmI2M2ZhZWZjZjgzNjJmNGM1MjhlN2M3ODQzMzg3OTM4NzAxNmIifQ.eyJhenAiOiI1NzM1OTkyMTEyMzEtcWNlOG9saTltNGtqbGI5ZmwwYWgzNWV2ZzRlOHNlanUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI1NzM1OTkyMTEyMzEtcWNlOG9saTltNGtqbGI5ZmwwYWgzNWV2ZzRlOHNlanUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDQ0MjIxNjA4MDAyOTYxODY5NjMiLCJlbWFpbCI6Imt5bGUubi5idXJrZUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6Ik1UYmx4b1FVTkVTMGt5bkRsNnRrbEEiLCJleHAiOjE1MjA3NTAyOTMsImlzcyI6ImFjY291bnRzLmdvb2dsZS5jb20iLCJqdGkiOiJkZjM0NmI1OWNhODRiYTM3MmY0YzZhM2Q2ZTdjM2FmZGIwNzA2OTUwIiwiaWF0IjoxNTIwNzQ2NjkzLCJuYW1lIjoiS3lsZSBCdXJrZSIsInBpY3R1cmUiOiJodHRwczovL2xoNC5nb29nbGV1c2VyY29udGVudC5jb20vLUFUNUVoWVZBbDV3L0FBQUFBQUFBQUFJL0FBQUFBQUFBRTgwL2pkTEdjQmRYQ25rL3M5Ni1jL3Bob3RvLmpwZyIsImdpdmVuX25hbWUiOiJLeWxlIiwiZmFtaWx5X25hbWUiOiJCdXJrZSIsImxvY2FsZSI6ImVuIn0.S7tXYv5uXpGQSMsBRi626gn7FQvtGAh_lvkbuThojRD6jccSWX_tPWCM0B7nVuceuB7YGXjEUNvmv42EuuarYbjma25gCCbk-fWE5sa1x8HtjHP4gS1tMvfh0RnQiG_XvtiFQtL_G0dLGTxW-Zn9egBjT_mdrOJF2C7uZR1Z6jY7LGABpY9jKffpoJ9pddMk4-iMjR_FgDNOJYaWX5Mcy0ZfVhv6Z5mmxiLq7Yh6e31JJpbQGhWC8T7aJWhU3CEzbNMpO6-jxbMTeGa_ElkISqhOiw8A-7LH_XygFpdFZEVn23egg9hXvixWq-ExR6aGCjZIe9ancjXWArCWwqLpmg";
 
 	if(token == null) {
 		//no token was found so redirect to the login page
 		window.location.href = "https://listassist.duckdns.org";
 	}
+
+	$("#customRadio").click(function() {
+		$("#customFields").show();
+		$("#byLinkFields").hide();
+	});
+
+	$("#byLinkRadio").click(function() {
+		$("#byLinkFields").show();
+		$("#customFields").hide();
+	});
 
 	function onLoad(signout) {
 			console.log("called.")
@@ -63,12 +73,38 @@ $(document).ready(function() {
 	$("#add_list").click(function() {
 		//clear inputs
 		$("#add_list_name_field").val("");
+		$("#add_list_name_field_link").val("");
 		//clear invalid classes
 		$("#add_list_name_field").removeClass("is-invalid");
+		$("#add_list_name_field_link").removeClass("is-invalid");
 	});
 
 	//this is the add list button on the new list modal
 	$("#add_list_modal_button").click(function() {
+		if($("#byLinkRadio").is(":checked")) {
+			var link = $("#add_list_name_field_link").val();
+			if(!link.startsWith("https://www.amazon.com")) {
+				$("#add_list_name_field_link").addClass("is-invalid");
+				return;
+			}
+			
+			var data = {
+				token: token,
+				listUrl: link
+			};
+			data = JSON.stringify(data);
+		
+			accessServer("https://listassist.duckdns.org/list/import", data, function(result) {
+				console.log(result);
+			},
+			function(result) {
+				alert(result);
+			});
+
+			$("#add_list_modal").modal('toggle');
+			return;
+		}
+
 		var name;
 		name = $("#add_list_name_field").val();
 		//ensure name isn't empty

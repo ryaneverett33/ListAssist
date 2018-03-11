@@ -27,10 +27,28 @@
           </div>
           <div class="modal-body">
             <form>
-              <div class="form-group">
-                <label for="add_list_name_field">Name</label>
-                <input type="text" class="form-control" id="add_list_name_field" maxlength="64">
+                <div id="radioControl">
+                    <div class="custom-control custom-radio">
+                      <input type="radio" id="customRadio" name="customRadio" class="custom-control-input" checked="">
+                      <label class="custom-control-label active" for="customRadio">Custom</label>
+                    </div>
+                    <div class="custom-control custom-radio">
+                      <input type="radio" id="byLinkRadio" name="customRadio" class="custom-control-input">
+                      <label class="custom-control-label" for="byLinkRadio">By Amazon link</label>
+                    </div>
+                  </div>
+              <div id="customFields">
+                <div class="form-group">
+                  <label for="add_list_name_field">Name</label>
+                  <input type="text" class="form-control" id="add_list_name_field" maxlength="64">
+                </div>
               </div>
+              <div id="byLinkFields" style="display: none">
+                  <div class="form-group">
+                    <label for="add_list_name_field_link">Link</label>
+                    <input type="text" class="form-control" id="add_list_name_field_link" maxlength="100">
+                  </div>
+                </div>
             </form>
           </div>
           <div class="modal-footer">
