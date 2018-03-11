@@ -233,14 +233,14 @@ router.post('/get', function (req, res, next) {
         res.status(400).send(JSON.stringify({ error: "Invalid Arguments" }));
         return;
       }
-      if (Number(json.id) == NaN) {
+      if (Number(json.id) == 0 | NaN) {
         console.log("invalid ID");
         res.setHeader("content-type", "application/json");
         res.status(400).send(JSON.stringify({ error: "Invalid ID" }));
         return;
       }
       ListManagement.getList(json.id, function (list) {
-        if (list[0] == null) {
+        if (list == null) {
           res.status(404).send("");
           return;
         }
