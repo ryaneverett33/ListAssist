@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 body { 
   background-color: #124668; 
 }
@@ -84,3 +85,21 @@ body {
 
 }
 
+=======
+.list {
+    max-width: 25%;
+    flex: 0 0 25%;
+    -webkit-box-flex: 0;
+}
+.list-img {
+    width: 100%;
+    border-top-left-radius: calc(.25rem - 1px);
+    border-top-right-radius: calc(.25rem - 1px);
+}
+.list-info {
+
+}
+#header {
+    position: absolute;
+}
+>>>>>>> d62180f6ac561be5d775fcee13c274ce657c3d7d
