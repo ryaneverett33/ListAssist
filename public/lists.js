@@ -96,6 +96,7 @@ $(document).ready(function() {
 		
 			accessServer("https://listassist.duckdns.org/list/import", data, function(result) {
 				console.log(result);
+				window.location.refresh();
 			},
 			function(result) {
 				alert(result);
