@@ -22,13 +22,15 @@ function onSignIn(googleUser) {
     tokenId : googleUser.getAuthResponse().id_token,
     provider : 'google',
     name : profile.getName(),
-    email : profile.getEmail()
+    email : profile.getEmail(),
+    image : profile.getImageUrl()
   }));
   console.log(JSON.stringify({
     tokenId : googleUser.getAuthResponse().id_token,
     provider : 'google',
     name : profile.getName(),
-    email : profile.getEmail()
+    email : profile.getEmail(),
+    image : profile.getImageUrl()
   }));
 }
 function signOut() {

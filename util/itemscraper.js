@@ -2,19 +2,22 @@ var osmosis = require('osmosis');
 
 var scrapeAmazonItem = function (url) {
   return new Promise((resolve, reject) => {
+    if (!url) {
+      reject('Url not defined');
+    }
     let out = {}
     osmosis
       .get(url)
       .set({
         itemTitle: '#productTitle',
-        price: '#priceblock_ourprice',
+        // price: '#priceblock_ourprice',
         itemImg: '#landingImage@data-old-hires'
       })
       .data(item => {
         out = item;
       })
       .done(() => {
-        if (!out || !out.itemTitle || !out.price || !out.itemImg) {
+        if (!out || !out.itemTitle || !out.itemImg) {
           reject('Item Not found');
         }
         if (out.price) 
@@ -27,6 +30,6 @@ var scrapeAmazonItem = function (url) {
 }
 
 // debug code
-// scrapeAmazonItem('https://www.amazon.com/gp/product/B073ZK95P6').then(console.log);
+//scrapeAmazonItem('https://www.amazon.com/gp/product/B073ZK95P6').then(console.log);
 
 module.exports = scrapeAmazonItem;

@@ -101,7 +101,6 @@ exports.setList = function setList(id, column, new_value, callback) {
 			console.log(typeof new_value)
 			console.log("user_id must be a number");
 			callback(false);
-
 			return;
 		}
 	} else {
@@ -180,8 +179,13 @@ exports.setItem = function setItem(id, column, new_value, callback) {
 	    	return;
 	    }
 	    var len = new_value.length
-		if (len > 64 || len < 1) {
-			console.error("Username size must be between 1 and 64 characters");
+		if ((column == "name" || column == "buyer") && (len > 64 || len < 1)) {
+			console.error("Username/buyer size must be between 1 and 64 characters");
+			callback(false);
+			return;
+		}
+		else if (column == "picture_url" && (len > 255 || len < 1)) {
+			console.error("picture_url size must be between 1 and 64 characters");
 			callback(false);
 			return;
 		}

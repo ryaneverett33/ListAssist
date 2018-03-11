@@ -8,10 +8,19 @@ $(document).ready(function() {
 
     $(".markAsBoughtButton").click(function() {
         currentItemCard = $(event.target).parent().parent();
+
+        //clear the invalid classes
+        $("#markAsBoughtNameField").removeClass("is-invalid");
     });
 
     $("#markAsBoughtSaveButton").click(function() {
         var name = $("#markAsBoughtNameField").val();
+
+        //ensure the name isn't empty
+        if(name == "") {
+            $("#markAsBoughtNameField").addClass("is-invalid");
+			return;
+        }
 
         //make text in card green
         currentItemCard.find(".card-body").addClass("text-success");

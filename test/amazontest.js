@@ -17,7 +17,6 @@ describe('amazon item scraper', () => {
 		return scrapeAmazonItem('https://www.amazon.com/gp/product/B073ZK95P6').then(item => {
 			expect(item).to.deep.equal({
 				itemTitle: 'Cable Knit Beanie by Tough Headwear - Thick, Soft & Warm Chunky Beanie Hats for Women & Men - Serious Beanies for Serious Style',
-				price: 9.95,
 				itemImg: 'https://images-na.ssl-images-amazon.com/images/I/81tKDBM5TmL._SL1500_.jpg',
 				link: 'https://www.amazon.com/gp/product/B073ZK95P6'
 			});
@@ -36,18 +35,15 @@ describe('amazon item scraper', () => {
 			expect(item).to.deep.equal({
 				items: [{
 						itemTitle: 'Seagate 2TB BarraCuda SATA 6Gb/s 128MB Cache 2.5-Inch 7mm Internal Hard Drive (ST2000LM015)',
-						link: 'http://amazon.com/dp/B01LX13P71/_encoding=UTF8?coliid=I19MTVKSJ4H6L&colid=Y3JW1PSZPW9N&psc=1',
-						price: 84.29
+						link: 'http://amazon.com/dp/B01LX13P71/_encoding=UTF8?coliid=I19MTVKSJ4H6L&colid=Y3JW1PSZPW9N&psc=1'
 					},
 					{
 						itemTitle: 'Crucial 16GB Kit (8GBx2) DDR4 2400 MT/S (PC4-19200) SR x8 Unbuffered SODIMM 260-Pin Memory - CT2K8G4SFS824A',
-						link: 'http://amazon.com/dp/B01BIWMWVS/_encoding=UTF8?coliid=I1CLHTOH1OQKFV&colid=Y3JW1PSZPW9N&psc=1',
-						price: 174.25
+						link: 'http://amazon.com/dp/B01BIWMWVS/_encoding=UTF8?coliid=I1CLHTOH1OQKFV&colid=Y3JW1PSZPW9N&psc=1'
 					},
 					{
 						itemTitle: 'Sony Premium Noise Cancelling, Bluetooth Headphone, Black (MDR1000X/B)',
-						link: 'http://amazon.com/dp/B01KHZ4ZYY/_encoding=UTF8?coliid=ILR69N7Q3W2HX&colid=Y3JW1PSZPW9N&psc=1',
-						price: 348
+						link: 'http://amazon.com/dp/B01KHZ4ZYY/_encoding=UTF8?coliid=ILR69N7Q3W2HX&colid=Y3JW1PSZPW9N&psc=1'
 					}
 				],
 				listTitle: 'Test Wish List',
@@ -57,18 +53,21 @@ describe('amazon item scraper', () => {
 	})
 
 	it('throws an error when the list is invalid', function (done) {
-		scrapeAmazonList('https://www.google.com').then(() => { }).catch(err => {
+		this.timeout(10000);
+		scrapeAmazonList('https://www.google.com').then(() => {}).catch(err => {
 			expect(err).to.exist;
 			done();
 		});
+	});
 
-		it('throws an error when the url is empty (item scraping)', function (done) {
-			scrapeAmazonItem('').catch(err => {
-				expect(err).to.exist;
-				done();
-			});
-		})
+	it('throws an error when the url is empty (item scraping)', function (done) {
+		this.timeout(10000);
+		scrapeAmazonItem('').catch(err => {
+			expect(err).to.exist;
+			done();
+		});
 	})
+
 })
 
 describe('amazon list scraper', () => {
@@ -78,18 +77,15 @@ describe('amazon list scraper', () => {
 			expect(item).to.deep.equal({
 				items: [{
 						itemTitle: 'Seagate 2TB BarraCuda SATA 6Gb/s 128MB Cache 2.5-Inch 7mm Internal Hard Drive (ST2000LM015)',
-						link: 'http://amazon.com/dp/B01LX13P71/_encoding=UTF8?coliid=I19MTVKSJ4H6L&colid=Y3JW1PSZPW9N&psc=1',
-						price: 84.29
+						link: 'http://amazon.com/dp/B01LX13P71/_encoding=UTF8?coliid=I19MTVKSJ4H6L&colid=Y3JW1PSZPW9N&psc=1'
 					},
 					{
 						itemTitle: 'Crucial 16GB Kit (8GBx2) DDR4 2400 MT/S (PC4-19200) SR x8 Unbuffered SODIMM 260-Pin Memory - CT2K8G4SFS824A',
-						link: 'http://amazon.com/dp/B01BIWMWVS/_encoding=UTF8?coliid=I1CLHTOH1OQKFV&colid=Y3JW1PSZPW9N&psc=1',
-						price: 174.25
+						link: 'http://amazon.com/dp/B01BIWMWVS/_encoding=UTF8?coliid=I1CLHTOH1OQKFV&colid=Y3JW1PSZPW9N&psc=1'
 					},
 					{
 						itemTitle: 'Sony Premium Noise Cancelling, Bluetooth Headphone, Black (MDR1000X/B)',
-						link: 'http://amazon.com/dp/B01KHZ4ZYY/_encoding=UTF8?coliid=ILR69N7Q3W2HX&colid=Y3JW1PSZPW9N&psc=1',
-						price: 348
+						link: 'http://amazon.com/dp/B01KHZ4ZYY/_encoding=UTF8?coliid=ILR69N7Q3W2HX&colid=Y3JW1PSZPW9N&psc=1'
 					}
 				],
 				listTitle: 'Test Wish List',
@@ -99,6 +95,7 @@ describe('amazon list scraper', () => {
 	})
 
 	it('throws an error when the list is invalid', function (done) {
+		this.timeout(10000);
 		scrapeAmazonList('https://www.google.com').then(() => {}).catch(err => {
 			expect(err).to.exist;
 			done();
@@ -106,7 +103,8 @@ describe('amazon list scraper', () => {
 	})
 
 	it('throws an error when the url is empty (list scraping)', function (done) {
-		scrapeAmazonList('').catch(err => {
+		this.timeout(10000);
+		scrapeAmazonList('').then(() => {}).catch(err => {
 			expect(err).to.exist;
 			done();
 		});

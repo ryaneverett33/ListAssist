@@ -29,25 +29,28 @@ exports.init = function() {
 //callback(token|null)
 exports.addUser = function(UserObj, callback) {
     if(callback == null) {
-        console.error("callback function is null");
+        console.error("UserManagement::addUser() callback function is null");
         return;
     }
-    UserControl.putUser(UserObj, function(id) {
-        if (id !== 0) {
-            //tokens.token = UserObj;
-            tokens.token = {
-                userid : id,
-                provider : 'google',
-                name : UserObj.name,
-                token : UserObj.token
-            };
-            callback(UserObj.token);
-            return;
+    UserControl.isUserInDb(UserObj, function(exists) {
+        var token = UserObj.token;
+        if (!exists) {
+            //put user in db
+            console.log("User doesn't exist in database, adding");
+            UserControl.putUser(UserObj, function(success) {
+                if (!success) {
+                    console.error("UserManagement::addUser() failed to put User in db");
+                }
+            });
         }
-        else {
-            callback(null);
-            return;
-        }
+        tokens[token] = {
+            userid : UserObj.id,
+            provider : 'google',
+            name : UserObj.name,
+            token : UserObj.token
+        };
+        callback(UserObj.token);
+        return;
     });
 }
 //checks if the user exists in the database
@@ -57,7 +60,7 @@ exports.userExists = function(UserObj, callback) {
         console.error("user object is null");
         return;
     }
-    if(callback = null) {
+    if(callback == null) {
         console.error("callback is null");
         return;
     }
@@ -70,11 +73,11 @@ exports.getUser = function(token, callback) {
         console.error("callback is null");
         return;
     }
-    if (tokens.token == null) {
+    if (tokens[token] == null) {
         callback(null);
         return;
     }
-    UserControl.getUser(tokens.token.id, function(User) {
+    UserControl.getUser(tokens[token].userid, function(User) {
         callback(User);
         return;
     });
@@ -83,21 +86,29 @@ exports.getUser = function(token, callback) {
 exports.getUserInfo = function(id, callback) {
     if(id == null) {
         console.error("id is null");
+        callback(null);
         return;
     }
     if(callback == null) {
         console.error("callback is null");
+        callback(null);
         return;
     }
-
+    console.error("userManagement::getUserInfo() NOT IMPLEMENTED");
+    callback(null);
 }
 //remove token from 
 exports.logoutUser = function(token) {
-    if (tokens.token == null) {
+    if (tokens[token] == null) {
         return false;
     }
     else {
-        delete tokens.token;
+        tokens[token] = null;
+        delete tokens[token];
         return true;
     }
+}
+//return true if user is already being tracked, otherwise false
+function tokenExists(token) {
+    return (tokens.token != null);
 }

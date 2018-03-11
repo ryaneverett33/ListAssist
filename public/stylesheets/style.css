@@ -6,3 +6,44 @@ body {
 a {
   color: #00B7FF;
 }
+
+html { 
+  background: url(../background_img.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+
+#sign_in_div {
+	position: absolute;
+	left: 37.5%;
+	top: 15%;
+	font-weight: bold;
+	padding-top: 0.5em;
+	padding-right: 2em;
+	padding-left: 2em;
+	padding-bottom: 7em;
+	border: 3px solid black;
+	background: white;
+	border-radius: 25px;
+}
+#main_header {
+	position: relative;
+	font-size: 3em;
+	font-family: "Helvetica Neue", sans-serif;
+}
+
+#sign_in_header {
+	position: relative;
+	left: 3%;
+	font-family: "Helvetica Neue", sans-serif;
+}
+
+.g-signin2 {
+	position: relative;
+	left: 20%;
+}
+
+

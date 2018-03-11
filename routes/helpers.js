@@ -54,3 +54,17 @@ exports.toJson = function(body) {
     //shouldn't get here
     return null;
 }
+//obj.oldkey -> obj.newkey
+exports.renameKey = function(obj, oldkey, newkey) {
+    if (obj == null) {
+        return;
+    }
+    if (oldkey !== newkey) {
+        Object.defineProperty(obj, newkey, 
+            Object.getOwnPropertyDescriptor(obj, oldkey));
+        delete obj[oldkey];
+    }
+}
+exports.isObjectEmpty = function(obj) {
+    return Object.keys(obj).length === 0 && obj.constructor === Object;
+}
