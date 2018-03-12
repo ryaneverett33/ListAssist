@@ -128,7 +128,8 @@ $(document).ready(function() {
 	var assignMarkAsBoughtButtonFunctionality = function() {
 		$(".markAsBoughtButton").off();
 
-		$(".markAsBoughtButton").click(function() {
+     //Firefox support
+		$(".markAsBoughtButton").click(function(event) {
 			currentItemCard = $(event.target).parent().parent();
 
         	//clear the invalid classes

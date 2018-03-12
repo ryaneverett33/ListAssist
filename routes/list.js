@@ -5,11 +5,17 @@ var ListManagement = require('../management/listManagement');
 var helpers = require('./helpers');
 var scrapeAmazonList = require('../util/listscraper');
 var scrapeAmazonItem = require('../util/itemscraper');
+var httproot = require('../util/http-root');
 
 /* get the page for creating a new list */
-router.get('/new', function (req, res, next) {
-  res.render('newlist', {});
-});
+/*router.get('/new', function (req, res, next) {
+  try {
+    res.render('newlist', {});
+  }
+  catch (err) {
+    res.status(500).send(JSON.stringify({error:err}));
+  }
+});*/
 
 /* create a new list */
 /*
@@ -17,45 +23,50 @@ token : "user login token",
 name : "name of new list"
 */
 router.post('/new', function (req, res, next) {
-  helpers.resolveBody(req, function (body) {
-    if (body == null) {
-      res.setHeader("content-type", "application/json");
-      res.status(400).send(JSON.stringify({ error: "Empty Request" }));
-      return;
-    }
-    var json = helpers.toJson(body);
-    if (json == null) {
-      res.setHeader("content-type", "application/json");
-      res.status(400).send(JSON.stringify({ error: "Bad JSON" }));
-      return;
-    }
-    if (json.token == null || json.name == null) {
-      res.setHeader("content-type", "application/json");
-      res.status(400).send(JSON.stringify({ error: "Invalid Arguments" }));
-      return;
-    }
-    UserManagement.getUser(json.token, function (User) {
-      if (User == null) {
+  try {
+    helpers.resolveBody(req, function (body) {
+      if (body == null) {
         res.setHeader("content-type", "application/json");
-        res.status(401).send(JSON.stringify({ error: "Unable to retrieve user" }));
+        res.status(400).send(JSON.stringify({ error: "Empty Request" }));
         return;
       }
-      else {
-        ListManagement.createList(json.name, User.getId(), function (id) {
-          if (id == null) {
-            res.setHeader("content-type", "application/json");
-            res.status(500).send(JSON.stringify({ error: "Unable to create List" }));
-            return;
-          }
-          else {
-            res.setHeader("content-type", "application/json");
-            res.status(200).send(JSON.stringify({ id: id }));
-            return;
-          }
-        });
+      var json = helpers.toJson(body);
+      if (json == null) {
+        res.setHeader("content-type", "application/json");
+        res.status(400).send(JSON.stringify({ error: "Bad JSON" }));
+        return;
       }
+      if (json.token == null || json.name == null) {
+        res.setHeader("content-type", "application/json");
+        res.status(400).send(JSON.stringify({ error: "Invalid Arguments" }));
+        return;
+      }
+      UserManagement.getUser(json.token, function (User) {
+        if (User == null) {
+          res.setHeader("content-type", "application/json");
+          res.status(401).send(JSON.stringify({ error: "Unable to retrieve user" }));
+          return;
+        }
+        else {
+          ListManagement.createList(json.name, User.getId(), function (id) {
+            if (id == null) {
+              res.setHeader("content-type", "application/json");
+              res.status(500).send(JSON.stringify({ error: "Unable to create List" }));
+              return;
+            }
+            else {
+              res.setHeader("content-type", "application/json");
+              res.status(200).send(JSON.stringify({ id: id }));
+              return;
+            }
+          });
+        }
+      });
     });
-  });
+  }
+  catch (err) {
+    res.status(500).send(JSON.stringify({ error: err }));
+  }
 });
 
 //Edit the name of the list
@@ -65,37 +76,43 @@ id : "list id",
 name : "new name of the list"
 */
 router.post('/edit', function (req, res, next) {
-  helpers.resolveBody(req, function (body) {
-    if (body == null) {
-      res.setHeader("content-type", "application/json");
-      res.status(400).send(JSON.stringify({ error: "Empty Request" }));
-      return;
-    }
-    var json = helpers.toJson(body);
-    if (json == null) {
-      res.setHeader("content-type", "application/json");
-      res.status(400).send(JSON.stringify({ error: "Bad JSON" }));
-      return;
-    }
-    if (json.token == null || json.name == null || json.id == null) {
-      res.setHeader("content-type", "application/json");
-      res.status(400).send(JSON.stringify({ error: "Invalid Arguments" }));
-      return;
-    }
-    UserManagement.getUser(json.token, function (User) {
-      if (User == null) {
+  try {
+    helpers.resolveBody(req, function (body) {
+      if (body == null) {
         res.setHeader("content-type", "application/json");
-        res.status(401).send(JSON.stringify({ error: "Unable to retrieve user" }));
+        res.status(400).send(JSON.stringify({ error: "Empty Request" }));
         return;
       }
-      else {
-        ListManagement.editList(json.id, json.name, function (success) {
-          res.setHeader("content-type", "application/json");
-          res.status(success ? 200 : 500).send();
-        });
+      var json = helpers.toJson(body);
+      if (json == null) {
+        res.setHeader("content-type", "application/json");
+        res.status(400).send(JSON.stringify({ error: "Bad JSON" }));
+        return;
       }
+      if (json.token == null || json.name == null || json.id == null) {
+        res.setHeader("content-type", "application/json");
+        res.status(400).send(JSON.stringify({ error: "Invalid Arguments" }));
+        return;
+      }
+      UserManagement.getUser(json.token, function (User) {
+        if (User == null) {
+          res.setHeader("content-type", "application/json");
+          res.status(401).send(JSON.stringify({ error: "Unable to retrieve user" }));
+          return;
+        }
+        else {
+          ListManagement.editList(json.id, json.name, function (success) {
+            res.setHeader("content-type", "application/json");
+            res.status(success ? 200 : 500).send();
+          });
+        }
+      });
     });
-  });
+  }
+  catch (err) {
+    res.status(500).send(JSON.stringify({ error: err }));
+  }
+
 });
 //Add item to a list
 /*
@@ -105,39 +122,45 @@ list_id : list to add to,
 picture : url of picture,
 */
 router.post('/add', function (req, res, next) {
-  helpers.resolveBody(req, function (body) {
-    if (body == null) {
-      res.setHeader("content-type", "application/json");
-      res.status(400).send(JSON.stringify({ error: "Empty Request" }));
-      return;
-    }
-    var json = helpers.toJson(body);
-    if (json == null) {
-      res.setHeader("content-type", "application/json");
-      res.status(400).send(JSON.stringify({ error: "Bad JSON" }));
-      return;
-    }
-    if (json.token == null || json.name == null || json.list_id == null) {
-      res.setHeader("content-type", "application/json");
-      res.status(400).send(JSON.stringify({ error: "Invalid Arguments" }));
-      return;
-    }
-    if (json.picture == null) json.picture = 'NULL';
-    UserManagement.getUser(json.token, function (User) {
-      if (User == null) {
+  try {
+    helpers.resolveBody(req, function (body) {
+      if (body == null) {
         res.setHeader("content-type", "application/json");
-        res.status(401).send(JSON.stringify({ error: "Unable to retrieve user" }));
+        res.status(400).send(JSON.stringify({ error: "Empty Request" }));
         return;
       }
-      else {
-        //this should probably return the item id
-        ListManagement.addItem(json.name, json.list_id, json.picture, function (success) {
-          res.setHeader("content-type", "application/json");
-          res.status(success ? 200 : 500).send();
-        });
+      var json = helpers.toJson(body);
+      if (json == null) {
+        res.setHeader("content-type", "application/json");
+        res.status(400).send(JSON.stringify({ error: "Bad JSON" }));
+        return;
       }
+      if (json.token == null || json.name == null || json.list_id == null) {
+        res.setHeader("content-type", "application/json");
+        res.status(400).send(JSON.stringify({ error: "Invalid Arguments" }));
+        return;
+      }
+      if (json.picture == null) json.picture = 'NULL';
+      UserManagement.getUser(json.token, function (User) {
+        if (User == null) {
+          res.setHeader("content-type", "application/json");
+          res.status(401).send(JSON.stringify({ error: "Unable to retrieve user" }));
+          return;
+        }
+        else {
+          //this should probably return the item id
+          ListManagement.addItem(json.name, json.list_id, json.picture, function (success) {
+            res.setHeader("content-type", "application/json");
+            res.status(success ? 200 : 500).send();
+          });
+        }
+      });
     });
-  });
+  }
+  catch (err) {
+    res.status(500).send(JSON.stringify({ error: err }));
+  }
+
 });
 
 /*edits an item in a list
@@ -148,43 +171,49 @@ arguments needed:
   new_value (must be the correct type, all ints except name and picture_url)
 */
 router.post('/item/edit', function (req, res, next) {
-  helpers.resolveBody(req, function (body) {
-    if (body == null) {
-      res.setHeader("content-type", "application/json");
-      res.status(400).send(JSON.stringify({ error: "Empty Request" }));
-      return;
-    }
-    var json = helpers.toJson(body);
-    if (json == null) {
-      res.setHeader("content-type", "application/json");
-      res.status(400).send(JSON.stringify({ error: "Bad JSON" }));
-      return;
-    }
-    if (json.token == null || json.id == null || json.column == null || json.new_value == null) {
-      res.setHeader("content-type", "application/json");
-      res.status(400).send(JSON.stringify({ error: "Invalid Arguments" }));
-      return;
-    }
-    UserManagement.getUser(json.token, function (User) {
-      if (User == null) {
+  try {
+    helpers.resolveBody(req, function (body) {
+      if (body == null) {
         res.setHeader("content-type", "application/json");
-        res.status(401).send(JSON.stringify({ error: "Unable to retrieve user" }));
+        res.status(400).send(JSON.stringify({ error: "Empty Request" }));
         return;
       }
-      else {
-        ListManagement.editItem(json.id, json.column, json.new_value, function (success) {
-          res.setHeader("content-type", "application/json");
-          res.status(success ? 200 : 500).send();
-        });
+      var json = helpers.toJson(body);
+      if (json == null) {
+        res.setHeader("content-type", "application/json");
+        res.status(400).send(JSON.stringify({ error: "Bad JSON" }));
+        return;
       }
+      if (json.token == null || json.id == null || json.column == null || json.new_value == null) {
+        res.setHeader("content-type", "application/json");
+        res.status(400).send(JSON.stringify({ error: "Invalid Arguments" }));
+        return;
+      }
+      UserManagement.getUser(json.token, function (User) {
+        if (User == null) {
+          res.setHeader("content-type", "application/json");
+          res.status(401).send(JSON.stringify({ error: "Unable to retrieve user" }));
+          return;
+        }
+        else {
+          ListManagement.editItem(json.id, json.column, json.new_value, function (success) {
+            res.setHeader("content-type", "application/json");
+            res.status(success ? 200 : 500).send();
+          });
+        }
+      });
     });
-  });
+  }
+  catch (err) {
+    res.status(500).send(JSON.stringify({ error: err }));
+  }
+
 });
 
 
 router.post('/get', function (req, res, next) {
   try {
-    helpers.resolveBody(req, function(body) {
+    helpers.resolveBody(req, function (body) {
       if (body == null) {
         console.log("body null");
         res.setHeader("content-type", "application/json");
@@ -198,14 +227,20 @@ router.post('/get', function (req, res, next) {
         res.status(400).send(JSON.stringify({ error: "Bad JSON" }));
         return;
       }
-      if (json.id == null ) {
+      if (json.id == null) {
         console.log("invalid arguments");
         res.setHeader("content-type", "application/json");
         res.status(400).send(JSON.stringify({ error: "Invalid Arguments" }));
         return;
       }
-      ListManagement.getList(json.id, function(list) {
-        if (list[0] == null) {
+      if (Number(json.id) == 0 | NaN) {
+        console.log("invalid ID");
+        res.setHeader("content-type", "application/json");
+        res.status(400).send(JSON.stringify({ error: "Invalid ID" }));
+        return;
+      }
+      ListManagement.getList(json.id, function (list) {
+        if (list == null) {
           res.status(404).send("");
           return;
         }
@@ -307,100 +342,112 @@ router.post('/all', function (req, res, next) {
     });
   }
   catch (err) {
-    console.log("/list/get encountered an error: " + err);
+    console.log("/list/all encountered an error: " + err);
     res.status(500).send(JSON.stringify({ error: err }));
     return;
   }
 });
 
 /* display a list */
-router.get('/:id', function (req, res, next) {
-  // todo: get the list from the database
-  var listId = Number(req.params.id);
-  if (listId == NaN || listId == null) {
-    res.render('404');
-    return;
+/*router.get('/items.html', function (req, res, next) {
+  try {
+    // todo: get the list from the database
+    var listId = Number(req.location.split("?")[1]);
+    if (listId == NaN || listId == null) {
+      res.render('404');
+      return;
+    }
+    else {
+      ListManagement.listExists(listId, function (exists) {
+        if (exists) {
+          /*res.render('itemsPublicExample', {
+            id: listId
+          });*/
+/*          res.sendFile('/items.html', {root : httproot.getRoot()});
+          return;
+        }
+        else {
+          res.status(404);
+          res.render('404');
+          return;
+        }
+      })
+    }
   }
-  else {
-    ListManagement.listExists(listId, function (exists) {
-      if (exists) {
-        res.render('itemsPublicExample', {
-          id: listId
-        });
-        return;
-      }
-      else {
-        res.status(404);
-        res.render('404');
-        return;
-      }
-    })
+  catch (err) {
+    res.status(500).send(JSON.stringify({ error: err }));
   }
   // todo:
   //res.render('list', { title: 'List' });
-});
+  //});
+});*/
 
 /**
  * Imports an amazon list
  * input: token, listUrl
  */
 router.post('/import', function (req, res, next) {
-  helpers.resolveBody(req, function (body) {
-    if (body == null) {
-      res.setHeader("content-type", "application/json");
-      res.status(400).send(JSON.stringify({ error: "Empty Request" }));
-      return;
-    }
-    var json = helpers.toJson(body);
-    if (json == null) {
-      res.setHeader("content-type", "application/json");
-      res.status(400).send(JSON.stringify({ error: "Bad JSON" }));
-      return;
-    }
-    if (!json.listUrl || json.token == null) {
-      res.setHeader("content-type", "application/json");
-      res.status(400).send(JSON.stringify({ error: "Invalid Arguments" }));
-      return;
-    }
-    UserManagement.getUser(json.token, function (User) {
-      if (User == null) {
+  try {
+    helpers.resolveBody(req, function (body) {
+      if (body == null) {
         res.setHeader("content-type", "application/json");
-        res.status(401).send(JSON.stringify({ error: "Unable to retrieve user" }));
+        res.status(400).send(JSON.stringify({ error: "Empty Request" }));
         return;
       }
-      else {
-        scrapeAmazonList(json.listUrl).then(list => {
-          ListManagement.createList(list.listTitle, User.getId(), function (newListId) {
-            if (!newListId) {
-              res.setHeader("content-type", "application/json");
-              res.status(500).send(JSON.stringify({ error: "Unable to create List" }));
-              return;
-            }
-            else {
-              res.setHeader("content-type", "application/json");
-              res.status(200).send(JSON.stringify({ id: newListId }));
-              list.items.forEach(listItem => {
-                scrapeAmazonItem(listItem.link).then(scrapedItem => {
-                  ListManagement.addItem(listItem.itemTitle, newListId, scrapedItem.itemImg, () => {
-                    console.log("ListItem added: ", scrapedItem.itemTitle)
-                  });
-                }).catch((err) => {
-                  console.error("Failed to add parsed item: ", err);
-                })
-
-              });
-
-              return;
-            }
-          });
-        }).catch(() => {
-          res.setHeader("content-type", "application/json");
-          res.status(500).send(JSON.stringify({ error: "Failed to scrape list" }));
-        })
-
+      var json = helpers.toJson(body);
+      if (json == null) {
+        res.setHeader("content-type", "application/json");
+        res.status(400).send(JSON.stringify({ error: "Bad JSON" }));
+        return;
       }
+      if (!json.listUrl || json.token == null) {
+        res.setHeader("content-type", "application/json");
+        res.status(400).send(JSON.stringify({ error: "Invalid Arguments" }));
+        return;
+      }
+      UserManagement.getUser(json.token, function (User) {
+        if (User == null) {
+          res.setHeader("content-type", "application/json");
+          res.status(401).send(JSON.stringify({ error: "Unable to retrieve user" }));
+          return;
+        }
+        else {
+          scrapeAmazonList(json.listUrl).then(list => {
+            ListManagement.createList(list.listTitle, User.getId(), function (newListId) {
+              if (!newListId) {
+                res.setHeader("content-type", "application/json");
+                res.status(500).send(JSON.stringify({ error: "Unable to create List" }));
+                return;
+              }
+              else {
+                res.setHeader("content-type", "application/json");
+                res.status(200).send(JSON.stringify({ id: newListId }));
+                list.items.forEach(listItem => {
+                  scrapeAmazonItem(listItem.link).then(scrapedItem => {
+                    ListManagement.addItem(listItem.itemTitle, newListId, scrapedItem.itemImg, () => {
+                      console.log("ListItem added: ", scrapedItem.itemTitle)
+                    });
+                  }).catch((err) => {
+                    console.error("Failed to add parsed item: ", err);
+                  })
+
+                });
+
+                return;
+              }
+            });
+          }).catch(() => {
+            res.setHeader("content-type", "application/json");
+            res.status(500).send(JSON.stringify({ error: "Failed to scrape list" }));
+          })
+
+        }
+      });
     });
-  });
+  }
+  catch (err) {
+    res.status(500).send(JSON.stringify({ error: err }));
+  }
 });
 
 /**
@@ -408,37 +455,43 @@ router.post('/import', function (req, res, next) {
  * input : id, token
  */
 router.post('/delete', function (req, res, next) {
-  helpers.resolveBody(req, function (body) {
-    if (body == null) {
-      res.setHeader("content-type", "application/json");
-      res.status(400).send(JSON.stringify({ error: "Empty Request" }));
-      return;
-    }
-    var json = helpers.toJson(body);
-    if (json == null) {
-      res.setHeader("content-type", "application/json");
-      res.status(400).send(JSON.stringify({ error: "Bad JSON" }));
-      return;
-    }
-    if (json.token == null || json.id == null) {
-      res.setHeader("content-type", "application/json");
-      res.status(400).send(JSON.stringify({ error: "Invalid Arguments" }));
-      return;
-    }
-    UserManagement.getUser(json.token, function (User) {
-      if (User == null) {
+  try {
+    helpers.resolveBody(req, function (body) {
+      if (body == null) {
         res.setHeader("content-type", "application/json");
-        res.status(401).send(JSON.stringify({ error: "Unable to retrieve user" }));
+        res.status(400).send(JSON.stringify({ error: "Empty Request" }));
         return;
       }
-
-      ListManagement.deleteList(json.id, function (success) {
+      var json = helpers.toJson(body);
+      if (json == null) {
         res.setHeader("content-type", "application/json");
-        res.status(success ? 200 : 500).send();
-      });
+        res.status(400).send(JSON.stringify({ error: "Bad JSON" }));
+        return;
+      }
+      if (json.token == null || json.id == null) {
+        res.setHeader("content-type", "application/json");
+        res.status(400).send(JSON.stringify({ error: "Invalid Arguments" }));
+        return;
+      }
+      UserManagement.getUser(json.token, function (User) {
+        if (User == null) {
+          res.setHeader("content-type", "application/json");
+          res.status(401).send(JSON.stringify({ error: "Unable to retrieve user" }));
+          return;
+        }
 
+        ListManagement.deleteList(json.id, function (success) {
+          res.setHeader("content-type", "application/json");
+          res.status(success ? 200 : 500).send();
+        });
+
+      });
     });
-  });
+  }
+  catch (err) {
+    res.status(500).send(JSON.stringify({ error: err }));
+  }
+
 });
 
 /**
@@ -446,37 +499,42 @@ router.post('/delete', function (req, res, next) {
  * input : id, token
  */
 router.post('/item/delete', function (req, res, next) {
-  helpers.resolveBody(req, function (body) {
-    if (body == null) {
-      res.setHeader("content-type", "application/json");
-      res.status(400).send(JSON.stringify({ error: "Empty Request" }));
-      return;
-    }
-    var json = helpers.toJson(body);
-    if (json == null) {
-      res.setHeader("content-type", "application/json");
-      res.status(400).send(JSON.stringify({ error: "Bad JSON" }));
-      return;
-    }
-    if (json.token == null || json.id == null) {
-      res.setHeader("content-type", "application/json");
-      res.status(400).send(JSON.stringify({ error: "Invalid Arguments" }));
-      return;
-    }
-    UserManagement.getUser(json.token, function (User) {
-      if (User == null) {
+  try {
+    helpers.resolveBody(req, function (body) {
+      if (body == null) {
         res.setHeader("content-type", "application/json");
-        res.status(401).send(JSON.stringify({ error: "Unable to retrieve user" }));
+        res.status(400).send(JSON.stringify({ error: "Empty Request" }));
         return;
       }
-
-      ListManagement.deleteItem(json.id, function (success) {
+      var json = helpers.toJson(body);
+      if (json == null) {
         res.setHeader("content-type", "application/json");
-        res.status(success ? 200 : 500).send();
-      });
+        res.status(400).send(JSON.stringify({ error: "Bad JSON" }));
+        return;
+      }
+      if (json.token == null || json.id == null) {
+        res.setHeader("content-type", "application/json");
+        res.status(400).send(JSON.stringify({ error: "Invalid Arguments" }));
+        return;
+      }
+      UserManagement.getUser(json.token, function (User) {
+        if (User == null) {
+          res.setHeader("content-type", "application/json");
+          res.status(401).send(JSON.stringify({ error: "Unable to retrieve user" }));
+          return;
+        }
 
+        ListManagement.deleteItem(json.id, function (success) {
+          res.setHeader("content-type", "application/json");
+          res.status(success ? 200 : 500).send();
+        });
+
+      });
     });
-  });
+  }
+  catch (err) {
+    res.status(500).send(JSON.stringify({ error: err }));
+  }
 });
 
 /*
@@ -487,66 +545,76 @@ name : optional
 either name or token supplied
 */
 router.post('/item/purchase', function (req, res, next) {
-  helpers.resolveBody(req, function (body) {
-    if (body == null) {
-      res.setHeader("content-type", "application/json");
-      res.status(400).send(JSON.stringify({ error: "Empty Request" }));
-      return;
-    }
-    var json = helpers.toJson(body);
-    if (json == null) {
-      res.setHeader("content-type", "application/json");
-      res.status(400).send(JSON.stringify({ error: "Bad JSON" }));
-      return;
-    }
-    if ((json.token == null && json.name == null) || json.id == null) {
-      res.setHeader("content-type", "application/json");
-      res.status(400).send(JSON.stringify({ error: "Invalid Arguments" }));
-      return;
-    }
-    if (json.token != null && json.name != null) {
-      res.setHeader("content-type", "application/json");
-      res.status(400).send(JSON.stringify({ error: "ya can't have both" }));
-      return;
-    }
-    if (json.token != null) {
-      UserManagement.getUser(json.token, function (user) {
-        if (user == null) {
-          res.setHeader("content-type", "application/json");
-          res.status(401).send(JSON.stringify({ error: "Unable to retrieve user" }));
-          return;
-        }
-        else {
-          ListManagement.purchaseItem(json.id, user.getName(), function (success) {
-            if (success) {
-              res.setHeader("content-type", "application/json");
-              res.status(200).send();
-              return;
-            }
-            else {
-              res.setHeader("content-type", "application/json");
-              res.status(500).send(JSON.stringify({ error: "already purchased" }))
-              return;
-            }
-          });
-        }
-      });
-    }
-    else {
-      ListManagement.purchaseItem(json.id, json.name, function (success) {
-        if (success) {
-          res.setHeader("content-type", "application/json");
-          res.status(200).send();
-          return;
-        }
-        else {
-          res.setHeader("content-type", "application/json");
-          res.status(500).send(JSON.stringify({ error: "already purchased" }))
-          return;
-        }
-      })
-    }
-  })
+  try {
+    helpers.resolveBody(req, function (body) {
+      if (body == null) {
+        res.setHeader("content-type", "application/json");
+        res.status(400).send(JSON.stringify({ error: "Empty Request" }));
+        return;
+      }
+      var json = helpers.toJson(body);
+      if (json == null) {
+        res.setHeader("content-type", "application/json");
+        res.status(400).send(JSON.stringify({ error: "Bad JSON" }));
+        return;
+      }
+      if ((json.token == null && json.name == null) || json.id == null) {
+        res.setHeader("content-type", "application/json");
+        res.status(400).send(JSON.stringify({ error: "Invalid Arguments" }));
+        return;
+      }
+      if (json.token != null && json.name != null) {
+        res.setHeader("content-type", "application/json");
+        res.status(400).send(JSON.stringify({ error: "ya can't have both" }));
+        return;
+      }
+      if (json.name === null || json.name.toUpperCase() === "NULL") {
+        res.setHeader("content-type", "application/json");
+        res.status(400).send(JSON.stringify({ error: "Invalid Arguments" }));
+        return;
+      }
+      if (json.token != null) {
+        UserManagement.getUser(json.token, function (user) {
+          if (user == null) {
+            res.setHeader("content-type", "application/json");
+            res.status(401).send(JSON.stringify({ error: "Unable to retrieve user" }));
+            return;
+          }
+          else {
+            ListManagement.purchaseItem(json.id, user.getName(), function (success) {
+              if (success) {
+                res.setHeader("content-type", "application/json");
+                res.status(200).send();
+                return;
+              }
+              else {
+                res.setHeader("content-type", "application/json");
+                res.status(500).send(JSON.stringify({ error: "already purchased" }))
+                return;
+              }
+            });
+          }
+        });
+      }
+      else {
+        ListManagement.purchaseItem(json.id, json.name, function (success) {
+          if (success) {
+            res.setHeader("content-type", "application/json");
+            res.status(200).send();
+            return;
+          }
+          else {
+            res.setHeader("content-type", "application/json");
+            res.status(500).send(JSON.stringify({ error: "already purchased" }))
+            return;
+          }
+        })
+      }
+    });
+  }
+  catch (err) {
+    res.status(500).send(JSON.stringify({ error: err }));
+  }
 });
 
 

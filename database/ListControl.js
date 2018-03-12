@@ -30,11 +30,18 @@ listObj : [
 */
 exports.getListsByUserId = function(userid, callback) {
     getEntry.getLists(userid, function(lists) {
-        if (lists === null || lists.row === null || lists.items === null) {
-            console.log("failed first round " + JSON.stringify(list));
+        if (lists == null || lists.length == 0) {
+            console.log("failed first round " + JSON.stringify(lists));
+            var debug;
+            debug = 5;
             callback({});
             return;
         }
+        /*if (lists === null || lists.row === null || lists.items === null) {
+            console.log("failed first round " + JSON.stringify(list));
+            callback({});
+            return;
+        }*/
         console.log("lists.length %d", lists.length);
         //console.log("list.items.length %d", lists.items.length);
         if (lists.length == 0) {
@@ -72,12 +79,14 @@ exports.createList = function(name, userid, callback) {
         if (err) {
             console.error("ListControl::createUser() failed to get pool connection: %d", err);
             callback(null);
+            connection.release();
             return;
         }
         conn.query('INSERT INTO Lists Values(0,?,?);', [name, userid], function(queryerr) {
             if (queryerr) {
                 console.error("ListControl::createUser() failed to query pool: %s", queryerr);
                 callback(null);
+                connection.release();
                 return;
             }
             else {
@@ -86,11 +95,13 @@ exports.createList = function(name, userid, callback) {
                     if (queryerr2) {
                         console.error("ListControl::createUser() failed to query twice pool: %s", queryerr2);
                         callback(null);
+                        connection.release();
                         return;
                     }
                     else {
                         if (results == null || results[0] == null) {
                             callback(null);
+                            connection.release();
                             return;
                         }
                         helpers.renameKey(results[0], "LAST_INSERT_ID()", "id");
@@ -99,6 +110,7 @@ exports.createList = function(name, userid, callback) {
                         //console.log(results[LAST_INSERT_ID()]);
                         //console.log(results.id);
                         callback(results[0].id);
+                        connection.release();
                         return;
                     }
                 });

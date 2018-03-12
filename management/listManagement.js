@@ -1,5 +1,6 @@
 var UserControl = require('../database/UserControl');
 var ListControl = require('../database/ListControl');
+var helpers = require('../routes/helpers');
 /*
 listObj : [
     {
@@ -106,16 +107,28 @@ exports.getList = function(listid, callback) {
         console.error("ListManagement::getLists() callback function is null");
         return;
     }
-    ListControl.getList(listid, function(list) {
-        if (list == null || list[0] == null) {
-            console.error("ListManagement::getLists() unable to get Lists");
-            callback(null);
-            return;
-        }
-        else {
-            callback(list);
-            return;
-        }
-    });
+    try {
+        ListControl.getList(listid, function(list) {
+            console.log("get list: " + list + JSON.stringify(list));
+            if (helpers.isObjectEmpty(list)) {
+                console.error("ListManagement::getLists() unable to get list EMPTY OBJECT");
+                callback(null);
+                return;
+            }
+            if (list == null || list == undefined || list[0] == null) {
+                console.error("ListManagement::getLists() unable to get Lists");
+                callback(null);
+                return;
+            }
+            else {
+                callback(list);
+                return;
+            }
+        });
+    }
+    catch(err) {
+        console.error("couldn't get list: " + err);
+        callback(null);
+    }
 }
 exports.isPurchased = ListControl.isPurchased;

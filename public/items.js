@@ -13,7 +13,8 @@ $(document).ready(function() {
 
 	if(token == null) {
 		//no token was found so redirect to the login page
-		window.location.href = "https://listassist.duckdns.org";
+		//window.location.href = "https://listassist.duckdns.org";
+		window.location.href = "/";
 	}
 
 	//get the id of the list
@@ -72,8 +73,8 @@ $(document).ready(function() {
 						picture: image
 					};
 					data = JSON.stringify(data);
-
-					accessServer("https://listassist.duckdns.org/list/add", data, function(result) {
+					//accessServer("https://listassist.duckdns.org/list/add", data, function(result) {
+						accessServer("/list/add", data, function(result) {
 						console.log(result);
 						window.location.reload();
 					},
@@ -150,7 +151,8 @@ $(document).ready(function() {
 			};
 			data = JSON.stringify(data);
 
-			accessServer("https://listassist.duckdns.org/list/item/edit", data, function(result) {
+			//accessServer("https://listassist.duckdns.org/list/item/edit", data, function(result) {
+				accessServer("/list/item/edit", data, function(result) {
 				console.log(result);
 				currentItemCard.find(".card-body .card-title").text(newName);
 				$("#editItemModal").modal("toggle");
@@ -174,7 +176,8 @@ $(document).ready(function() {
 					data = JSON.stringify(data);
 					console.log(data);
 
-					accessServer("https://listassist.duckdns.org/list/item/edit", data, function(result) {
+					//accessServer("https://listassist.duckdns.org/list/item/edit", data, function(result) {
+						accessServer("/list/item/edit", data, function(result) {
 						console.log(result);
 						currentItemCard.find(".card-img-top").attr("src", newImage);
 						$("#editItemModal").modal("toggle");
@@ -197,7 +200,8 @@ $(document).ready(function() {
 		}
 		data = JSON.stringify(data);
 
-		accessServer("https://listassist.duckdns.org/list/item/delete", data, function(result) {
+		//accessServer("https://listassist.duckdns.org/list/item/delete", data, function(result) {
+			accessServer("/list/item/delete", data, function(result) {
 			console.log(result);
 			window.location.reload();
 		},
@@ -211,7 +215,7 @@ $(document).ready(function() {
 		$(".editItemButton").off();
 
 		//this is the edit item button on each of the item entries
-		$(".editItemButton").click(function () {
+		$(".editItemButton").click(function (event) {
 			currentItemCard = $(event.target).parent().parent();;
 
 			var name = currentItemCard.find(".card-body .card-title").text();
@@ -254,14 +258,16 @@ $(document).ready(function() {
 
 	//set the link on the share list modal
 	$("#shareListField").attr("value", "https://listassist.duckdns.org/itemsPublic.html?" + id);
-
+	//$("#shareListField").attr("value", "/itemsPublic.html?" + id);
+	
 	//initially fill up the page with the items and update the name
 	var data = {
 		id: id
 	};
 	data = JSON.stringify(data);
 
-	accessServer("https://listassist.duckdns.org/list/get", data, function(result) {
+	//accessServer("https://listassist.duckdns.org/list/get", data, function(result) {
+		accessServer("/list/get", data, function(result) {
 		json = JSON.parse(result);
 		var items = null;
 

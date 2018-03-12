@@ -1,26 +1,33 @@
 //Gets the full body of an HTTP request, calls the callback with the fixed body
-exports.resolveBody = function(req, callback) {
-    //A weird case to support Postman and regular browsers
-    if (this.isBodyFilled(req)) {
-        if (callback != null) {
-            console.log(req.body);
-            callback(req.body);
+exports.resolveBody = function (req, callback) {
+    try {
+        //A weird case to support Postman and regular browsers
+        if (this.isBodyFilled(req)) {
+            if (callback != null) {
+                console.log(req.body);
+                callback(req.body);
+                return;
+            }
             return;
         }
+        let body = [];
+        req.on('data', (chunk) => {
+            body.push(chunk);
+        }).on('end', () => {
+            body = Buffer.concat(body).toString();
+            console.log("resolved, calling callback");
+            if (callback != null) {
+                callback(body);
+                return;
+            }
+            return;
+        });
+    }
+    catch (err) {
+        console.error("helpers.resolveBody() failed with error: " + err);
+        callback(null);
         return;
     }
-    let body = [];
-    req.on('data', (chunk) => {
-        body.push(chunk);
-    }).on('end', () => {
-        body = Buffer.concat(body).toString();
-        console.log("resolved, calling callback");
-        if (callback != null) {
-            callback(body);
-            return;
-        }
-        return;
-    });
 }
 //Needed for resolvedBody, checks if the HTTP Request body has already been filled or if it's just an empty object
 exports.isBodyFilled = function(req) {
@@ -64,4 +71,7 @@ exports.renameKey = function(obj, oldkey, newkey) {
             Object.getOwnPropertyDescriptor(obj, oldkey));
         delete obj[oldkey];
     }
+}
+exports.isObjectEmpty = function(obj) {
+    return Object.keys(obj).length === 0 && obj.constructor === Object;
 }

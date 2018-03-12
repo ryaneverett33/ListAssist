@@ -42,12 +42,14 @@ exports.putUser = function(userObj, callback) {
                     console.error("UserControl::putUser() failed to insert user. Error: %s", queryerr);
                     if (callback != null) {
                         callback(false);
+                        connection.release();
                         return;
                     }
                 }
                 else {
                     if (callback != null) {
                         callback(true);
+                        connection.release();
                         return;
                     }
                 }

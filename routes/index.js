@@ -3,17 +3,12 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  //res.render('index', { title: 'Express' });
-  
-  //serve the login page
-  res.render('login');
-
-  //serve the items page
-  //res.render('itemsExample');
-  //res.sendFile('../public/index.html');
-
-  //serve the public items page
-  //res.render('itemsPublicExample');
+  try {
+    res.render('login');
+  }
+  catch (err) {
+    res.status(500).send(JSON.stringify({error : err}));
+  }
 });
 
 module.exports = router;

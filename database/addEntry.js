@@ -44,7 +44,8 @@ exports.createUser = function createUser(id, name, username, email, image, callb
 	pool.connect(function(error, connection) {
 		//check for errors
 	    if (error) {
-	      console.error("Error adding user to database: %s", error);
+		  console.error("Error adding user to database: %s", error);
+		  connection.release();
 	      callback(false);
 	      return;
 	    }
@@ -55,11 +56,13 @@ exports.createUser = function createUser(id, name, username, email, image, callb
 		        if (error2) {
 					console.error("An error occured adding user to database: %s", error2);
 					callback(false);
-					pool.disconnect(connection);
+					connection.release();
+					//pool.disconnect(connection);
 					return;
 		        } else {
 					callback(true);
-					pool.disconnect(connection);
+					connection.release();
+					//pool.disconnect(connection);
 					return;
 		        }
 	      });
@@ -103,11 +106,13 @@ exports.createList = function createList(id, name, list_id, callback) {
 			        if (error2) {
 						console.error("An error occured adding list to database: %s", error2);
 						callback(false);
-						pool.disconnect(connection);
+						connection.release();
+						//pool.disconnect(connection);
 						return;
 			        } else {
 						callback(true);
-						pool.disconnect(connection);
+						connection.release();
+						//pool.disconnect(connection);
 						return;
 			        }
 		    	});
@@ -118,11 +123,13 @@ exports.createList = function createList(id, name, list_id, callback) {
 			        if (error2) {
 						console.error("An error occured adding list to database: %s", error2);
 						callback(false);
-						pool.disconnect(connection);
+						connection.release();
+						//pool.disconnect(connection);
 						return;
 			        } else {
 						callback(true);
-						pool.disconnect(connection);
+						connection.release();
+						//pool.disconnect(connection);
 						return;
 			        }
 		    	});
@@ -156,12 +163,14 @@ exports.createItem = function createItem(name, picture_url, buyer, purchased, li
 			        if (error2) {
 						console.error("An error occured adding item to database 1: %s", error2);
 						callback(false);
-						pool.disconnect(connection);
+						connection.release();
+						//pool.disconnect(connection);
 						return;
 			        } else {
 			        	//the query went through with no problems
 						callback(true);
-						pool.disconnect(connection);
+						connection.release();
+						//pool.disconnect(connection);
 						return;
 			        }
 		      	});
@@ -172,12 +181,14 @@ exports.createItem = function createItem(name, picture_url, buyer, purchased, li
 			        if (error2) {
 						console.error("An error occured adding item to database 2: %s", error2);
 						callback(false);
-						pool.disconnect(connection);
+						connection.release();
+						//pool.disconnect(connection);
 						return;
 			        } else {
 			        	//the query went through with no problems
 						callback(true);
-						pool.disconnect(connection);
+						connection.release();
+						//pool.disconnect(connection);
 						return;
 			        }
 		      	});
