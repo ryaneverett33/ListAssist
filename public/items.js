@@ -73,7 +73,6 @@ $(document).ready(function() {
 						picture: image
 					};
 					data = JSON.stringify(data);
-
 					//accessServer("https://listassist.duckdns.org/list/add", data, function(result) {
 						accessServer("/list/add", data, function(result) {
 						console.log(result);
@@ -313,5 +312,6 @@ $(document).ready(function() {
 	},
 	function(result) {
 		console.log(result);
+		alert("This list was not found");
 	});
 });

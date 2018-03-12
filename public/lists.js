@@ -13,13 +13,11 @@ $(document).ready(function() {
 			//console.log(token)
 		}
 	}
-
-	//token = "eyJhbGciOiJSUzI1NiIsImtpZCI6ImFjMmI2M2ZhZWZjZjgzNjJmNGM1MjhlN2M3ODQzMzg3OTM4NzAxNmIifQ.eyJhenAiOiI1NzM1OTkyMTEyMzEtcWNlOG9saTltNGtqbGI5ZmwwYWgzNWV2ZzRlOHNlanUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI1NzM1OTkyMTEyMzEtcWNlOG9saTltNGtqbGI5ZmwwYWgzNWV2ZzRlOHNlanUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDQ0MjIxNjA4MDAyOTYxODY5NjMiLCJlbWFpbCI6Imt5bGUubi5idXJrZUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6Ik1UYmx4b1FVTkVTMGt5bkRsNnRrbEEiLCJleHAiOjE1MjA3NTAyOTMsImlzcyI6ImFjY291bnRzLmdvb2dsZS5jb20iLCJqdGkiOiJkZjM0NmI1OWNhODRiYTM3MmY0YzZhM2Q2ZTdjM2FmZGIwNzA2OTUwIiwiaWF0IjoxNTIwNzQ2NjkzLCJuYW1lIjoiS3lsZSBCdXJrZSIsInBpY3R1cmUiOiJodHRwczovL2xoNC5nb29nbGV1c2VyY29udGVudC5jb20vLUFUNUVoWVZBbDV3L0FBQUFBQUFBQUFJL0FBQUFBQUFBRTgwL2pkTEdjQmRYQ25rL3M5Ni1jL3Bob3RvLmpwZyIsImdpdmVuX25hbWUiOiJLeWxlIiwiZmFtaWx5X25hbWUiOiJCdXJrZSIsImxvY2FsZSI6ImVuIn0.S7tXYv5uXpGQSMsBRi626gn7FQvtGAh_lvkbuThojRD6jccSWX_tPWCM0B7nVuceuB7YGXjEUNvmv42EuuarYbjma25gCCbk-fWE5sa1x8HtjHP4gS1tMvfh0RnQiG_XvtiFQtL_G0dLGTxW-Zn9egBjT_mdrOJF2C7uZR1Z6jY7LGABpY9jKffpoJ9pddMk4-iMjR_FgDNOJYaWX5Mcy0ZfVhv6Z5mmxiLq7Yh6e31JJpbQGhWC8T7aJWhU3CEzbNMpO6-jxbMTeGa_ElkISqhOiw8A-7LH_XygFpdFZEVn23egg9hXvixWq-ExR6aGCjZIe9ancjXWArCWwqLpmg";
+	//token = "eyJhbGciOiJSUzI1NiIsImtpZCI6ImFjMmI2M2ZhZWZjZjgzNjJmNGM1MjhlN2M3ODQzMzg3OTM4NzAxNmIifQ.eyJhenAiOiI1NzM1OTkyMTEyMzEtcWNlOG9saTltNGtqbGI5ZmwwYWgzNWV2ZzRlOHNlanUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI1NzM1OTkyMTEyMzEtcWNlOG9saTltNGtqbGI5ZmwwYWgzNWV2ZzRlOHNlanUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDQ0MjIxNjA4MDAyOTYxODY5NjMiLCJlbWFpbCI6Imt5bGUubi5idXJrZUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6ImgxTk9MNlF0cUQ4Qzl5dk5mbVNRNnciLCJleHAiOjE1MjA4MDAyOTAsImlzcyI6ImFjY291bnRzLmdvb2dsZS5jb20iLCJqdGkiOiJmNTM1ZDllNjFlOTNiNjBlYTJiZDZmZTAxMWM3YTIyYzlhMmRiNDYwIiwiaWF0IjoxNTIwNzk2NjkwLCJuYW1lIjoiS3lsZSBCdXJrZSIsInBpY3R1cmUiOiJodHRwczovL2xoNC5nb29nbGV1c2VyY29udGVudC5jb20vLUFUNUVoWVZBbDV3L0FBQUFBQUFBQUFJL0FBQUFBQUFBRTgwL2pkTEdjQmRYQ25rL3M5Ni1jL3Bob3RvLmpwZyIsImdpdmVuX25hbWUiOiJLeWxlIiwiZmFtaWx5X25hbWUiOiJCdXJrZSIsImxvY2FsZSI6ImVuIn0.Dg8WpgTk5oiZItxevDsb3PKu2BiAdak8_bQlq7kdq5ga2BO-rViJYGedbMXxo7o0cn35-1P-ZJf_Ab4IDbO3Aqg7kcUl6R7mG24dBhAnrIjktMxkH9H0zamoskcfdlyKcnW2eonCbF7ZkgChNTFcgFv29CKFjXuAdhCRfVelE73-7U_rkeNxYUcSjklArUI9oNBKA_dVUdc7bvGZdwT6QZv56AnspfAs6HHTr_PvetKUIcf-MWhRNAICr9taTJFDoa2USl9a-p1VyHsxB9XLf1s0boeUscd7hF0TnhxUr760DmzA2Ei7ab8wbcoIfZp0uSBRxsp0aQIZwwznhcNI_A";
 
 	if(token == null) {
 		//no token was found so redirect to the login page
-		//window.location.href = "https://listassist.duckdns.org";
-		window.location.href = "/";
+		window.location.href = "https://listassist.duckdns.org";
 	}
 
 	$("#customRadio").click(function() {
@@ -153,7 +151,8 @@ $(document).ready(function() {
 
 	function assignEditButtonFunctionality() {
 		$(".edit").off();
-
+    
+    //firefox support
 		$(".edit").click(function (event) {
 			d = $(event.target).parent();
 			var name = d.find(".name").text();
@@ -170,6 +169,22 @@ $(document).ready(function() {
 		});
 	}
 
+	$("#editListRemoveButton").click(function() {
+		var data = {
+			token: token,
+			id: d.attr("listID")
+		};
+		data = JSON.stringify(data);
+	
+		accessServer("/list/delete", data, function(result) {
+			console.log(result);
+			$("#edit_list_modal").modal("toggle");
+			window.location.reload();
+		},
+		function(result) {
+			console.log(result);
+		});
+	});
 	$("#edit_list_modal_save").click(function() {
 		var name = $("#edit_list_name_field").val();
 		console.log(name);

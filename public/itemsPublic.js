@@ -128,6 +128,7 @@ $(document).ready(function() {
 	var assignMarkAsBoughtButtonFunctionality = function() {
 		$(".markAsBoughtButton").off();
 
+     //Firefox support
 		$(".markAsBoughtButton").click(function(event) {
 			currentItemCard = $(event.target).parent().parent();
 
@@ -219,6 +220,7 @@ $(document).ready(function() {
 	},
 	function(result) {
 		console.log(result);
+		alert("This list was not found");
 	});
     
 });
