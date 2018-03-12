@@ -216,7 +216,7 @@ $(document).ready(function() {
 		$(".editItemButton").off();
 
 		//this is the edit item button on each of the item entries
-		$(".editItemButton").click(function () {
+		$(".editItemButton").click(function (event) {
 			currentItemCard = $(event.target).parent().parent();;
 
 			var name = currentItemCard.find(".card-body .card-title").text();

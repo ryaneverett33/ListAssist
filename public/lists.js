@@ -154,7 +154,7 @@ $(document).ready(function() {
 	function assignEditButtonFunctionality() {
 		$(".edit").off();
 
-		$(".edit").click(function () {
+		$(".edit").click(function (event) {
 			d = $(event.target).parent();
 			var name = d.find(".name").text();
 			$("#edit_list_name_field").val(name);
@@ -165,7 +165,7 @@ $(document).ready(function() {
 	function assignListButtonFunctionality() {
 		$(".listButton").off();
 
-		$(".listButton").click(function() {
+		$(".listButton").click(function(event) {
 			window.location.href = "/items.html?" + $(event.target).parent().attr("listID");
 		});
 	}

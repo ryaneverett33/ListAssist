@@ -128,7 +128,7 @@ $(document).ready(function() {
 	var assignMarkAsBoughtButtonFunctionality = function() {
 		$(".markAsBoughtButton").off();
 
-		$(".markAsBoughtButton").click(function() {
+		$(".markAsBoughtButton").click(function(event) {
 			currentItemCard = $(event.target).parent().parent();
 
         	//clear the invalid classes
