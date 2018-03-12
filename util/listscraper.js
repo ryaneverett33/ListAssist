@@ -13,7 +13,9 @@ var scrapeAmazonList = function (url) {
       listDescription: '#wlDesc',
     })
     //.find('.g-item-sortable:gt(0)')
-    .find('g-item-sortable:gt()')
+    //.find('.g-item-sortable:first(1000000)')
+    .find('.g-item-sortable')
+    //.find('#g-items')
     .set({
       itemTitle: '.g-item-details .a-link-normal',
       link: '.g-item-details .a-link-normal@href'
