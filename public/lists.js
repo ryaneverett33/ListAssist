@@ -18,7 +18,8 @@ $(document).ready(function() {
 
 	if(token == null) {
 		//no token was found so redirect to the login page
-		window.location.href = "https://listassist.duckdns.org";
+		//window.location.href = "https://listassist.duckdns.org";
+		window.location.href = "/";
 	}
 
 	$("#customRadio").click(function() {
@@ -94,7 +95,8 @@ $(document).ready(function() {
 			};
 			data = JSON.stringify(data);
 		
-			accessServer("https://listassist.duckdns.org/list/import", data, function(result) {
+			//accessServer("https://listassist.duckdns.org/list/import", data, function(result) {
+			accessServer("/list/import", data, function(result) {
 				console.log(result);
 				window.location.refresh();
 			},
@@ -123,7 +125,8 @@ $(document).ready(function() {
 			};
 			data = JSON.stringify(data);
 		
-			accessServer("https://listassist.duckdns.org/list/new", data, function(result) {
+			//accessServer("https://listassist.duckdns.org/list/new", data, function(result) {
+			accessServer("/list/new", data, function(result) {
 				console.log(result);
 			},
 			function(result) {
@@ -186,7 +189,8 @@ $(document).ready(function() {
 		data = JSON.stringify(data);
 		console.log(data);
 	
-		accessServer("https://listassist.duckdns.org/list/edit", data, function(result) {
+		//accessServer("https://listassist.duckdns.org/list/edit", data, function(result) {
+		accessServer("/list/edit", data, function(result) {
 			console.log(result);
 		},
 		function(result) {
@@ -220,7 +224,8 @@ $(document).ready(function() {
 	};
 	data = JSON.stringify(data);
 
-	accessServer("https://listassist.duckdns.org/list/all", data, function(result) {
+	//accessServer("https://listassist.duckdns.org/list/all", data, function(result) {
+	accessServer("/list/all", data, function(result) {
 		json = JSON.parse(result);
 
 		for(var i = 0; i < json.length; i++) {

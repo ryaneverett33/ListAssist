@@ -12,7 +12,8 @@ exports.deleteUser = function deleteUser(id, callback) {
 		//check for errors
 	    if (error) {
 	      console.error("Error adding item to database: %s", error);
-	      callback(false);
+		  callback(false);
+		  connection.release();
 	      return;
 	    }
 	    else {
@@ -22,7 +23,8 @@ exports.deleteUser = function deleteUser(id, callback) {
 		        if (error2) {
 					console.error("An error occured adding item to database: %s", error2);
 					callback(false);
-					pool.disconnect(connection);
+					//pool.disconnect(connection);
+					connection.release();
 					return;
 		        } else {
 		        	//the user has been deleted
@@ -33,7 +35,8 @@ exports.deleteUser = function deleteUser(id, callback) {
 				        if (error2) {
 							console.error("An error occured adding item to database: %s", error2);
 							callback(false);
-							pool.disconnect(connection);
+							//pool.disconnect(connection);
+							connection.release();
 							return;
 				        } else {
 				        	//the user has been deleted
@@ -44,13 +47,15 @@ exports.deleteUser = function deleteUser(id, callback) {
 				        			if (!r) {
 				        				console.log("FALSE")
 				        				callback(false)
-					        			pool.disconnect(connection)
+										//pool.disconnect(connection)
+										connection.release();
 					        			return
 				        			}
 				        		})
 				        	}
 							callback(true);
-							pool.disconnect(connection);
+							//pool.disconnect(connection);
+							connection.release();
 							return;
 				        }
 			      	});	
@@ -70,7 +75,8 @@ exports.deleteList = function deleteList(id, callback) {
 		//check for errors
 	    if (error) {
 	      console.error("Error adding item to database: %s", error);
-	      callback(false);
+		  callback(false);
+		  connection.release();
 	      return;
 	    }
 	    else {
@@ -80,7 +86,7 @@ exports.deleteList = function deleteList(id, callback) {
 		        if (error2) {
 					console.error("An error occured adding item to database: %s", error2);
 					callback(false);
-					pool.disconnect(connection);
+					//pool.disconnect(connection);
 					return;
 		        } else {
 		        	//the list has been deleted
@@ -90,11 +96,13 @@ exports.deleteList = function deleteList(id, callback) {
 				        if (error3) {
 							console.error("An error occured adding item to database: %s", error2);
 							callback(false);
-							pool.disconnect(connection);
+							connection.release();
+							//pool.disconnect(connection);
 							return;
 				        } else {
 							callback(true);
-							pool.disconnect(connection);
+							connection.release();
+							//pool.disconnect(connection);
 							return;
 						}
 		        	});
@@ -112,8 +120,9 @@ exports.deleteItem = function deleteItem(id, callback) {
 	pool.connect(function(error, connection) {
 		//check for errors
 	    if (error) {
-	      console.error("Error adding item to database: %s", error);
-	      callback(false);
+		  console.error("Error adding item to database: %s", error);
+		  connection.release();
+	      //callback(false);
 	      return;
 	    }
 	    else {
@@ -123,12 +132,14 @@ exports.deleteItem = function deleteItem(id, callback) {
 		        if (error2) {
 					console.error("An error occured adding item to database: %s", error2);
 					callback(false);
-					pool.disconnect(connection);
+					connection.release();
+					//pool.disconnect(connection);
 					return;
 		        } else {
 		        	//the item has been deleted
 					callback(true);
-					pool.disconnect(connection);
+					connection.release();
+					//pool.disconnect(connection);
 					return;
 		        }
 	      });

@@ -45,7 +45,8 @@ exports.setUser = function setUser(id, new_username, callback) {
 		//check for errors
 	    if (error) {
 	      console.error("Error setting user in database: %s", error);
-	      callback(false);
+		  callback(false);
+		  connection.release();
 	      return;
 	    }
 	    else {
@@ -54,12 +55,14 @@ exports.setUser = function setUser(id, new_username, callback) {
 		        if (error2) {
 					console.error("An error occured setting user in database: %s", error2);
 					callback(false);
-					pool.disconnect(connection);
+					connection.release();
+					//pool.disconnect(connection);
 					return;
 		        } else {
 		        	//no problems setting user, so callback true
 					callback(true);
-					pool.disconnect(connection);
+					connection.release();
+					//pool.disconnect(connection);
 					return;
 		        }
 	      });
@@ -113,7 +116,8 @@ exports.setList = function setList(id, column, new_value, callback) {
 		//check for errors
 	    if (error) {
 	      console.error("Error setting list in database: %s", error);
-	      callback(false);
+		  callback(false);
+		  connection.release();
 	      return;
 	    }
 	    else {
@@ -122,12 +126,14 @@ exports.setList = function setList(id, column, new_value, callback) {
 		        if (error2) {
 					console.error("An error occured setting list in database: %s", error2);
 					callback(false);
-					pool.disconnect(connection);
+					connection.release();
+					//pool.disconnect(connection);
 					return;
 		        } else {
 		        	//no problems setting user, so set callback to true
 					callback(true);
-					pool.disconnect(connection);
+					connection.release();
+					//pool.disconnect(connection);
 					return;
 		        }
 	      });
@@ -201,7 +207,8 @@ exports.setItem = function setItem(id, column, new_value, callback) {
 		//check for errors
 	    if (error) {
 	      console.error("Error setting item in database: %s", error);
-	      callback(false);
+		  callback(false);
+		  connection.release();
 	      return;
 	    }
 	    else {
@@ -210,12 +217,14 @@ exports.setItem = function setItem(id, column, new_value, callback) {
 		        if (error2) {
 					console.error("An error occured setting list in database: %s", error2);
 					callback(false);
-					pool.disconnect(connection);
+					connection.release();
+					//pool.disconnect(connection);
 					return;
 		        } else {
 		        	//no problems setting user, so set callback to true
 					callback(true);
-					pool.disconnect(connection);
+					connection.release();
+					//pool.disconnect(connection);
 					return;
 		        }
 	      });

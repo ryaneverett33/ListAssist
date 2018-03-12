@@ -568,6 +568,11 @@ router.post('/item/purchase', function (req, res, next) {
         res.status(400).send(JSON.stringify({ error: "ya can't have both" }));
         return;
       }
+      if (json.name === null || json.name.toUpperCase() === "NULL") {
+        res.setHeader("content-type", "application/json");
+        res.status(400).send(JSON.stringify({ error: "Invalid Arguments" }));
+        return;
+      }
       if (json.token != null) {
         UserManagement.getUser(json.token, function (user) {
           if (user == null) {
