@@ -219,6 +219,7 @@ $(document).ready(function() {
 	},
 	function(result) {
 		console.log(result);
+		alert("This list was not found");
 	});
     
 });
