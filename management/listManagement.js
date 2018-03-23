@@ -82,7 +82,7 @@ exports.purchaseItem = function(itemid, name, callback) {
             return;
         }
         else {
-            ListControl.purchaseItem(itemid, name, function(success) {
+            ListControl.purchaseItem(itemid, itemid, function(success) {
                 if (success) {
                     console.log("successfully purchased!");
                     callback(true);
