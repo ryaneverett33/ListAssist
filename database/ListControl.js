@@ -175,7 +175,8 @@ exports.isPurchased = function(id, callback) {
         else {
             console.log(exists);
             //console.log("exists.purchased %d, == %d === %d == 1", exists[0].purchased, exists.purchased == true, exists.purchased === true, exists.purchased == 1);
-            callback(exists[0].purchased == true);
+            //callback(exists[0].purchased == true);
+            callback(Boolean(exists[0].purchased ? false : false));
             return;
         }
     });
