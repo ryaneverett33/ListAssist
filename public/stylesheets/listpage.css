@@ -84,3 +84,19 @@ body {
 
 }
 
+.list {
+    max-width: 25%;
+    flex: 0 0 25%;
+    -webkit-box-flex: 0;
+}
+.list-img {
+    width: 100%;
+    border-top-left-radius: calc(.25rem - 1px);
+    border-top-right-radius: calc(.25rem - 1px);
+}
+.list-info {
+
+}
+#header {
+    position: absolute;
+}
