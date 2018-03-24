@@ -11,13 +11,15 @@ var scrapeAmazonItem = function (url) {
       .set({
         itemTitle: '#productTitle',
         // price: '#priceblock_ourprice',
-        itemImg: '#landingImage@data-old-hires'
+        //itemImg: '#landingImage@data-old-hires',
       })
       .data(item => {
         out = item;
       })
       .done(() => {
-        if (!out || !out.itemTitle || !out.itemImg) {
+        console.log(out.obj);
+        console.log(out);
+        if (!out || !out.itemTitle) {
           reject('Item Not found');
         }
         if (out.price) 

@@ -13,7 +13,6 @@ $(document).ready(function() {
 			//console.log(token)
 		}
 	}
-
 	//token = "eyJhbGciOiJSUzI1NiIsImtpZCI6ImFjMmI2M2ZhZWZjZjgzNjJmNGM1MjhlN2M3ODQzMzg3OTM4NzAxNmIifQ.eyJhenAiOiI1NzM1OTkyMTEyMzEtcWNlOG9saTltNGtqbGI5ZmwwYWgzNWV2ZzRlOHNlanUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI1NzM1OTkyMTEyMzEtcWNlOG9saTltNGtqbGI5ZmwwYWgzNWV2ZzRlOHNlanUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDQ0MjIxNjA4MDAyOTYxODY5NjMiLCJlbWFpbCI6Imt5bGUubi5idXJrZUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6ImgxTk9MNlF0cUQ4Qzl5dk5mbVNRNnciLCJleHAiOjE1MjA4MDAyOTAsImlzcyI6ImFjY291bnRzLmdvb2dsZS5jb20iLCJqdGkiOiJmNTM1ZDllNjFlOTNiNjBlYTJiZDZmZTAxMWM3YTIyYzlhMmRiNDYwIiwiaWF0IjoxNTIwNzk2NjkwLCJuYW1lIjoiS3lsZSBCdXJrZSIsInBpY3R1cmUiOiJodHRwczovL2xoNC5nb29nbGV1c2VyY29udGVudC5jb20vLUFUNUVoWVZBbDV3L0FBQUFBQUFBQUFJL0FBQUFBQUFBRTgwL2pkTEdjQmRYQ25rL3M5Ni1jL3Bob3RvLmpwZyIsImdpdmVuX25hbWUiOiJLeWxlIiwiZmFtaWx5X25hbWUiOiJCdXJrZSIsImxvY2FsZSI6ImVuIn0.Dg8WpgTk5oiZItxevDsb3PKu2BiAdak8_bQlq7kdq5ga2BO-rViJYGedbMXxo7o0cn35-1P-ZJf_Ab4IDbO3Aqg7kcUl6R7mG24dBhAnrIjktMxkH9H0zamoskcfdlyKcnW2eonCbF7ZkgChNTFcgFv29CKFjXuAdhCRfVelE73-7U_rkeNxYUcSjklArUI9oNBKA_dVUdc7bvGZdwT6QZv56AnspfAs6HHTr_PvetKUIcf-MWhRNAICr9taTJFDoa2USl9a-p1VyHsxB9XLf1s0boeUscd7hF0TnhxUr760DmzA2Ei7ab8wbcoIfZp0uSBRxsp0aQIZwwznhcNI_A";
 
 	if(token == null) {
@@ -34,7 +33,7 @@ $(document).ready(function() {
 	function onLoad(signout) {
 			console.log("called.")
       gapi.load('auth2', function() {
-        gapi.auth2.init().then(() => {
+        gapi.auth2.init().then(() => { 
 		  		console.log("no");
 		  		var auth2 = gapi.auth2.getAuthInstance();
 					auth2.signOut().then(function () {
@@ -47,7 +46,7 @@ $(document).ready(function() {
   function signOut() {
 			console.log("called.")
       gapi.load('auth2', function() {
-        gapi.auth2.init().then(() => {
+        gapi.auth2.init().then(() => { 
 		  		console.log("no");
 		  		var auth2 = gapi.auth2.getAuthInstance();
 					auth2.signOut().then(function () {
@@ -87,14 +86,14 @@ $(document).ready(function() {
 				$("#add_list_name_field_link").addClass("is-invalid");
 				return;
 			}
-
 			var data = {
 				token: token,
 				listUrl: link
 			};
 			data = JSON.stringify(data);
-
-			accessServer("https://listassist.duckdns.org/list/import", data, function(result) {
+		
+			//accessServer("https://listassist.duckdns.org/list/import", data, function(result) {
+			accessServer("/list/import", data, function(result) {
 				console.log(result);
 				window.location.refresh();
 			},
@@ -122,8 +121,9 @@ $(document).ready(function() {
 				name: name
 			};
 			data = JSON.stringify(data);
-
-			accessServer("https://listassist.duckdns.org/list/new", data, function(result) {
+		
+			//accessServer("https://listassist.duckdns.org/list/new", data, function(result) {
+			accessServer("/list/new", data, function(result) {
 				console.log(result);
 			},
 			function(result) {
@@ -150,8 +150,9 @@ $(document).ready(function() {
 
 	function assignEditButtonFunctionality() {
 		$(".edit").off();
-
-		$(".edit").click(function () {
+    
+    //firefox support
+		$(".edit").click(function (event) {
 			d = $(event.target).parent();
 			var name = d.find(".name").text();
 			$("#edit_list_name_field").val(name);
@@ -162,7 +163,7 @@ $(document).ready(function() {
 	function assignListButtonFunctionality() {
 		$(".listButton").off();
 
-		$(".listButton").click(function() {
+		$(".listButton").click(function(event) {
 			window.location.href = "/items.html?" + $(event.target).parent().attr("listID");
 		});
 	}
@@ -174,7 +175,7 @@ $(document).ready(function() {
 		};
 		data = JSON.stringify(data);
 	
-		accessServer("https://listassist.duckdns.org/list/delete", data, function(result) {
+		accessServer("/list/delete", data, function(result) {
 			console.log(result);
 			$("#edit_list_modal").modal("toggle");
 			window.location.reload();
@@ -183,7 +184,6 @@ $(document).ready(function() {
 			console.log(result);
 		});
 	});
-
 	$("#edit_list_modal_save").click(function() {
 		var name = $("#edit_list_name_field").val();
 		console.log(name);
@@ -202,8 +202,9 @@ $(document).ready(function() {
 		};
 		data = JSON.stringify(data);
 		console.log(data);
-
-		accessServer("https://listassist.duckdns.org/list/edit", data, function(result) {
+	
+		//accessServer("https://listassist.duckdns.org/list/edit", data, function(result) {
+		accessServer("/list/edit", data, function(result) {
 			console.log(result);
 		},
 		function(result) {
@@ -237,7 +238,8 @@ $(document).ready(function() {
 	};
 	data = JSON.stringify(data);
 
-	accessServer("https://listassist.duckdns.org/list/all", data, function(result) {
+	//accessServer("https://listassist.duckdns.org/list/all", data, function(result) {
+	accessServer("/list/all", data, function(result) {
 		json = JSON.parse(result);
 
 		for(var i = 0; i < json.length; i++) {

@@ -431,8 +431,9 @@ router.post('/import', function (req, res, next) {
         }
         else {
           scrapeAmazonList(json.listUrl).then(list => {
+            console.log(list);
             ListManagement.createList(list.listTitle, User.getId(), function (newListId) {
-              if (!newListId) {
+              if (newListId == null) {
                 res.setHeader("content-type", "application/json");
                 res.status(500).send(JSON.stringify({ error: "Unable to create List" }));
                 return;
@@ -454,7 +455,8 @@ router.post('/import', function (req, res, next) {
                 return;
               }
             });
-          }).catch(() => {
+          }).catch((err) => {
+            console.error(err);
             res.setHeader("content-type", "application/json");
             res.status(500).send(JSON.stringify({ error: "Failed to scrape list" }));
           })
@@ -584,6 +586,11 @@ router.post('/item/purchase', function (req, res, next) {
       if (json.token != null && json.name != null) {
         res.setHeader("content-type", "application/json");
         res.status(400).send(JSON.stringify({ error: "ya can't have both" }));
+        return;
+      }
+      if (json.name === null || json.name.toUpperCase() === "NULL") {
+        res.setHeader("content-type", "application/json");
+        res.status(400).send(JSON.stringify({ error: "Invalid Arguments" }));
         return;
       }
       if (json.token != null) {
