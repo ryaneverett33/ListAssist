@@ -38,7 +38,13 @@ exports.initiate = function() {
 // get connection for the pool
 exports.connect = function(callback) {
 	//this.initiate();
-	pool.getConnection(callback);
+	try {
+		pool.getConnection(callback);
+	}
+	catch (err) {
+		console.error("pool connect encountered an error: " + err);
+		callback(null);
+	}
 } 
 
 // free up connection and put back in the pool

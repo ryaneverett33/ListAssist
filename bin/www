@@ -10,6 +10,7 @@ var debug = require('debug')('listassist:server');
 var http = require('http');
 var https = require('https');
 var LIST_ASSIST_SSL = process.env.LIST_ASSIST_SSL == 'TRUE' || process.env.LIST_ASSIST_SSL == 'true';
+if (LIST_ASSIST_SSL) LIST_ASSIST_SSL = false;
 var privateKey;
 var certificate;
 var authority;
@@ -28,7 +29,7 @@ var credientials = {
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(process.env.PORT || '4000');
 var sslPort = normalizePort(process.env.PORT || ' 3443');
 app.set('port', port);
 

@@ -11,7 +11,8 @@ exports.getUser = function getUser(user_id, callback) {
 		//check for errors
 	    if (error) {
 	      console.error("Error getting user from database: %s", error);
-	      callback(false);
+				callback(false);
+				connection.release();
 	      return;
 	    }
 	    else {
@@ -20,11 +21,13 @@ exports.getUser = function getUser(user_id, callback) {
 		        if (error2) {
 							console.error("An error occured getting user from database: %s", error2);
 							callback(false);
-							pool.disconnect(connection);
+							connection.release();
+							//pool.disconnect(connection);
 							return;
 		        } else {
 							callback(results);
-							pool.disconnect(connection);
+							connection.release();
+							//pool.disconnect(connection);
 							return;
 		        }
 	      });
@@ -90,7 +93,8 @@ exports.getList = function(list_id, callback) {
 	    	query
 			  .on('error', function(err) {
 			  	console.error("An error occured getting list(s) from database: %s", err);
-			  	callback(null);
+					callback(null);
+					connection.release();
 			  	return;
 			    // Handle error, an 'end' event will be emitted after this as well
 			  })
@@ -123,7 +127,8 @@ exports.getList = function(list_id, callback) {
 			  })
 			  .on('end', function() {
 			    // all rows have been received
-			    callback(lists);
+					callback(lists);
+					connection.release();
 			    return;
 			  });
 		}
@@ -136,8 +141,9 @@ function getItems(list_id, callback) {
 		//check for errors
 	    if (error) {
 	      console.error("Error getting user from database: %s", error);
-	      callback(null);
-	      pool.disconnect(connection);
+				callback(null);
+				connection.release();
+	      //pool.disconnect(connection);
 	      return;
 	    }
 	    else {
@@ -147,8 +153,9 @@ function getItems(list_id, callback) {
 		        	callback(null);
 		        } else {			
 		        	callback(results);
-		        }
-	        	pool.disconnect(connection);
+						}
+						connection.release();
+	        	//pool.disconnect(connection);
 	        	return;
 		    });
 		}
@@ -180,7 +187,8 @@ exports.getLists = function getLists(user_id, callback) {
 	    	query
 			  .on('error', function(err) {
 			  	console.error("An error occured getting list(s) from database: %s", err);
-			  	callback(null);
+					callback(null);
+					connection.release();
 			  	return;
 			    // Handle error, an 'end' event will be emitted after this as well
 			  })
@@ -203,7 +211,8 @@ exports.getLists = function getLists(user_id, callback) {
 			  })
 			  .on('end', function() {
 			    // all rows have been received
-			    callback(lists);
+					callback(lists);
+					connection.release();
 			    return;
 			  });
 		}

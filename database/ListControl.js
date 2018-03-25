@@ -79,12 +79,14 @@ exports.createList = function(name, userid, callback) {
         if (err) {
             console.error("ListControl::createUser() failed to get pool connection: %d", err);
             callback(null);
+            connection.release();
             return;
         }
         conn.query('INSERT INTO Lists Values(0,?,?);', [name, userid], function(queryerr) {
             if (queryerr) {
                 console.error("ListControl::createUser() failed to query pool: %s", queryerr);
                 callback(null);
+                connection.release();
                 return;
             }
             else {
@@ -93,11 +95,13 @@ exports.createList = function(name, userid, callback) {
                     if (queryerr2) {
                         console.error("ListControl::createUser() failed to query twice pool: %s", queryerr2);
                         callback(null);
+                        connection.release();
                         return;
                     }
                     else {
                         if (results == null || results[0] == null) {
                             callback(null);
+                            connection.release();
                             return;
                         }
                         helpers.renameKey(results[0], "LAST_INSERT_ID()", "id");
@@ -106,6 +110,7 @@ exports.createList = function(name, userid, callback) {
                         //console.log(results[LAST_INSERT_ID()]);
                         //console.log(results.id);
                         callback(results[0].id);
+                        connection.release();
                         return;
                     }
                 });
@@ -170,7 +175,8 @@ exports.isPurchased = function(id, callback) {
         else {
             console.log(exists);
             //console.log("exists.purchased %d, == %d === %d == 1", exists[0].purchased, exists.purchased == true, exists.purchased === true, exists.purchased == 1);
-            callback(exists[0].purchased == true);
+            //callback(exists[0].purchased == true);
+            callback(Boolean(exists[0].purchased ? false : false));
             return;
         }
     });
