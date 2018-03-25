@@ -127,33 +127,6 @@ $(document).ready(function() {
 
 	var assignMarkAsBoughtButtonFunctionality = function() {
 		$(".markAsBoughtButton").off();
-
-     //Firefox support
-		$(".markAsBoughtButton").click(function(event) {
-			currentItemCard = $(event.target).parent().parent();
-
-        	//clear the invalid classes
-			$("#markAsBoughtNameField").removeClass("is-invalid");
-			   
-			if(token != null) {
-				var data = {
-					token: token
-				};
-				data.id = currentItemCard.attr("itemID");
-				data = JSON.stringify(data);
-				console.log(data);
-			
-				accessServer("https://listassist.duckdns.org/list/item/purchase", data, function(result) {
-					window.location.reload();
-				},
-				function(result) {
-					console.log(result);
-				});
-			}
-			else {
-				$("#markAsBoughtModal").modal("toggle");
-			}
-		});
 	}
 
     //initially fill up the page with the items and update the name
