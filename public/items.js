@@ -291,6 +291,7 @@ $(document).ready(function() {
 
 		for(var i = 0; i < Math.min(10, items.length); i++) {
 			var name = items[i].name;
+			name = name.slice(0, 25);
 			var picURL = items[i].picture_url;
 			var itemID = items[i].id;
 
