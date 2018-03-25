@@ -289,7 +289,7 @@ $(document).ready(function() {
 			return;
 		}
 
-		for(var i = 0; i < 10; i++) {
+		for(var i = 0; i < Math.min(10, items.length); i++) {
 			var name = items[i].name;
 			var picURL = items[i].picture_url;
 			var itemID = items[i].id;
