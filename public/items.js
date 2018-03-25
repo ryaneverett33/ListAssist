@@ -277,7 +277,7 @@ $(document).ready(function() {
 				items = json[i].items;
 
 				//update the name
-				$("#listTitle").html(json[i].info.name);
+				$("#listTitle").html("list1");
 
 				break;
 			}
