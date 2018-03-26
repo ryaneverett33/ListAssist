@@ -15,6 +15,7 @@
 
     <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
 
+<!-- Bug 24 - list names is 25 max characters -->
 
     <div class="modal fade" id="add_list_modal" tabindex="-1" role="dialog" aria-labelledby="add_list_modal" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -40,7 +41,7 @@
               <div id="customFields">
                 <div class="form-group">
                   <label for="add_list_name_field">Name</label>
-                  <input type="text" class="form-control" id="add_list_name_field" maxlength="64">
+                  <input type="text" class="form-control" id="add_list_name_field" maxlength="25">
                 </div>
               </div>
               <div id="byLinkFields" style="display: none">
@@ -73,7 +74,7 @@
           <div class="modal-body">
             <div class="form-group">
               <label for="edit_list_name_field">Name</label>
-              <input type="text" class="form-control" id="edit_list_name_field" maxlength="64">
+              <input type="text" class="form-control" id="edit_list_name_field" maxlength="25">
             </div>
           </div>
           <div class="modal-footer">
@@ -87,7 +88,7 @@
 
 
 
-    <div class="top"> 
+    <div class="top">
       <button type="button" id="logout" class="btn btn-outline-danger">Login/Logout</button>
       <div id="list_header">My Lists</div>
       <button type="button" id="add_list" class="btn btn-outline-danger" data-toggle="modal" data-target="#add_list_modal">Add List</button>
@@ -116,7 +117,7 @@
           <div class="modal-body">
             <div class="form-group">
               <label for="edit_list_name_field">Name</label>
-              <input type="text" class="form-control" id="edit_list_name_field" maxlength="64">
+              <input type="text" class="form-control" id="edit_list_name_field" maxlength="25">
             </div>
           </div>
           <div class="modal-footer">
