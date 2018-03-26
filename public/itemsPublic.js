@@ -88,7 +88,7 @@ $(document).ready(function() {
 			itemHTML = `
 				<div class="col-3">
 					<div class="card" itemID="` + itemID + `">
-						<img class="card-img-top" src="` + image + `" link="` + image + `">
+						<img class="card-img-top" src="` + 'image1.png' + `" link="` + image + `">
 						<div class="card-body text-success">
 							<h5 class="card-title">` + name + `</h5>
 							<p class="card-text">Bought by ` + buyer + `</p>
@@ -100,7 +100,7 @@ $(document).ready(function() {
 			itemHTML = `
 				<div class="col-3">
 					<div class="card" itemID="` + itemID + `">
-						<img class="card-img-top" src="` + image + `" link="` + image + `">
+						<img class="card-img-top" src="` + 'image1.png' + `" link="` + image + `">
 						<div class="card-body">
 							<h5 class="card-title">` + name + `</h5>
 							<p class="card-text"></p>

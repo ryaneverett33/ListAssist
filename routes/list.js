@@ -456,9 +456,21 @@ router.post('/import', function (req, res, next) {
               }
             });
           }).catch((err) => {
-            console.error(err);
-            res.setHeader("content-type", "application/json");
-            res.status(500).send(JSON.stringify({ error: "Failed to scrape list" }));
+            // Bug 14
+            // console.error(err);
+            // res.setHeader("content-type", "application/json");
+            // res.status(500).send(JSON.stringify({ error: "Failed to scrape list" }));
+            ListManagement.createList(" ", User.getId(), function (newListId) {
+              if (newListId == null) {
+                res.setHeader("content-type", "application/json");
+                res.status(500).send(JSON.stringify({ error: "Unable to create List" }));
+                return;
+              }
+              else {
+                res.setHeader("content-type", "application/json");
+                res.status(200).send(JSON.stringify({ id: newListId }));
+              }
+            });
           })
 
         }
