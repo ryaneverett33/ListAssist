@@ -65,7 +65,7 @@ $(document).ready(function() {
 		//for (var i = 0; i < cookie.length; i++)
 		//	eraseCookie(cookie[i].split("=")[0]);
 		//signOut();
-		window.location.href = "/";
+		//window.location.href = "/";
 	});
 
 	//this is the add list button on the page

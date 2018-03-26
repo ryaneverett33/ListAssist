@@ -9,7 +9,7 @@ $(document).ready(function() {
 		}
 	}
 
-	//token = "eyJhbGciOiJSUzI1NiIsImtpZCI6ImFjMmI2M2ZhZWZjZjgzNjJmNGM1MjhlN2M3ODQzMzg3OTM4NzAxNmIifQ.eyJhenAiOiI1NzM1OTkyMTEyMzEtcWNlOG9saTltNGtqbGI5ZmwwYWgzNWV2ZzRlOHNlanUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI1NzM1OTkyMTEyMzEtcWNlOG9saTltNGtqbGI5ZmwwYWgzNWV2ZzRlOHNlanUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDQ0MjIxNjA4MDAyOTYxODY5NjMiLCJlbWFpbCI6Imt5bGUubi5idXJrZUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6ImgxTk9MNlF0cUQ4Qzl5dk5mbVNRNnciLCJleHAiOjE1MjA4MDAyOTAsImlzcyI6ImFjY291bnRzLmdvb2dsZS5jb20iLCJqdGkiOiJmNTM1ZDllNjFlOTNiNjBlYTJiZDZmZTAxMWM3YTIyYzlhMmRiNDYwIiwiaWF0IjoxNTIwNzk2NjkwLCJuYW1lIjoiS3lsZSBCdXJrZSIsInBpY3R1cmUiOiJodHRwczovL2xoNC5nb29nbGV1c2VyY29udGVudC5jb20vLUFUNUVoWVZBbDV3L0FBQUFBQUFBQUFJL0FBQUFBQUFBRTgwL2pkTEdjQmRYQ25rL3M5Ni1jL3Bob3RvLmpwZyIsImdpdmVuX25hbWUiOiJLeWxlIiwiZmFtaWx5X25hbWUiOiJCdXJrZSIsImxvY2FsZSI6ImVuIn0.Dg8WpgTk5oiZItxevDsb3PKu2BiAdak8_bQlq7kdq5ga2BO-rViJYGedbMXxo7o0cn35-1P-ZJf_Ab4IDbO3Aqg7kcUl6R7mG24dBhAnrIjktMxkH9H0zamoskcfdlyKcnW2eonCbF7ZkgChNTFcgFv29CKFjXuAdhCRfVelE73-7U_rkeNxYUcSjklArUI9oNBKA_dVUdc7bvGZdwT6QZv56AnspfAs6HHTr_PvetKUIcf-MWhRNAICr9taTJFDoa2USl9a-p1VyHsxB9XLf1s0boeUscd7hF0TnhxUr760DmzA2Ei7ab8wbcoIfZp0uSBRxsp0aQIZwwznhcNI_A";
+	//token = "eyJhbGciOiJSUzI1NiIsImtpZCI6IjM3NmVhMWUyZjRjOTM3YzMzM2QxZTI0YjU2NDczOGZjMDRjOTkwMDkifQ.eyJhenAiOiI1NzM1OTkyMTEyMzEtcWNlOG9saTltNGtqbGI5ZmwwYWgzNWV2ZzRlOHNlanUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI1NzM1OTkyMTEyMzEtcWNlOG9saTltNGtqbGI5ZmwwYWgzNWV2ZzRlOHNlanUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDQ0MjIxNjA4MDAyOTYxODY5NjMiLCJlbWFpbCI6Imt5bGUubi5idXJrZUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6IlJsRmdSOVZqUHAxd01ETU14U1oyVkEiLCJleHAiOjE1MjIwMTU4OTEsImlzcyI6ImFjY291bnRzLmdvb2dsZS5jb20iLCJqdGkiOiI5MjkwMTlkNWQ2NDBiNmRhYTBiM2Q5YWYwNjA3ZWVhMDYwYmQ0NGE0IiwiaWF0IjoxNTIyMDEyMjkxLCJuYW1lIjoiS3lsZSBCdXJrZSIsInBpY3R1cmUiOiJodHRwczovL2xoNC5nb29nbGV1c2VyY29udGVudC5jb20vLUFUNUVoWVZBbDV3L0FBQUFBQUFBQUFJL0FBQUFBQUFBRTgwL2pkTEdjQmRYQ25rL3M5Ni1jL3Bob3RvLmpwZyIsImdpdmVuX25hbWUiOiJLeWxlIiwiZmFtaWx5X25hbWUiOiJCdXJrZSIsImxvY2FsZSI6ImVuIn0.GA5-Nzmkkf2I28GbzEdwRFNe_nOF1wLQ8lv_XOCoB7Uiehm89ehp1A_L-U0GiEEbk3q5yfu3WYnsccMXtbqGfNSdOYBH-2gRa5JbPTcqEj3jhCmgfU1BN5TIJqbI1nVRocXesonpWMqJr08DjoWG299qcC4LQNiBYkA-ryujW7QpTAP4uueoOO_PXNv1aqUezrYAB1vWrpVKBWNsucyEPK8RfLTPiqu6YdlAsRVRKc79mZt_eTC4xc8KS5-T3mW1pyhaDFiuULdS4wuSD-D31OKXlXZavNtbs9hoZvSlQ5BoLX4demKw-Yt5_fUprH3e6CD4obTSm-SZKpSN6cwxMQ";
 
 	if(token == null) {
 		//no token was found so redirect to the login page
@@ -97,10 +97,11 @@ $(document).ready(function() {
 	});
 
 	var addItem = function(name, image, itemID) {
+		/* Bug 6 */
 		var itemHTML = `
 			<div class="col-3">
 				<div class="card" itemID="` + itemID + `">
-					<img class="card-img-top" src="` + image + `">
+					<img class="card-img-top" src="` + '/defaultItem.png' + `">
 					<div class="card-body">
 						<h5 class="card-title">` + name + `</h5>
 						<button type="button" class="btn btn-outline-primary btn-sm editItemButton" data-toggle="modal" data-target="#editItemModal">Edit</button>
@@ -162,35 +163,37 @@ $(document).ready(function() {
 			});
 		}
 
-		if(newImage != oldImage) {
-			//ensure the image exists
-			imageExists(newImage, null, function(exists, passOut) {
-				if(exists) {
-					//update the backend with the new item information
-					var data = {
-						token: token,
-						id: currentItemCard.attr("itemid"),
-						column: "picture_url",
-						new_value: newImage
-					};
-					data = JSON.stringify(data);
-					console.log(data);
+		// Bug 10
+		// if(newImage != oldImage) {
+		// 	
+		// 	//ensure the image exists
+		// 	imageExists(newImage, null, function(exists, passOut) {
+		// 		if(exists) {
+		// 			//update the backend with the new item information
+		// 			var data = {
+		// 				token: token,
+		// 				id: currentItemCard.attr("itemid"),
+		// 				column: "picture_url",
+		// 				new_value: newImage
+		// 			};
+		// 			data = JSON.stringify(data);
+		// 			console.log(data);
 
-					//accessServer("https://listassist.duckdns.org/list/item/edit", data, function(result) {
-						accessServer("/list/item/edit", data, function(result) {
-						console.log(result);
-						currentItemCard.find(".card-img-top").attr("src", newImage);
-						$("#editItemModal").modal("toggle");
-					},
-					function(result) {
-						console.log(result);
-					});
-				}
-				else {
-					$("#editItemImageField").addClass("is-invalid");
-				}
-			});
-		}
+		// 			//accessServer("https://listassist.duckdns.org/list/item/edit", data, function(result) {
+		// 				accessServer("/list/item/edit", data, function(result) {
+		// 				console.log(result);
+		// 				currentItemCard.find(".card-img-top").attr("src", newImage);
+		// 				$("#editItemModal").modal("toggle");
+		// 			},
+		// 			function(result) {
+		// 				console.log(result);
+		// 			});
+		// 		}
+		// 		else {
+		// 			$("#editItemImageField").addClass("is-invalid");
+		// 		}
+		// 	});
+		// }
 	});
 
 	$("#editItemRemoveButton").click(function() {
@@ -277,7 +280,7 @@ $(document).ready(function() {
 				items = json[i].items;
 
 				//update the name
-				$("#listTitle").html(json[i].info.name);
+				$("#listTitle").html("list1");
 
 				break;
 			}
@@ -289,8 +292,9 @@ $(document).ready(function() {
 			return;
 		}
 
-		for(var i = 0; i < items.length; i++) {
+		for(var i = 0; i < Math.min(10, items.length); i++) {
 			var name = items[i].name;
+			name = name.slice(0, 25);
 			var picURL = items[i].picture_url;
 			var itemID = items[i].id;
 

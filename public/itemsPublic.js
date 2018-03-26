@@ -88,7 +88,7 @@ $(document).ready(function() {
 			itemHTML = `
 				<div class="col-3">
 					<div class="card" itemID="` + itemID + `">
-						<img class="card-img-top" src="` + image + `" link="` + image + `">
+						<img class="card-img-top" src="` + 'image1.png' + `" link="` + image + `">
 						<div class="card-body text-success">
 							<h5 class="card-title">` + name + `</h5>
 							<p class="card-text">Bought by ` + buyer + `</p>
@@ -100,7 +100,7 @@ $(document).ready(function() {
 			itemHTML = `
 				<div class="col-3">
 					<div class="card" itemID="` + itemID + `">
-						<img class="card-img-top" src="` + image + `" link="` + image + `">
+						<img class="card-img-top" src="` + 'image1.png' + `" link="` + image + `">
 						<div class="card-body">
 							<h5 class="card-title">` + name + `</h5>
 							<p class="card-text"></p>
@@ -127,33 +127,6 @@ $(document).ready(function() {
 
 	var assignMarkAsBoughtButtonFunctionality = function() {
 		$(".markAsBoughtButton").off();
-
-     //Firefox support
-		$(".markAsBoughtButton").click(function(event) {
-			currentItemCard = $(event.target).parent().parent();
-
-        	//clear the invalid classes
-			$("#markAsBoughtNameField").removeClass("is-invalid");
-			   
-			if(token != null) {
-				var data = {
-					token: token
-				};
-				data.id = currentItemCard.attr("itemID");
-				data = JSON.stringify(data);
-				console.log(data);
-			
-				accessServer("https://listassist.duckdns.org/list/item/purchase", data, function(result) {
-					window.location.reload();
-				},
-				function(result) {
-					console.log(result);
-				});
-			}
-			else {
-				$("#markAsBoughtModal").modal("toggle");
-			}
-		});
 	}
 
     //initially fill up the page with the items and update the name
@@ -172,7 +145,7 @@ $(document).ready(function() {
 				items = json[i].items;
 
 				//update the name
-				$("#listTitle").html(json[i].info.name);
+				$("#listTitle").html("List name");
 
 				break;
 			}
