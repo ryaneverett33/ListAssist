@@ -45,7 +45,8 @@ $(document).ready(function() {
 		data = JSON.stringify(data);
 		console.log(data);
     
-        accessServer("https://listassist.duckdns.org/list/item/purchase", data, function(result) {
+        //accessServer("https://listassist.duckdns.org/list/item/purchase", data, function(result) {
+		accessServer("/list/item/purchase", data, function(result) {
 			console.log(result);
         },
         function(result) {
@@ -162,7 +163,8 @@ $(document).ready(function() {
 	};
 	data = JSON.stringify(data);
 
-	accessServer("https://listassist.duckdns.org/list/get", data, function(result) {
+	//accessServer("https://listassist.duckdns.org/list/get", data, function(result) {
+	accessServer("/list/get", data, function(result) {
 		json = JSON.parse(result);
 		var items = null;
 

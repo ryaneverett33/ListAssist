@@ -561,16 +561,19 @@ router.post('/item/purchase', function (req, res, next) {
         return;
       }
       if ((json.token == null && json.name == null) || json.id == null) {
+        //no name, id, or token
         res.setHeader("content-type", "application/json");
         res.status(400).send(JSON.stringify({ error: "Invalid Arguments" }));
         return;
       }
-      if (json.token != null && json.name != null) {
+      else if (json.token != null && json.name != null) {
+        //suplied both a token and a name
         res.setHeader("content-type", "application/json");
         res.status(400).send(JSON.stringify({ error: "ya can't have both" }));
         return;
       }
-      if (json.name === null || json.name.toUpperCase() === "NULL") {
+      else if (json.name === null && json.name === undefined && json.name.toUpperCase() === "NULL") {
+        //didn't supply a name
         res.setHeader("content-type", "application/json");
         res.status(400).send(JSON.stringify({ error: "Invalid Arguments" }));
         return;
