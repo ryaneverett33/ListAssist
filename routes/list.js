@@ -171,20 +171,22 @@ arguments needed:
   new_value (must be the correct type, all ints except name and picture_url)
 */
 router.post('/item/edit', function (req, res, next) {
-  try {
-    helpers.resolveBody(req, function (body) {
-      if (body == null) {
-        res.setHeader("content-type", "application/json");
-        res.status(400).send(JSON.stringify({ error: "Empty Request" }));
-        return;
-      }
-      var json = helpers.toJson(body);
-      if (json == null) {
-        res.setHeader("content-type", "application/json");
-        res.status(400).send(JSON.stringify({ error: "Bad JSON" }));
-        return;
-      }
-    });
+  helpers.resolveBody(req, function (body) {
+    if (body == null) {
+      res.setHeader("content-type", "application/json");
+      res.status(400).send(JSON.stringify({
+        error: "Empty Request"
+      }));
+      return;
+    }
+    var json = helpers.toJson(body);
+    if (json == null) {
+      res.setHeader("content-type", "application/json");
+      res.status(400).send(JSON.stringify({
+        error: "Bad JSON"
+      }));
+      return;
+    }
   });
 });
 
@@ -192,55 +194,65 @@ router.post('/item/edit', function (req, res, next) {
 /*
 token : "user login token" || userid : "user id"
 */
-router.post('/get', function(req, res, next) {
-  helpers.resolveBody(req, function(body) {
+router.post('/get', function (req, res, next) {
+  helpers.resolveBody(req, function (body) {
     if (body == null) {
-		console.log("body null");
+      console.log("body null");
       res.setHeader("content-type", "application/json");
-      res.status(400).send(JSON.stringify({ error: "Empty Request" }));
+      res.status(400).send(JSON.stringify({
+        error: "Empty Request"
+      }));
       return;
     }
     var json = helpers.toJson(body);
     if (json == null) {
-		console.log("json null");
+      console.log("json null");
       res.setHeader("content-type", "application/json");
-      res.status(400).send(JSON.stringify({ error: "Bad JSON" }));
+      res.status(400).send(JSON.stringify({
+        error: "Bad JSON"
+      }));
       return;
     }
     if (json.token == null && json.userid == null) {
       console.log("invalid arguments");
-	  res.setHeader("content-type", "application/json");
-      res.status(400).send(JSON.stringify({ error : "Invalid Arguments"}));
+      res.setHeader("content-type", "application/json");
+      res.status(400).send(JSON.stringify({
+        error: "Invalid Arguments"
+      }));
       return;
     }
     if (json.token != null && json.userid != null) {
       console.log("can't have both");
-	  res.setHeader("content-type", "application/json");
-      res.status(400).send(JSON.stringify({ error : "ya can't have both"}));
+      res.setHeader("content-type", "application/json");
+      res.status(400).send(JSON.stringify({
+        error: "ya can't have both"
+      }));
       return;
     }
     if (json.token != null) {
-		console.log("getting from token");
+      console.log("getting from token");
       //get User id from UserManagement (user is logged in)
-      UserManagement.getUser(json.token, function(User) {
+      UserManagement.getUser(json.token, function (User) {
         console.log("user null");
-		if (User == null) {
-			console.log("user null");
+        if (User == null) {
+          console.log("user null");
           res.setHeader("content-type", "application/json");
-          res.status(401).send(JSON.stringify({ error: "Unable to retrieve user" }));
+          res.status(401).send(JSON.stringify({
+            error: "Unable to retrieve user"
+          }));
           return;
-        }
-        else {
-			console.log("get list from user");
-          ListManagement.getLists(User.getId(), function(lists) {
+        } else {
+          console.log("get list from user");
+          ListManagement.getLists(User.getId(), function (lists) {
             if (lists == null) {
-				console.log("lists null from user");
+              console.log("lists null from user");
               res.setHeader("content-type", "application/json");
-              res.status(404).send(JSON.stringify({ error : "Unable to retrive lists" }));
+              res.status(404).send(JSON.stringify({
+                error: "Unable to retrive lists"
+              }));
               return;
-            }
-            else {
-				console.log("lists g");
+            } else {
+              console.log("lists g");
               res.setHeader("content-type", "application/json");
               res.status(200).send(JSON.stringify(lists));
               return;
@@ -248,32 +260,27 @@ router.post('/get', function(req, res, next) {
           });
         }
       });
-    }
-    else {
-		console.log("get from id");
+    } else {
+      console.log("get from id");
       //get Lists from given id
-      ListManagement.getLists(json.userid, function(lists) {
+      ListManagement.getLists(json.userid, function (lists) {
         console.log("got lists from id");
-		if (lists == null) {
-			console.log("lists null");
+        if (lists == null) {
+          console.log("lists null");
           res.setHeader("content-type", "application/json");
-          res.status(404).send(JSON.stringify({ error : "Unable to retrive lists" }));
+          res.status(404).send(JSON.stringify({
+            error: "Unable to retrive lists"
+          }));
           return;
-        }
-        else {
-			console.log("lists g");
+        } else {
+          console.log("lists g");
           res.setHeader("content-type", "application/json");
           res.status(200).send(JSON.stringify(lists));
           return;
         }
       });
-    });
-  }
-  catch (err) {
-    console.log("/list/get encountered an error: " + err);
-    res.status(500).send(JSON.stringify({ error: err }));
-    return;
-  }
+    }
+  });
 });
 
 /* Get the lists of a user */
