@@ -148,7 +148,8 @@ exports.setItem = function setItem(id, column, new_value, callback) {
 	//must be done this way because sql doesn't like quotes around the column values
 	var query_string;
 	if (column === "name") {
-	    query_string = 'UPDATE Items SET name=? WHERE id=?;';
+		/*bug for editing name*/
+	    query_string = 'UPDATE Items SET mame=? WHERE id=?;';
 	}
 	else if (column === "picture_url") {
 		query_string = 'UPDATE Items SET picture_url=? WHERE id=?;';
