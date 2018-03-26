@@ -86,7 +86,6 @@ $(document).ready(function() {
 				$("#add_list_name_field_link").addClass("is-invalid");
 				return;
 			}
-			
 			var data = {
 				token: token,
 				listUrl: link
