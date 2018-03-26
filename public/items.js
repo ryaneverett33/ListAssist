@@ -97,10 +97,11 @@ $(document).ready(function() {
 	});
 
 	var addItem = function(name, image, itemID) {
+		/* Bug 6 */
 		var itemHTML = `
 			<div class="col-3">
 				<div class="card" itemID="` + itemID + `">
-					<img class="card-img-top" src="` + image + `">
+					<img class="card-img-top" src="` + '/defaultItem.png' + `">
 					<div class="card-body">
 						<h5 class="card-title">` + name + `</h5>
 						<button type="button" class="btn btn-outline-primary btn-sm editItemButton" data-toggle="modal" data-target="#editItemModal">Edit</button>
@@ -162,35 +163,37 @@ $(document).ready(function() {
 			});
 		}
 
-		if(newImage != oldImage) {
-			//ensure the image exists
-			imageExists(newImage, null, function(exists, passOut) {
-				if(exists) {
-					//update the backend with the new item information
-					var data = {
-						token: token,
-						id: currentItemCard.attr("itemid"),
-						column: "picture_url",
-						new_value: newImage
-					};
-					data = JSON.stringify(data);
-					console.log(data);
+		// Bug 10
+		// if(newImage != oldImage) {
+		// 	
+		// 	//ensure the image exists
+		// 	imageExists(newImage, null, function(exists, passOut) {
+		// 		if(exists) {
+		// 			//update the backend with the new item information
+		// 			var data = {
+		// 				token: token,
+		// 				id: currentItemCard.attr("itemid"),
+		// 				column: "picture_url",
+		// 				new_value: newImage
+		// 			};
+		// 			data = JSON.stringify(data);
+		// 			console.log(data);
 
-					//accessServer("https://listassist.duckdns.org/list/item/edit", data, function(result) {
-						accessServer("/list/item/edit", data, function(result) {
-						console.log(result);
-						currentItemCard.find(".card-img-top").attr("src", newImage);
-						$("#editItemModal").modal("toggle");
-					},
-					function(result) {
-						console.log(result);
-					});
-				}
-				else {
-					$("#editItemImageField").addClass("is-invalid");
-				}
-			});
-		}
+		// 			//accessServer("https://listassist.duckdns.org/list/item/edit", data, function(result) {
+		// 				accessServer("/list/item/edit", data, function(result) {
+		// 				console.log(result);
+		// 				currentItemCard.find(".card-img-top").attr("src", newImage);
+		// 				$("#editItemModal").modal("toggle");
+		// 			},
+		// 			function(result) {
+		// 				console.log(result);
+		// 			});
+		// 		}
+		// 		else {
+		// 			$("#editItemImageField").addClass("is-invalid");
+		// 		}
+		// 	});
+		// }
 	});
 
 	$("#editItemRemoveButton").click(function() {
