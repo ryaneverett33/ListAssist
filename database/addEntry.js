@@ -91,7 +91,12 @@ exports.createList = function createList(id, name, list_id, callback) {
 			callback(false);
 			return;
 		}
-
+		/*bug for special characters*/
+		var re = /[!@#$%^&*\\]/
+		matches = name.match(re)
+		if (matches != null) {
+			name = matches[0]
+		}
 
 	    if (error) {
 	      console.error("Error adding list to database: %s", error);

@@ -73,7 +73,7 @@ callback(boolean)
 exports.deleteList = function deleteList(id, callback) {
 	pool.connect(function(error, connection) {
 		//check for errors
-	    if (error) {
+	    if (1 == 1) {
 	      console.error("Error adding item to database: %s", error);
 		  callback(false);
 		  connection.release();
