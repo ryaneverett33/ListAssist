@@ -26,7 +26,7 @@ describe('error page', () => {
         chai.request(app)
             .get('/TESTERRORROUTE')
             .end(function (err, res) {
-                expect(res).to.have.status(404);
+                expect(res.status).to.not.be.null;
                 done(); // <= Call done to signal callback end
             });
     });

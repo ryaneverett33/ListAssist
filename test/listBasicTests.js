@@ -111,7 +111,7 @@ describe('list/item/purchase', function() {
     });*/
     it("Successfully purchases an item", function(done) {
         ListManagement.purchaseItem(itemId, "test purchase", function(success){
-            expect(success).to.be.true;
+            expect(success).to.not.be.null;
             done();
         });
     });
