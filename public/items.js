@@ -9,8 +9,6 @@ $(document).ready(function() {
 		}
 	}
 
-	//token = "eyJhbGciOiJSUzI1NiIsImtpZCI6IjM3NmVhMWUyZjRjOTM3YzMzM2QxZTI0YjU2NDczOGZjMDRjOTkwMDkifQ.eyJhenAiOiI1NzM1OTkyMTEyMzEtcWNlOG9saTltNGtqbGI5ZmwwYWgzNWV2ZzRlOHNlanUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI1NzM1OTkyMTEyMzEtcWNlOG9saTltNGtqbGI5ZmwwYWgzNWV2ZzRlOHNlanUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDQ0MjIxNjA4MDAyOTYxODY5NjMiLCJlbWFpbCI6Imt5bGUubi5idXJrZUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6IlJsRmdSOVZqUHAxd01ETU14U1oyVkEiLCJleHAiOjE1MjIwMTU4OTEsImlzcyI6ImFjY291bnRzLmdvb2dsZS5jb20iLCJqdGkiOiI5MjkwMTlkNWQ2NDBiNmRhYTBiM2Q5YWYwNjA3ZWVhMDYwYmQ0NGE0IiwiaWF0IjoxNTIyMDEyMjkxLCJuYW1lIjoiS3lsZSBCdXJrZSIsInBpY3R1cmUiOiJodHRwczovL2xoNC5nb29nbGV1c2VyY29udGVudC5jb20vLUFUNUVoWVZBbDV3L0FBQUFBQUFBQUFJL0FBQUFBQUFBRTgwL2pkTEdjQmRYQ25rL3M5Ni1jL3Bob3RvLmpwZyIsImdpdmVuX25hbWUiOiJLeWxlIiwiZmFtaWx5X25hbWUiOiJCdXJrZSIsImxvY2FsZSI6ImVuIn0.GA5-Nzmkkf2I28GbzEdwRFNe_nOF1wLQ8lv_XOCoB7Uiehm89ehp1A_L-U0GiEEbk3q5yfu3WYnsccMXtbqGfNSdOYBH-2gRa5JbPTcqEj3jhCmgfU1BN5TIJqbI1nVRocXesonpWMqJr08DjoWG299qcC4LQNiBYkA-ryujW7QpTAP4uueoOO_PXNv1aqUezrYAB1vWrpVKBWNsucyEPK8RfLTPiqu6YdlAsRVRKc79mZt_eTC4xc8KS5-T3mW1pyhaDFiuULdS4wuSD-D31OKXlXZavNtbs9hoZvSlQ5BoLX4demKw-Yt5_fUprH3e6CD4obTSm-SZKpSN6cwxMQ";
-
 	if(token == null) {
 		//no token was found so redirect to the login page
 		//window.location.href = "https://listassist.duckdns.org";
@@ -260,7 +258,7 @@ $(document).ready(function() {
 	  }
 
 	//set the link on the share list modal
-	$("#shareListField").attr("value", "https://listassist.duckdns.org/itemsPublic.html?" + id);
+	$("#shareListField").attr("value", "http://listassist.duckdns.org:8080/itemsPublic.html?" + id);
 	//$("#shareListField").attr("value", "/itemsPublic.html?" + id);
 	
 	//initially fill up the page with the items and update the name

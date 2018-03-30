@@ -17,7 +17,8 @@ $(document).ready(function() {
 
 	if(token == null) {
 		//no token was found so redirect to the login page
-		window.location.href = "https://listassist.duckdns.org";
+		//window.location.href = "https://listassist.duckdns.org";
+		window.location.href = "/";
 	}
 
 	$("#customRadio").click(function() {
