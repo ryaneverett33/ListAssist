@@ -9,7 +9,7 @@ $(document).ready(function() {
 		}
 	}
 
-	//token = "eyJhbGciOiJSUzI1NiIsImtpZCI6ImFjMmI2M2ZhZWZjZjgzNjJmNGM1MjhlN2M3ODQzMzg3OTM4NzAxNmIifQ.eyJhenAiOiI1NzM1OTkyMTEyMzEtcWNlOG9saTltNGtqbGI5ZmwwYWgzNWV2ZzRlOHNlanUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI1NzM1OTkyMTEyMzEtcWNlOG9saTltNGtqbGI5ZmwwYWgzNWV2ZzRlOHNlanUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDQ0MjIxNjA4MDAyOTYxODY5NjMiLCJlbWFpbCI6Imt5bGUubi5idXJrZUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6ImgxTk9MNlF0cUQ4Qzl5dk5mbVNRNnciLCJleHAiOjE1MjA4MDAyOTAsImlzcyI6ImFjY291bnRzLmdvb2dsZS5jb20iLCJqdGkiOiJmNTM1ZDllNjFlOTNiNjBlYTJiZDZmZTAxMWM3YTIyYzlhMmRiNDYwIiwiaWF0IjoxNTIwNzk2NjkwLCJuYW1lIjoiS3lsZSBCdXJrZSIsInBpY3R1cmUiOiJodHRwczovL2xoNC5nb29nbGV1c2VyY29udGVudC5jb20vLUFUNUVoWVZBbDV3L0FBQUFBQUFBQUFJL0FBQUFBQUFBRTgwL2pkTEdjQmRYQ25rL3M5Ni1jL3Bob3RvLmpwZyIsImdpdmVuX25hbWUiOiJLeWxlIiwiZmFtaWx5X25hbWUiOiJCdXJrZSIsImxvY2FsZSI6ImVuIn0.Dg8WpgTk5oiZItxevDsb3PKu2BiAdak8_bQlq7kdq5ga2BO-rViJYGedbMXxo7o0cn35-1P-ZJf_Ab4IDbO3Aqg7kcUl6R7mG24dBhAnrIjktMxkH9H0zamoskcfdlyKcnW2eonCbF7ZkgChNTFcgFv29CKFjXuAdhCRfVelE73-7U_rkeNxYUcSjklArUI9oNBKA_dVUdc7bvGZdwT6QZv56AnspfAs6HHTr_PvetKUIcf-MWhRNAICr9taTJFDoa2USl9a-p1VyHsxB9XLf1s0boeUscd7hF0TnhxUr760DmzA2Ei7ab8wbcoIfZp0uSBRxsp0aQIZwwznhcNI_A";
+	//token = "eyJhbGciOiJSUzI1NiIsImtpZCI6ImU5YjU2Y2ZjNjQwZDEyYmZmNDU0MDU1MzQwMmM3ZjE1N2Q0ODE4MDYifQ.eyJhenAiOiI1NzM1OTkyMTEyMzEtcWNlOG9saTltNGtqbGI5ZmwwYWgzNWV2ZzRlOHNlanUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI1NzM1OTkyMTEyMzEtcWNlOG9saTltNGtqbGI5ZmwwYWgzNWV2ZzRlOHNlanUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDQ0MjIxNjA4MDAyOTYxODY5NjMiLCJlbWFpbCI6Imt5bGUubi5idXJrZUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6ImhqWkV1TlRoOGEtbXEzc05zVXU4aUEiLCJleHAiOjE1MjI0NDc5NzQsImlzcyI6ImFjY291bnRzLmdvb2dsZS5jb20iLCJqdGkiOiIyNDliYmEzNjJhY2QxYWVhZTRjYzNjZWM1ODNhODE3NTBjYTQxNWMxIiwiaWF0IjoxNTIyNDQ0Mzc0LCJuYW1lIjoiS3lsZSBCdXJrZSIsInBpY3R1cmUiOiJodHRwczovL2xoNC5nb29nbGV1c2VyY29udGVudC5jb20vLUFUNUVoWVZBbDV3L0FBQUFBQUFBQUFJL0FBQUFBQUFBRTgwL2pkTEdjQmRYQ25rL3M5Ni1jL3Bob3RvLmpwZyIsImdpdmVuX25hbWUiOiJLeWxlIiwiZmFtaWx5X25hbWUiOiJCdXJrZSIsImxvY2FsZSI6ImVuIn0.HyQeJweYWkNzMAHmuDOoqRiqLaSmXzH7KD6FCp1PJhB0mjqjVh9XXEadbIJMpj65PwUEusm0MU4Wp2aXVIYcoPXnB-TVdrNOiTo96KwRmTcZcCycC17EctGB5wUJ6aq2DIXx9oPTvKO7vZnef-e3mpVipUyQvel1NDToQtQGoHOSC93_8jpS6D7yCD6bHefcBZs3H-FoDscyk9gFv0CHp15FjbeD8NY__Ab07xt4n7HtPTh-s7K8xncHNarc--ngC7sh7Prb-g8zl5MRIGSptdKBCIccgb2ONxqwXjTDHp8bSaTa58dbOn7fyNTGwTPT4eykOxcqOUk5xvJjj97IAw";
 
 	if(token == null) {
 		//no token was found so redirect to the login page
@@ -257,7 +257,7 @@ $(document).ready(function() {
 	  }
 
 	//set the link on the share list modal
-	$("#shareListField").attr("value", "https://listassist.duckdns.org/itemsPublic.html?" + id);
+	$("#shareListField").attr("value", "http://listassist.duckdns.org:8080/itemsPublic.html?" + id);
 	//$("#shareListField").attr("value", "/itemsPublic.html?" + id);
 	
 	//initially fill up the page with the items and update the name
@@ -277,7 +277,7 @@ $(document).ready(function() {
 				items = json[i].items;
 
 				//update the name
-				$("#listTitle").html(json[i].info.name);
+				$("#listTitle").html("list1");
 
 				break;
 			}
@@ -289,8 +289,9 @@ $(document).ready(function() {
 			return;
 		}
 
-		for(var i = 0; i < items.length; i++) {
+		for(var i = 0; i < Math.min(10, items.length); i++) {
 			var name = items[i].name;
+			name = name.slice(0, 25);
 			var picURL = items[i].picture_url;
 			var itemID = items[i].id;
 
