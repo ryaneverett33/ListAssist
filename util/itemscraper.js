@@ -11,7 +11,7 @@ var scrapeAmazonItem = function (url) {
       .set({
         itemTitle: '#productTitle',
         // price: '#priceblock_ourprice',
-        itemImg: '#landingImage@data-old-hires',
+        //itemImg: '#landingImage@data-old-hires',
       })
       .data(item => {
         out = item;

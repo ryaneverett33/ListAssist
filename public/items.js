@@ -9,8 +9,6 @@ $(document).ready(function() {
 		}
 	}
 
-	//token = "eyJhbGciOiJSUzI1NiIsImtpZCI6ImU5YjU2Y2ZjNjQwZDEyYmZmNDU0MDU1MzQwMmM3ZjE1N2Q0ODE4MDYifQ.eyJhenAiOiI1NzM1OTkyMTEyMzEtcWNlOG9saTltNGtqbGI5ZmwwYWgzNWV2ZzRlOHNlanUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJhdWQiOiI1NzM1OTkyMTEyMzEtcWNlOG9saTltNGtqbGI5ZmwwYWgzNWV2ZzRlOHNlanUuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJzdWIiOiIxMDQ0MjIxNjA4MDAyOTYxODY5NjMiLCJlbWFpbCI6Imt5bGUubi5idXJrZUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXRfaGFzaCI6ImhqWkV1TlRoOGEtbXEzc05zVXU4aUEiLCJleHAiOjE1MjI0NDc5NzQsImlzcyI6ImFjY291bnRzLmdvb2dsZS5jb20iLCJqdGkiOiIyNDliYmEzNjJhY2QxYWVhZTRjYzNjZWM1ODNhODE3NTBjYTQxNWMxIiwiaWF0IjoxNTIyNDQ0Mzc0LCJuYW1lIjoiS3lsZSBCdXJrZSIsInBpY3R1cmUiOiJodHRwczovL2xoNC5nb29nbGV1c2VyY29udGVudC5jb20vLUFUNUVoWVZBbDV3L0FBQUFBQUFBQUFJL0FBQUFBQUFBRTgwL2pkTEdjQmRYQ25rL3M5Ni1jL3Bob3RvLmpwZyIsImdpdmVuX25hbWUiOiJLeWxlIiwiZmFtaWx5X25hbWUiOiJCdXJrZSIsImxvY2FsZSI6ImVuIn0.HyQeJweYWkNzMAHmuDOoqRiqLaSmXzH7KD6FCp1PJhB0mjqjVh9XXEadbIJMpj65PwUEusm0MU4Wp2aXVIYcoPXnB-TVdrNOiTo96KwRmTcZcCycC17EctGB5wUJ6aq2DIXx9oPTvKO7vZnef-e3mpVipUyQvel1NDToQtQGoHOSC93_8jpS6D7yCD6bHefcBZs3H-FoDscyk9gFv0CHp15FjbeD8NY__Ab07xt4n7HtPTh-s7K8xncHNarc--ngC7sh7Prb-g8zl5MRIGSptdKBCIccgb2ONxqwXjTDHp8bSaTa58dbOn7fyNTGwTPT4eykOxcqOUk5xvJjj97IAw";
-
 	if(token == null) {
 		//no token was found so redirect to the login page
 		//window.location.href = "https://listassist.duckdns.org";
@@ -97,10 +95,11 @@ $(document).ready(function() {
 	});
 
 	var addItem = function(name, image, itemID) {
+		/* Bug 6 */
 		var itemHTML = `
 			<div class="col-3">
 				<div class="card" itemID="` + itemID + `">
-					<img class="card-img-top" src="` + image + `">
+					<img class="card-img-top" src="` + '/defaultItem.png' + `">
 					<div class="card-body">
 						<h5 class="card-title">` + name + `</h5>
 						<button type="button" class="btn btn-outline-primary btn-sm editItemButton" data-toggle="modal" data-target="#editItemModal">Edit</button>
@@ -162,35 +161,37 @@ $(document).ready(function() {
 			});
 		}
 
-		if(newImage != oldImage) {
-			//ensure the image exists
-			imageExists(newImage, null, function(exists, passOut) {
-				if(exists) {
-					//update the backend with the new item information
-					var data = {
-						token: token,
-						id: currentItemCard.attr("itemid"),
-						column: "picture_url",
-						new_value: newImage
-					};
-					data = JSON.stringify(data);
-					console.log(data);
+		// Bug 10
+		// if(newImage != oldImage) {
+		// 	
+		// 	//ensure the image exists
+		// 	imageExists(newImage, null, function(exists, passOut) {
+		// 		if(exists) {
+		// 			//update the backend with the new item information
+		// 			var data = {
+		// 				token: token,
+		// 				id: currentItemCard.attr("itemid"),
+		// 				column: "picture_url",
+		// 				new_value: newImage
+		// 			};
+		// 			data = JSON.stringify(data);
+		// 			console.log(data);
 
-					//accessServer("https://listassist.duckdns.org/list/item/edit", data, function(result) {
-						accessServer("/list/item/edit", data, function(result) {
-						console.log(result);
-						currentItemCard.find(".card-img-top").attr("src", newImage);
-						$("#editItemModal").modal("toggle");
-					},
-					function(result) {
-						console.log(result);
-					});
-				}
-				else {
-					$("#editItemImageField").addClass("is-invalid");
-				}
-			});
-		}
+		// 			//accessServer("https://listassist.duckdns.org/list/item/edit", data, function(result) {
+		// 				accessServer("/list/item/edit", data, function(result) {
+		// 				console.log(result);
+		// 				currentItemCard.find(".card-img-top").attr("src", newImage);
+		// 				$("#editItemModal").modal("toggle");
+		// 			},
+		// 			function(result) {
+		// 				console.log(result);
+		// 			});
+		// 		}
+		// 		else {
+		// 			$("#editItemImageField").addClass("is-invalid");
+		// 		}
+		// 	});
+		// }
 	});
 
 	$("#editItemRemoveButton").click(function() {

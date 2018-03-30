@@ -34,7 +34,7 @@ $(document).ready(function() {
 	function onLoad(signout) {
 			console.log("called.")
       gapi.load('auth2', function() {
-        gapi.auth2.init().then(() => { 
+        gapi.auth2.init().then(() => {
 		  		console.log("no");
 		  		var auth2 = gapi.auth2.getAuthInstance();
 					auth2.signOut().then(function () {
@@ -47,7 +47,7 @@ $(document).ready(function() {
   function signOut() {
 			console.log("called.")
       gapi.load('auth2', function() {
-        gapi.auth2.init().then(() => { 
+        gapi.auth2.init().then(() => {
 		  		console.log("no");
 		  		var auth2 = gapi.auth2.getAuthInstance();
 					auth2.signOut().then(function () {
@@ -66,7 +66,7 @@ $(document).ready(function() {
 		//for (var i = 0; i < cookie.length; i++)
 		//	eraseCookie(cookie[i].split("=")[0]);
 		//signOut();
-		window.location.href = "/";
+		//window.location.href = "/";
 	});
 
 	//this is the add list button on the page
@@ -81,19 +81,19 @@ $(document).ready(function() {
 
 	//this is the add list button on the new list modal
 	$("#add_list_modal_button").click(function() {
+		//Bug 15 - can make lists with the same name
 		if($("#byLinkRadio").is(":checked")) {
 			var link = $("#add_list_name_field_link").val();
 			if(!link.startsWith("https://www.amazon.com")) {
 				$("#add_list_name_field_link").addClass("is-invalid");
 				return;
 			}
-			
 			var data = {
 				token: token,
 				listUrl: link
 			};
 			data = JSON.stringify(data);
-		
+
 			//accessServer("https://listassist.duckdns.org/list/import", data, function(result) {
 			accessServer("/list/import", data, function(result) {
 				console.log(result);
@@ -123,7 +123,7 @@ $(document).ready(function() {
 				name: name
 			};
 			data = JSON.stringify(data);
-		
+
 			//accessServer("https://listassist.duckdns.org/list/new", data, function(result) {
 			accessServer("/list/new", data, function(result) {
 				console.log(result);
@@ -152,7 +152,7 @@ $(document).ready(function() {
 
 	function assignEditButtonFunctionality() {
 		$(".edit").off();
-    
+
     //firefox support
 		$(".edit").click(function (event) {
 			d = $(event.target).parent();
@@ -176,7 +176,7 @@ $(document).ready(function() {
 			id: d.attr("listID")
 		};
 		data = JSON.stringify(data);
-	
+
 		accessServer("/list/delete", data, function(result) {
 			console.log(result);
 			$("#edit_list_modal").modal("toggle");
@@ -186,32 +186,35 @@ $(document).ready(function() {
 			console.log(result);
 		});
 	});
-	$("#edit_list_modal_save").click(function() {
-		var name = $("#edit_list_name_field").val();
-		console.log(name);
-		//ensure name isn't empty
-		if(name.replace(/\s+/) == "") {
-			$("#edit_list_name_field").addClass("is-invalid");
-			return;
-		}
-		d.find(".name").text(name);
 
-		//update the backend with the new item information...
-		var data = {
-			token: token,
-			id: d.attr("listID"),
-			name: name
-		};
-		data = JSON.stringify(data);
-		console.log(data);
-	
-		//accessServer("https://listassist.duckdns.org/list/edit", data, function(result) {
-		accessServer("/list/edit", data, function(result) {
-			console.log(result);
-		},
-		function(result) {
-			console.log(result);
-		});
+	$("#edit_list_modal_save").click(function() {
+		//Bug 4 - Editing the list name won't change the list name
+		//
+		// var name = $("#edit_list_name_field").val();
+		// console.log(name);
+		// //ensure name isn't empty
+		// if(name.replace(/\s+/) == "") {
+		// 	$("#edit_list_name_field").addClass("is-invalid");
+		// 	return;
+		// }
+		// d.find(".name").text(name);
+		//
+		// //update the backend with the new item information...
+		// var data = {
+		// 	token: token,
+		// 	id: d.attr("listID"),
+		// 	name: name
+		// };
+		// data = JSON.stringify(data);
+		// console.log(data);
+		//
+		// //accessServer("https://listassist.duckdns.org/list/edit", data, function(result) {
+		// accessServer("/list/edit", data, function(result) {
+		// 	console.log(result);
+		// },
+		// function(result) {
+		// 	console.log(result);
+		// });
 
 		$("#edit_list_modal").modal("toggle");
 	})
@@ -243,8 +246,8 @@ $(document).ready(function() {
 	//accessServer("https://listassist.duckdns.org/list/all", data, function(result) {
 	accessServer("/list/all", data, function(result) {
 		json = JSON.parse(result);
-
-		for(var i = 0; i < json.length; i++) {
+//Bug 12 - list page only shows 10 items
+		for(var i = 0; i < Math.min(10, json.length); i++) {
 			var name = json[i].info.name;
 			var listID = json[i].info.id;
 
